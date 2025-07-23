@@ -25,7 +25,12 @@ const routes = [
     name: 'Account',
     component: Account,
     meta: { requiresAuth: true }
-  }
+  },
+ {
+  path: '/account/edit',
+  name: 'EditProfile',
+  component: () => import('../pages/EditProfile.vue')
+}
 ]
 
 const router = createRouter({
