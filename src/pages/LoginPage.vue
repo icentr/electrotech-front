@@ -15,7 +15,8 @@
           Введите ваши учетные данные для входа
         </p>
       </div>
-      
+      <p v-if="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
+
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
         <div class="rounded-md shadow-sm space-y-4">
           <div>
@@ -73,7 +74,7 @@
       <div class="text-center">
         <p class="text-sm text-gray-600">
           Еще нет аккаунта?
-          <RouterLink to="/registr" class="font-medium text-blue-600 hover:text-blue-500">
+          <RouterLink to="/Register" class="font-medium text-blue-600 hover:text-blue-500">
             Зарегистрироваться
           </RouterLink>
         </p>
@@ -81,22 +82,59 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import api from '../api'
+import { useAuthStore } from '../stores/useAuthStore'
 
 const router = useRouter()
+const auth = useAuthStore()
+
 const form = ref({
   email: '',
   password: '',
   remember: false
 })
 
-const handleLogin = () => {
-  // Здесь будет логика авторизации
-  console.log('Login form submitted:', form.value)
-  // После успешной авторизации перенаправляем в личный кабинет
-  router.push('/account')
+const errorMessage = ref('')
+
+function validate() {
+  if (!form.value.email) {
+    errorMessage.value = 'Email обязателен'
+    return false
+  }
+  // Простая проверка email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(form.value.email)) {
+    errorMessage.value = 'Введите корректный email'
+    return false
+  }
+  if (!form.value.password) {
+    errorMessage.value = 'Пароль обязателен'
+    return false
+  }
+  errorMessage.value = ''
+  return true
+}
+
+const handleLogin = async () => {
+  if (!validate()) return
+
+  try {
+    const response = await api.post('/auth/login', {
+      email: form.value.email,
+      password: form.value.password
+    })
+
+    const { token, refresh_token } = response.data
+
+    auth.login(token)
+    localStorage.setItem('refresh_token', refresh_token)
+
+    router.push('/account')
+  } catch (error) {
+    errorMessage.value = error.response?.data?.message || 'Неверный email или пароль'
+  }
 }
 </script>
