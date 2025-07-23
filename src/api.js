@@ -1,16 +1,61 @@
 import axios from 'axios'
+import { useAuthStore } from './stores/useAuthStore'
 
 const api = axios.create({
-  baseURL: 'http://localhost:1488/api',
+  baseURL: 'http://localhost:1488/api/',
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
+//  Перехватчик ответов — пытается обновить токен при 401
+api.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config
+
+    // Пропускаем, если уже пробовали рефреш
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      try {
+        const auth = useAuthStore()
+
+        const refreshToken = localStorage.getItem('refresh_token')
+        if (!refreshToken) throw new Error('No refresh token')
+
+        const { data } = await axios.post('http://localhost:1488/api/auth/refresh', {
+          refresh_token: refreshToken
+        })
+
+        // Обновляем токен в хранилище и в localStorage
+        auth.token = data.token
+        localStorage.setItem('token', data.token)
+
+        // Повторяем оригинальный запрос с новым токеном
+        originalRequest.headers['Authorization'] = data.token
+        return api(originalRequest)
+
+      } catch (refreshErr) {
+        // Если refresh не сработал — выкидываем пользователя
+        const auth = useAuthStore()
+        auth.logout()
+        window.location.href = '/login'
+        return Promise.reject(refreshErr)
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
+
+// Перехватчик запроса — подставляет токен
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers['Authorization'] = token 
   }
   return config
 })
 
 export default api
-  
