@@ -3,6 +3,9 @@ import Home from "../pages/Home.vue";
 import Login from "../pages/LoginPage.vue";
 import Register from "../pages/RegistrPage.vue";
 import Account from "../pages/Account.vue";
+import CatalogPage from "../pages/CatalogPage.vue";
+import CompanyPage from "../pages/CompanyPage.vue";
+import CartPage from "../pages/CartPage.vue";
 
 function isTokenValid() {
   const token = localStorage.getItem("token");
@@ -30,8 +33,14 @@ const routes = [
     path: "/account/edit",
     name: "EditProfile",
     component: () => import("../pages/EditProfile.vue"),
-     meta: { requiresAuth: true } // ← добавь это!
+    meta: { requiresAuth: true }, // ← добавь это!
   },
+  {path: "/catalog", name: "catalog", component: CatalogPage },
+  {path: "/company", name: "company", component: CompanyPage },
+  {path: "/cart", name: "cart", component: CartPage},
+  {path: "/checkout", name: "checkout", component: () => import("../pages/CheckoutPage.vue"), meta: { requiresAuth: true } },
+  {path: "/product/:id", name: "product", component: () => import("../pages/ProductPage.vue"), props: true },
+  {path: "/productCard", name: "productCard", component: () => import("../components/ProductCard.vue")},
 ];
 
 const router = createRouter({

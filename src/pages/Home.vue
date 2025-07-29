@@ -18,7 +18,7 @@
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-12 md:mb-0">
                     <div class="bg-white bg-opacity-20 rounded-full px-5 py-1.5 inline-block mb-6">
-                        <span class="font-medium text-sm tracking-wide">БЕСПЛАТНАЯ ДОСТАВКА ДО ТК ОТ 50 000 ₽</span>
+                        <span class="font-medium text-sm tracking-wide text-blue-600">БЕСПЛАТНАЯ ДОСТАВКА ДО ТК ОТ 50 000 ₽</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">КОМПЛЕКТУЮЩИЕ ДЛЯ ПРОМЫШЛЕННОЙ ЭЛЕКТРОТЕХНИКИ</h1>
                     <p class="text-xl mb-8 opacity-90 max-w-lg">Контроллеры, автоматические выключатели, блоки питания, клеммы и другие электротехнические компоненты для предприятий</p>
@@ -28,24 +28,24 @@
                             <i class="fas fa-phone-alt mr-3"></i>
                             ЗАКАЗАТЬ ЗВОНОК
                         </a>
-                        <a href="#" class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition duration-300 flex items-center justify-center hover:shadow-lg">
+                        <RouterLink to="catalog" class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition duration-300 flex items-center justify-center hover:shadow-lg">
                             <i class="fas fa-list-alt mr-3"></i>
                             СМОТРЕТЬ КАТАЛОГ
-                        </a>
+                        </RouterLink>
                     </div>
                     
                     <div class="mt-10 flex flex-wrap gap-3">
                         <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
                             <i class="fas fa-check-circle mr-2 text-blue-300"></i>
-                            <span class="text-sm">Собственный склад</span>
+                            <span class="text-sm text-blue-600">Собственный склад</span>
                         </div>
                         <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
                             <i class="fas fa-check-circle mr-2 text-blue-300"></i>
-                            <span class="text-sm">Оригинальные компоненты</span>
+                            <span class="text-sm text-blue-600">Оригинальные компоненты</span>
                         </div>
                         <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
                             <i class="fas fa-check-circle mr-2 text-blue-300"></i>
-                            <span class="text-sm">Техническая консультация</span>
+                            <span class="text-sm text-blue-600">Техническая консультация</span>
                         </div>
                     </div>
                 </div>

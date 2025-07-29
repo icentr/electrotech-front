@@ -7,7 +7,10 @@
         <nav class="flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-2">
             <li class="inline-flex items-center">
-              <RouterLink to="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+              <RouterLink
+                to="/"
+                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600"
+              >
                 <i class="fas fa-home mr-2"></i>
                 Главная
               </RouterLink>
@@ -15,7 +18,9 @@
             <li aria-current="page">
               <div class="flex items-center">
                 <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Корзина</span>
+                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2"
+                  >Корзина</span
+                >
               </div>
             </li>
           </ol>
@@ -23,61 +28,94 @@
       </div>
 
       <h1 class="text-2xl font-bold text-gray-900 mb-6">Корзина</h1>
-      
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Основная часть - список товаров -->
         <div class="lg:col-span-2">
           <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
             <!-- Заголовок таблицы -->
-            <div class="hidden md:grid grid-cols-12 gap-4 mb-4 border-b border-gray-200 pb-3">
-              <div class="col-span-6 text-sm font-medium text-gray-500">Товар</div>
-              <div class="col-span-2 text-sm font-medium text-gray-500">Цена</div>
-              <div class="col-span-2 text-sm font-medium text-gray-500">Количество</div>
-              <div class="col-span-2 text-sm font-medium text-gray-500">Сумма</div>
+            <div
+              class="hidden md:grid grid-cols-12 gap-4 mb-4 border-b border-gray-200 pb-3"
+            >
+              <div class="col-span-6 text-sm font-medium text-gray-500">
+                Товар
+              </div>
+              <div class="col-span-2 text-sm font-medium text-gray-500">
+                Цена
+              </div>
+              <div class="col-span-2 text-sm font-medium text-gray-500">
+                Количество
+              </div>
+              <div class="col-span-2 text-sm font-medium text-gray-500">
+                Сумма
+              </div>
             </div>
-            
+
             <!-- Список товаров -->
             <div v-if="cartItems.length > 0">
-              <div v-for="item in cartItems" :key="item.id" class="grid grid-cols-3 md:grid-cols-12 gap-4 py-4 border-b border-gray-100">
+              <div
+                v-for="item in cartItems"
+                :key="item.id"
+                class="grid grid-cols-3 md:grid-cols-12 gap-4 py-4 border-b border-gray-100"
+              >
                 <!-- Изображение и название -->
                 <div class="col-span-3 md:col-span-6 flex items-start">
-                  <div class="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center mr-4">
-                    <img :src="item.image" :alt="item.name" class="max-h-full">
+                  <div
+                    class="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center mr-4"
+                  >
+                    <img
+                      :src="getImageUrl(item.image)"
+                      :alt="item.name"
+                      class="max-h-full"
+                    />
                   </div>
                   <div>
-                    <RouterLink :to="`/product/${item.id}`" class="text-sm font-medium text-gray-900 hover:text-blue-600">{{ item.name }}</RouterLink>
-                    <p class="text-xs text-gray-500 mt-1">Код: {{ item.code }}</p>
-                    <button class="text-xs text-red-600 hover:text-red-800 mt-2 flex items-center" @click="removeFromCart(item.id)">
+                    <RouterLink
+                      :to="`/product/${item.id}`"
+                      class="text-sm font-medium text-gray-900 hover:text-blue-600"
+                      >{{ item.name }}</RouterLink
+                    >
+                    <p class="text-xs text-gray-500 mt-1">
+                      Код: {{ item.code }}
+                    </p>
+                    <button
+                      class="text-xs text-red-600 hover:text-red-800 mt-2 flex items-center"
+                      @click="removeFromCart(item.id)"
+                    >
                       <i class="fas fa-trash-alt mr-1"></i> Удалить
                     </button>
                   </div>
                 </div>
-                
+
                 <!-- Цена -->
                 <div class="col-span-1 md:col-span-2 flex items-center">
                   <div class="md:hidden text-xs text-gray-500 mb-1">Цена</div>
-                  <div class="font-medium">{{ formatCurrency(item.price) }}</div>
+                  <div class="font-medium">
+                    {{ formatCurrency(item.price) }}
+                  </div>
                 </div>
-                
+
                 <!-- Количество -->
                 <div class="col-span-1 md:col-span-2 flex items-center">
                   <div class="md:hidden text-xs text-gray-500 mb-1">Кол-во</div>
-                  <div class="flex items-center border border-gray-300 rounded-md">
-                    <button 
+                  <div
+                    class="flex items-center border border-gray-300 rounded-md"
+                  >
+                    <button
                       class="px-2 py-1 text-gray-600 hover:bg-gray-100"
                       @click="updateQuantity(item.id, item.quantity - 1)"
                       :disabled="item.quantity <= 1"
                     >
                       <i class="fas fa-minus text-xs"></i>
                     </button>
-                    <input 
-                      type="number" 
-                      min="1" 
-                      class="w-10 text-center border-x border-gray-300 py-1 text-sm" 
+                    <input
+                      type="number"
+                      min="1"
+                      class="w-10 text-center border-x border-gray-300 py-1 text-sm"
                       v-model.number="item.quantity"
                       @change="updateQuantity(item.id, item.quantity)"
-                    >
-                    <button 
+                    />
+                    <button
                       class="px-2 py-1 text-gray-600 hover:bg-gray-100"
                       @click="updateQuantity(item.id, item.quantity + 1)"
                     >
@@ -85,31 +123,35 @@
                     </button>
                   </div>
                 </div>
-                
+
                 <!-- Сумма -->
                 <div class="col-span-1 md:col-span-2 flex items-center">
                   <div class="md:hidden text-xs text-gray-500 mb-1">Сумма</div>
-                  <div class="font-medium">{{ formatCurrency(item.price * item.quantity) }}</div>
+                  <div class="font-medium">
+                    {{ formatCurrency(item.price * item.quantity) }}
+                  </div>
                 </div>
               </div>
-              
+
               <!-- Промокод -->
-              <div class="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div
+                class="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+              >
                 <div class="flex-1 flex items-center">
-                  <input 
-                    type="text" 
-                    placeholder="Введите промокод" 
+                  <input
+                    type="text"
+                    placeholder="Введите промокод"
                     class="border border-gray-300 rounded-l-md px-4 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     v-model="promoCode"
-                  >
-                  <button 
+                  />
+                  <button
                     class="bg-blue-600 text-white px-4 py-2 rounded-r-md text-sm font-medium hover:bg-blue-700 transition-colors"
                     @click="applyPromoCode"
                   >
                     Применить
                   </button>
                 </div>
-                <button 
+                <button
                   class="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center"
                   @click="clearCart"
                 >
@@ -117,16 +159,22 @@
                 </button>
               </div>
             </div>
-            
+
             <!-- Пустая корзина -->
             <div v-else class="py-12 text-center">
-              <div class="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div
+                class="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+              >
                 <i class="fas fa-shopping-cart text-gray-400 text-xl"></i>
               </div>
-              <h3 class="text-lg font-medium text-gray-900 mb-2">Ваша корзина пуста</h3>
-              <p class="text-gray-500 mb-6">Добавьте товары из каталога, чтобы продолжить</p>
-              <RouterLink 
-                to="/catalog" 
+              <h3 class="text-lg font-medium text-gray-900 mb-2">
+                Ваша корзина пуста
+              </h3>
+              <p class="text-gray-500 mb-6">
+                Добавьте товары из каталога, чтобы продолжить
+              </p>
+              <RouterLink
+                to="/catalog"
                 class="bg-blue-600 text-white py-2 px-6 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors inline-flex items-center"
               >
                 <i class="fas fa-arrow-left mr-2"></i> Перейти в каталог
@@ -134,12 +182,14 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Боковая панель - итоги -->
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 sticky top-4">
+          <div
+            class="bg-white rounded-lg shadow-sm p-6 border border-gray-100 sticky top-4"
+          >
             <h2 class="text-lg font-bold text-gray-900 mb-4">Ваш заказ</h2>
-            
+
             <div class="space-y-3 mb-6">
               <div class="flex justify-between">
                 <span class="text-gray-600">Товары ({{ totalItems }})</span>
@@ -147,31 +197,40 @@
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Скидка</span>
-                <span class="text-red-600 font-medium">-{{ formatCurrency(discount) }}</span>
+                <span class="text-red-600 font-medium"
+                  >-{{ formatCurrency(discount) }}</span
+                >
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Доставка</span>
-                <span class="font-medium">{{ deliveryCost === 0 ? 'Бесплатно' : formatCurrency(deliveryCost) }}</span>
+                <span class="font-medium">{{
+                  deliveryCost === 0
+                    ? "Бесплатно"
+                    : formatCurrency(deliveryCost)
+                }}</span>
               </div>
             </div>
-            
+
             <div class="border-t border-gray-200 pt-4 mb-6">
               <div class="flex justify-between text-lg font-bold text-gray-900">
                 <span>Итого</span>
                 <span>{{ formatCurrency(total) }}</span>
               </div>
             </div>
-            
-            <RouterLink 
+
+            <RouterLink
               v-if="cartItems.length > 0"
-              to="/checkout" 
+              to="/checkout"
               class="w-full bg-blue-600 text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
             >
               <i class="fas fa-credit-card mr-2"></i> Оформить заказ
             </RouterLink>
-            
+
             <div class="mt-4 text-xs text-gray-500">
-              Нажимая на кнопку, вы соглашаетесь с <a href="#" class="text-blue-600 hover:underline">условиями обработки персональных данных</a>
+              Нажимая на кнопку, вы соглашаетесь с
+              <a href="#" class="text-blue-600 hover:underline"
+                >условиями обработки персональных данных</a
+              >
             </div>
           </div>
         </div>
@@ -181,47 +240,60 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { useCartStore } from '../stores/cart'
+import { ref, computed } from "vue";
+import { RouterLink } from "vue-router";
+import { useCartStore } from "../stores/cart";
+import { BASE_URL } from "../api";
 
-const cartStore = useCartStore()
-const promoCode = ref('')
+const getImageUrl = (filename) => {
+  
+
+  return filename ? `${BASE_URL}files/` : "";
+};
+
+const cartStore = useCartStore();
+const promoCode = ref("");
 
 // Форматирование валюты
 const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(amount)
-}
+  return new Intl.NumberFormat("ru-RU", {
+    style: "currency",
+    currency: "RUB",
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
 
 // Методы корзины
 const updateQuantity = (id, newQuantity) => {
-  cartStore.updateQuantity(id, newQuantity)
-}
+  cartStore.updateQuantity(id, newQuantity);
+};
 
 const removeFromCart = (id) => {
-  cartStore.removeFromCart(id)
-}
+  cartStore.removeFromCart(id);
+};
 
 const clearCart = () => {
-  cartStore.clearCart()
-  promoCode.value = ''
-}
+  cartStore.clearCart();
+  promoCode.value = "";
+};
 
 const applyPromoCode = () => {
   if (promoCode.value) {
-    const success = cartStore.applyPromoCode(promoCode.value)
-    alert(success ? 'Промокод применен!' : 'Промокод недействителен')
+    const success = cartStore.applyPromoCode(promoCode.value);
+    alert(success ? "Промокод применен!" : "Промокод недействителен");
   }
-}
+};
 
 // Вычисляемые свойства
-const subtotal = computed(() => cartStore.subtotal)
-const discount = computed(() => cartStore.discount)
-const total = computed(() => subtotal.value - discount.value + deliveryCost.value)
-const totalItems = computed(() => cartStore.totalItems)
-const cartItems = computed(() => cartStore.cartItems)
+const subtotal = computed(() => cartStore.subtotal);
+const discount = computed(() => cartStore.discount);
+const total = computed(
+  () => subtotal.value - discount.value + deliveryCost.value
+);
+const totalItems = computed(() => cartStore.totalItems);
+const cartItems = computed(() => cartStore.cartItems);
 
 const deliveryCost = computed(() => {
-  return subtotal.value - discount.value >= 50000 ? 0 : 500
-})
+  return subtotal.value - discount.value >= 50000 ? 0 : 500;
+});
 </script>

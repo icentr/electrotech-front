@@ -341,23 +341,15 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
+import axios from 'axios' // Импорт axios, если не установлен - надо добавить
 
 const router = useRouter()
 const cartStore = useCartStore()
 
-// Проверка на пустую корзину при загрузке
-onMounted(() => {
-  if (cartStore.totalItems === 0) {
-    router.push('/cart')
-  }
-})
-
-// Форма заказа
 const orderForm = ref({
   lastName: '',
   firstName: '',
@@ -376,24 +368,47 @@ const orderForm = ref({
 
 const isSubmitting = ref(false)
 
-// Форматирование валюты
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(amount)
 }
 
-// Стоимость доставки
 const deliveryCost = computed(() => {
   if (orderForm.value.deliveryType === 'pickup') return 0
   if (cartStore.subtotal - cartStore.discount >= 50000) return 0
   return orderForm.value.deliveryType === 'courier' ? 500 : 0
 })
 
-// Итоговая сумма
 const total = computed(() => {
   return cartStore.subtotal - cartStore.discount + deliveryCost.value
 })
 
-// Отправка заказа
+onMounted(async () => {
+  // Перенаправление, если корзина пуста
+  if (cartStore.totalItems === 0) {
+    router.push('/cart')
+    return
+  }
+
+  // Автозаполнение из профиля
+  try {
+    const response = await axios.get('/api/user/get-data')
+    if (response.data) {
+      const user = response.data
+      orderForm.value.lastName = user.surname || ''
+      orderForm.value.firstName = user.first_name || ''
+      orderForm.value.email = user.email || ''
+      orderForm.value.phone = user.phone_number || ''
+      // Можно добавить автозаполнение компании, если данные есть в профиле
+      orderForm.value.companyName = user.companyName || ''
+      orderForm.value.inn = user.inn || ''
+      orderForm.value.kpp = user.kpp || ''
+      orderForm.value.legalAddress = user.legalAddress || ''
+    }
+  } catch (error) {
+    console.warn('Не удалось получить данные пользователя', error)
+  }
+})
+
 const submitOrder = async () => {
   if (!orderForm.value.agreeTerms) {
     alert('Пожалуйста, согласитесь с условиями обработки данных')
@@ -406,50 +421,53 @@ const submitOrder = async () => {
   }
 
   isSubmitting.value = true
-  
+
   try {
-    // Генерация данных заказа
-    const invoiceNumber = `INV-${Date.now().toString().slice(-6)}`
-    const invoiceDate = new Date().toLocaleDateString('ru-RU')
-    
-    const orderData = {
-      id: `ORD-${Date.now().toString().slice(-6)}`,
-      date: new Date().toLocaleString('ru-RU'),
-      invoiceNumber,
-      invoiceDate,
-      customer: {
-        name: `${orderForm.value.lastName} ${orderForm.value.firstName}`,
-        company: orderForm.value.companyName,
-        email: orderForm.value.email,
-        phone: orderForm.value.phone
-      },
-      delivery: {
-        type: orderForm.value.deliveryType,
-        address: orderForm.value.deliveryAddress || 'Самовывоз'
-      },
-      payment: orderForm.value.paymentMethod,
-      items: [...cartStore.cartItems],
-      subtotal: cartStore.subtotal,
-      discount: cartStore.discount,
-      deliveryCost: deliveryCost.value,
-      total: total.value
-    }
-    
-    // Сохранение в localStorage для страницы успешного заказа
-    localStorage.setItem('lastOrder', JSON.stringify(orderData))
-    
-    // Переход на страницу подтверждения
-    router.push({
-      path: '/order-success',
-      state: { orderData }
+    // Формируем массив товаров для отправки
+    const productsPayload = cartStore.cartItems.map(item => ({
+      id: item.id,
+      quantity: item.quantity
+    }))
+
+    // Отправляем заказ на сервер
+    const response = await axios.post('/api/orders/create', {
+      products: productsPayload
     })
-    
-    // Очистка корзины
-    cartStore.clearCart()
-    
+
+    if (response.status === 200) {
+      alert('Заказ успешно создан!')
+
+      // Можно сохранить заказ локально (если нужно)
+      localStorage.setItem('lastOrder', JSON.stringify({
+        products: productsPayload,
+        total: total.value,
+        deliveryCost: deliveryCost.value,
+        paymentMethod: orderForm.value.paymentMethod,
+        deliveryType: orderForm.value.deliveryType,
+        deliveryAddress: orderForm.value.deliveryAddress,
+        customer: {
+          lastName: orderForm.value.lastName,
+          firstName: orderForm.value.firstName,
+          email: orderForm.value.email,
+          phone: orderForm.value.phone,
+          companyName: orderForm.value.companyName,
+          inn: orderForm.value.inn,
+          kpp: orderForm.value.kpp,
+          legalAddress: orderForm.value.legalAddress,
+        },
+        comments: orderForm.value.comments
+      }))
+
+      cartStore.clearCart()
+
+      // Переход на страницу успешного заказа
+      router.push('/order-success')
+    } else {
+      alert('Не удалось создать заказ. Попробуйте позже.')
+    }
   } catch (error) {
-    console.error('Ошибка при оформлении заказа:', error)
-    alert('Произошла ошибка при оформлении заказа. Пожалуйста, попробуйте еще раз.')
+    console.error('Ошибка при отправке заказа', error)
+    alert('Произошла ошибка при оформлении заказа. Попробуйте еще раз.')
   } finally {
     isSubmitting.value = false
   }
