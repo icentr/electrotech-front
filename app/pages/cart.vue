@@ -53,25 +53,7 @@ const deliveryCost = computed(() => {
 <template>
     <div class="pb-12">
         <div class="container mx-auto px-4">
-            <!-- Хлебные крошки -->
-            <div class="py-4">
-                <nav class="flex" aria-label="Breadcrumb">
-                    <ol class="inline-flex items-center space-x-1 md:space-x-2">
-                        <li class="inline-flex items-center">
-                            <RouterLink to="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
-                                <ChevronRightIcon class="size-4 me-1" />
-                                Главная
-                            </RouterLink>
-                        </li>
-                        <li aria-current="page">
-                            <div class="flex items-center">
-                                <ChevronRightIcon class="size-4 me-1" />
-                                <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Корзина</span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
+            <Breadcrumbs :page="'Корзина'" />
 
             <h1 class="text-2xl font-bold text-gray-900 mb-6">Корзина</h1>
 
@@ -98,8 +80,8 @@ const deliveryCost = computed(() => {
                                     <div>
                                         <RouterLink :to="`/product/${item.id}`" class="text-sm font-medium text-gray-900 hover:text-blue-600">{{ item.name }}</RouterLink>
                                         <p class="text-xs text-gray-500 mt-1">Код: {{ item.code }}</p>
-                                        <button class="text-xs text-red-600 hover:text-red-800 mt-2 flex items-center" @click="removeFromCart(item.id)">
-                                            <TrashIcon class="size-3 mr-1" />
+                                        <button class="text-sm text-red-600 hover:text-red-800 mt-2 flex items-center" @click="removeFromCart(item.id)">
+                                            <TrashIcon class="size-4 mr-1" />
                                             Удалить
                                         </button>
                                     </div>

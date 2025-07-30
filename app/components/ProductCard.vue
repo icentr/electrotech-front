@@ -1,8 +1,8 @@
 <template>
-    <div
+    <NuxtLink
+        :to="`/product/${product.id}`"
         class="relative group bg-white rounded-xl shadow-sm p-5 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent h-full flex flex-col">
         <!-- Слой-ссылка -->
-        <RouterLink :to="`/product/${product.id}`" class="absolute inset-0 z-0"> </RouterLink>
         <!-- Содержимое карточки -->
         <div class="relative z-10 flex flex-col h-full">
             <!-- Изображение -->
@@ -50,7 +50,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </NuxtLink>
 </template>
 
 <script setup>

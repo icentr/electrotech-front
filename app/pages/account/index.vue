@@ -97,24 +97,7 @@ const repeatOrder = (orderId) => {
 <template>
     <div class="bg-gray-50 min-h-screen pb-12">
         <!-- Хлебные крошки -->
-        <div class="container mx-auto px-4 py-6">
-            <nav class="flex" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                    <li class="inline-flex items-center">
-                        <RouterLink to="/" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600">
-                            <i class="fas fa-home mr-2"></i>
-                            Главная
-                        </RouterLink>
-                    </li>
-                    <li aria-current="page">
-                        <div class="flex items-center">
-                            <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
-                            <span class="ml-1 text-sm font-medium text-gray-700 md:ml-2">Личный кабинет</span>
-                        </div>
-                    </li>
-                </ol>
-            </nav>
-        </div>
+        <Breadcrumbs :page="'Личный кабинет'" />
 
         <!-- Основной контент -->
         <div class="container mx-auto px-4">
