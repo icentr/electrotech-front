@@ -11,7 +11,7 @@ const handleLogout = () => {
 </script>
 
 <template>
-    <div class="bg-gray-50 min-h-screen">
+    <div class="bg-gray-50 min-h-svh flex flex-col">
         <!-- Хедер -->
         <header class="bg-white shadow-md sticky top-0 z-50">
             <div class="container mx-auto px-4">
@@ -93,7 +93,7 @@ const handleLogout = () => {
         </header>
 
         <!-- Контент -->
-        <main class="container mx-auto px-4 py-6">
+        <main class="container mx-auto px-4 py-6 grow">
             <NuxtPage />
         </main>
 

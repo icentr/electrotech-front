@@ -18,11 +18,8 @@
                     {{ product.name }}
                 </NuxtLink>
 
-                <div class="flex items-center mb-3">
-                    <div class="flex text-yellow-400 mr-2">
-                        <i class="fas fa-star" v-for="i in 5" :key="i" :class="{ 'text-gray-300': i > product.rating }"></i>
-                    </div>
-                    <span class="text-gray-500 text-sm">({{ product.reviews }})</span>
+                <div class="flex items-center mb-4">
+                    <span class="text-gray-700 font-semibold text-sm">{{ product.manufacturer }}</span>
                 </div>
 
                 <div class="text-gray-600 text-sm mb-4 line-clamp-2">
@@ -37,12 +34,13 @@
                         <div class="text-gray-900 font-bold text-xl">{{ product.price }} ₽</div>
                         <div v-if="product.oldPrice" class="text-gray-400 text-sm line-through">{{ product.oldPrice }} ₽</div>
                     </div>
-                    <div v-if="product.inStock" class="text-green-600 text-sm font-medium"><i class="fas fa-check-circle mr-1"></i> В наличии</div>
+                    <div v-if="product.count > 0" class="text-green-600 text-sm font-medium"><i class="fas fa-check-circle mr-1"></i>В наличии ({{ product.count }})</div>
                     <div v-else class="text-gray-500 text-sm"><i class="fas fa-clock mr-1"></i> Под заказ</div>
                 </div>
 
                 <button
-                    class="relative z-20 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+                    :disabled="product.count == 0"
+                    class="relative z-20 w-full bg-blue-600 disabled:bg-blue-200 disabled:text-blue-50 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
                     @click.stop="$emit('add-to-cart', product)">
                     <i class="fas fa-shopping-cart mr-2"></i>
                     В корзину
