@@ -22,7 +22,7 @@ const handleLogout = () => {
                             <i class="fas fa-bolt text-white text-xl"></i>
                         </div>
                         <div>
-                            <RouterLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600"> ЭЛЕКТРО<span class="text-blue-600">ТЕХ</span> </RouterLink>
+                            <NuxtLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600"> ЭЛЕКТРО<span class="text-blue-600">ТЕХ</span> </NuxtLink>
                             <p class="text-xs text-gray-500">Поставки электротехнического оборудования</p>
                         </div>
                     </div>
@@ -31,10 +31,10 @@ const handleLogout = () => {
                     <nav class="hidden lg:block">
                         <ul class="flex space-x-8">
                             <li>
-                                <RouterLink to="/" class="nav-link"> Главная</RouterLink>
+                                <NuxtLink to="/" class="nav-link"> Главная</NuxtLink>
                             </li>
-                            <li><RouterLink to="/catalog" class="nav-link">Каталог</RouterLink></li>
-                            <li><RouterLink to="/company" class="nav-link">О компании</RouterLink></li>
+                            <li><NuxtLink to="/catalog" class="nav-link">Каталог</NuxtLink></li>
+                            <li><NuxtLink to="/company" class="nav-link">О компании</NuxtLink></li>
                         </ul>
                     </nav>
 
@@ -49,23 +49,30 @@ const handleLogout = () => {
                                 </button>
                             </template>
                             <template v-else>
-                                <RouterLink to="/login" class="auth-button">
+                                <NuxtLink to="/login" class="auth-button">
                                     <ArrowLeftEndOnRectangleIcon class="size-6 me-2" />
                                     <span class="font-medium">Вход</span>
-                                </RouterLink>
+                                </NuxtLink>
                             </template>
 
-                            <RouterLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
+                            <NuxtLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
                                 <UserIcon class="size-5 me-1" />
                                 <span class="ml-2">Аккаунт</span>
-                            </RouterLink>
+                            </NuxtLink>
                         </div>
 
-                        <RouterLink to="/cart" class="icon-button relative">
+                        <NuxtLink to="/cart" class="icon-button relative">
                             <ShoppingCartIcon class="size-5 me-1" />
-                            <span v-if="cart.totalItems != 0" class="cart-badge">{{ cart.totalItems }}</span>
-                            <span class="ml-2">Корзина</span>
-                        </RouterLink>
+                            Корзина
+
+                            <Transition enter-to-class="scale-250 -y-offset-5" leave-to-class="scale-0">
+                                <span
+                                    v-if="cart.totalItems != 0"
+                                    class="duration-200 absolute -top-2 -right-2 transition-all bg-[#2563eb] text-white text-sm font-semibold rounded-full w-6 h-6 flex justify-center items-center"
+                                    >{{ cart.totalItems }}</span
+                                >
+                            </Transition>
+                        </NuxtLink>
 
                         <button class="lg:hidden text-gray-600 hover:text-blue-600">
                             <i class="fas fa-bars text-xl"></i>
@@ -141,20 +148,5 @@ const handleLogout = () => {
 .icon-button:hover {
     color: #2563eb;
     background-color: #e5e7eb;
-}
-.cart-badge {
-    position: absolute;
-    top: -0.5rem;
-    right: -0.5rem;
-    background-color: #2563eb;
-    color: white;
-    border-radius: 9999px;
-    width: 1.25rem;
-    height: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 700;
 }
 </style>
