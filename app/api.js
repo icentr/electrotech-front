@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 
 const BASE_URL = "http://localhost:1488/api/";
 
@@ -13,6 +14,7 @@ const api = axios.create({
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
+        const auth = useAuthStore();
         const originalRequest = error.config;
 
         // Пропускаем, если уже пробовали рефреш
@@ -20,25 +22,20 @@ api.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                const auth = useAuthStore();
-
-                const refreshToken = localStorage.getItem("refresh_token");
-                if (!refreshToken) throw new Error("No refresh token");
+                if (!auth.refreshToken) throw new Error("No refresh token");
 
                 const { data } = await axios.post("/auth/refresh", {
-                    refresh_token: refreshToken,
+                    refresh_token: auth.refreshToken,
                 });
 
                 // Обновляем токен в хранилище и в localStorage
                 auth.token = data.token;
-                localStorage.setItem("token", data.token);
 
                 // Повторяем оригинальный запрос с новым токеном
                 originalRequest.headers["Authorization"] = data.token;
                 return api(originalRequest);
             } catch (refreshErr) {
                 // Если refresh не сработал — выкидываем пользователя
-                const auth = useAuthStore();
                 auth.logout();
                 window.location.href = "/login";
                 return Promise.reject(refreshErr);
@@ -51,9 +48,9 @@ api.interceptors.response.use(
 
 // Перехватчик запроса — подставляет токен
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        config.headers["Authorization"] = token;
+    const auth = useAuthStore();
+    if (auth.token) {
+        config.headers["Authorization"] = auth.token;
     }
     return config;
 });

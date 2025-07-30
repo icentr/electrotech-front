@@ -1,4 +1,55 @@
-<!-- src/views/CartPage.vue -->
+<script setup>
+import { PlusIcon, MinusIcon, TrashIcon, ChevronRightIcon } from "@heroicons/vue/16/solid";
+import { ref, computed } from "vue";
+import { RouterLink } from "vue-router";
+import { getImageUrl } from "../api";
+
+const cartStore = useCartStore();
+
+const promoCode = ref("");
+
+// Форматирование валюты
+const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+        maximumFractionDigits: 0,
+    }).format(amount);
+};
+
+// Методы корзины
+const updateQuantity = (id, newQuantity) => {
+    cartStore.updateQuantity(id, newQuantity);
+};
+
+const removeFromCart = (id) => {
+    cartStore.removeFromCart(id);
+};
+
+const clearCart = () => {
+    cartStore.clearCart();
+    promoCode.value = "";
+};
+
+const applyPromoCode = () => {
+    if (promoCode.value) {
+        const success = cartStore.applyPromoCode(promoCode.value);
+        alert(success ? "Промокод применен!" : "Промокод недействителен");
+    }
+};
+
+// Вычисляемые свойства
+const subtotal = computed(() => cartStore.subtotal);
+const discount = computed(() => cartStore.discount);
+const total = computed(() => subtotal.value - discount.value + deliveryCost.value);
+const totalItems = computed(() => cartStore.totalItems);
+const cartItems = computed(() => cartStore.cartItems);
+
+const deliveryCost = computed(() => {
+    return subtotal.value - discount.value >= 50000 ? 0 : 500;
+});
+</script>
+
 <template>
     <div class="pb-12">
         <div class="container mx-auto px-4">
@@ -8,13 +59,13 @@
                     <ol class="inline-flex items-center space-x-1 md:space-x-2">
                         <li class="inline-flex items-center">
                             <RouterLink to="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
-                                <i class="fas fa-home mr-2"></i>
+                                <ChevronRightIcon class="size-4 me-1" />
                                 Главная
                             </RouterLink>
                         </li>
                         <li aria-current="page">
                             <div class="flex items-center">
-                                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                                <ChevronRightIcon class="size-4 me-1" />
                                 <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Корзина</span>
                             </div>
                         </li>
@@ -48,7 +99,8 @@
                                         <RouterLink :to="`/product/${item.id}`" class="text-sm font-medium text-gray-900 hover:text-blue-600">{{ item.name }}</RouterLink>
                                         <p class="text-xs text-gray-500 mt-1">Код: {{ item.code }}</p>
                                         <button class="text-xs text-red-600 hover:text-red-800 mt-2 flex items-center" @click="removeFromCart(item.id)">
-                                            <i class="fas fa-trash-alt mr-1"></i> Удалить
+                                            <TrashIcon class="size-3 mr-1" />
+                                            Удалить
                                         </button>
                                     </div>
                                 </div>
@@ -66,16 +118,16 @@
                                     <div class="md:hidden text-xs text-gray-500 mb-1">Кол-во</div>
                                     <div class="flex items-center border border-gray-300 rounded-md">
                                         <button class="px-2 py-1 text-gray-600 hover:bg-gray-100" @click="updateQuantity(item.id, item.quantity - 1)" :disabled="item.quantity <= 1">
-                                            <i class="fas fa-minus text-xs"></i>
+                                            <MinusIcon class="size-4" />
                                         </button>
                                         <input
                                             type="number"
                                             min="1"
-                                            class="w-10 text-center border-x border-gray-300 py-1 text-sm"
+                                            class="w-10 text-start ps-3 border-x border-gray-300 py-1 text-sm"
                                             v-model.number="item.quantity"
                                             @change="updateQuantity(item.id, item.quantity)" />
                                         <button class="px-2 py-1 text-gray-600 hover:bg-gray-100" @click="updateQuantity(item.id, item.quantity + 1)">
-                                            <i class="fas fa-plus text-xs"></i>
+                                            <PlusIcon class="size-4" />
                                         </button>
                                     </div>
                                 </div>
@@ -91,14 +143,14 @@
 
                             <!-- Промокод -->
                             <div class="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                                <div class="flex-1 flex items-center">
+                                <form class="flex-1 flex items-center" @submit.prevent="applyPromoCode">
                                     <input
                                         type="text"
                                         placeholder="Введите промокод"
                                         class="border border-gray-300 rounded-l-md px-4 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                         v-model="promoCode" />
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md text-sm font-medium hover:bg-blue-700 transition-colors" @click="applyPromoCode">Применить</button>
-                                </div>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md text-sm font-medium hover:bg-blue-700 transition-colors">Применить</button>
+                                </form>
                                 <button class="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center" @click="clearCart">
                                     <i class="fas fa-trash-alt mr-2"></i> Очистить корзину
                                 </button>
@@ -163,54 +215,3 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref, computed } from "vue";
-import { RouterLink } from "vue-router";
-import { getImageUrl } from "../api";
-
-const cartStore = useCartStore();
-
-const promoCode = ref("");
-
-// Форматирование валюты
-const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-        maximumFractionDigits: 0,
-    }).format(amount);
-};
-
-// Методы корзины
-const updateQuantity = (id, newQuantity) => {
-    cartStore.updateQuantity(id, newQuantity);
-};
-
-const removeFromCart = (id) => {
-    cartStore.removeFromCart(id);
-};
-
-const clearCart = () => {
-    cartStore.clearCart();
-    promoCode.value = "";
-};
-
-const applyPromoCode = () => {
-    if (promoCode.value) {
-        const success = cartStore.applyPromoCode(promoCode.value);
-        alert(success ? "Промокод применен!" : "Промокод недействителен");
-    }
-};
-
-// Вычисляемые свойства
-const subtotal = computed(() => cartStore.subtotal);
-const discount = computed(() => cartStore.discount);
-const total = computed(() => subtotal.value - discount.value + deliveryCost.value);
-const totalItems = computed(() => cartStore.totalItems);
-const cartItems = computed(() => cartStore.cartItems);
-
-const deliveryCost = computed(() => {
-    return subtotal.value - discount.value >= 50000 ? 0 : 500;
-});
-</script>

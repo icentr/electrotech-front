@@ -1,3 +1,15 @@
+<script setup>
+import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
+const router = useRouter();
+const auth = useAuthStore();
+const cart = useCartStore();
+
+const handleLogout = () => {
+    auth.logout();
+    router.push("/login");
+};
+</script>
+
 <template>
     <div class="bg-gray-50 min-h-screen">
         <!-- Хедер -->
@@ -18,7 +30,9 @@
                     <!-- Навигация -->
                     <nav class="hidden lg:block">
                         <ul class="flex space-x-8">
-                            <li><RouterLink to="/" class="nav-link">Главная</RouterLink></li>
+                            <li>
+                                <RouterLink to="/" class="nav-link"> Главная</RouterLink>
+                            </li>
                             <li><RouterLink to="/catalog" class="nav-link">Каталог</RouterLink></li>
                             <li><RouterLink to="/company" class="nav-link">О компании</RouterLink></li>
                         </ul>
@@ -30,25 +44,26 @@
                             <template v-if="auth.isAuthenticated">
                                 <button class="auth-button" @click="handleLogout">
                                     <i class="fas fa-sign-out-alt mr-2"></i>
+                                    <ArrowLeftStartOnRectangleIcon class="size-6 me-2" />
                                     <span class="font-medium">Выход</span>
                                 </button>
                             </template>
                             <template v-else>
                                 <RouterLink to="/login" class="auth-button">
-                                    <i class="far fa-user mr-2"></i>
+                                    <ArrowLeftEndOnRectangleIcon class="size-6 me-2" />
                                     <span class="font-medium">Вход</span>
                                 </RouterLink>
                             </template>
 
-                            <RouterLink to="/account" class="icon-button">
-                                <i class="fas fa-user-circle"></i>
+                            <RouterLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
+                                <UserIcon class="size-5 me-1" />
                                 <span class="ml-2">Аккаунт</span>
                             </RouterLink>
                         </div>
 
                         <RouterLink to="/cart" class="icon-button relative">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-badge">3</span>
+                            <ShoppingCartIcon class="size-5 me-1" />
+                            <span v-if="cart.totalItems != 0" class="cart-badge">{{ cart.totalItems }}</span>
                             <span class="ml-2">Корзина</span>
                         </RouterLink>
 
@@ -83,16 +98,6 @@
         </footer>
     </div>
 </template>
-
-<script setup>
-const router = useRouter();
-const auth = useAuthStore();
-
-const handleLogout = () => {
-    auth.logout();
-    router.push("/login");
-};
-</script>
 
 <style>
 .nav-link {

@@ -58,11 +58,11 @@ export const useCartStore = defineStore("cart", {
         },
 
         applyPromoCode(code) {
-            if (code.toUpperCase() === "SALE10") {
-                this.discountPercent = 10;
-                this.promoCode = code;
-                return true;
-            }
+            // if (code.toUpperCase() === "SALE10") {
+            //     this.discountPercent = 10;
+            //     this.promoCode = code;
+            //     return true;
+            // }
             return false;
         },
 

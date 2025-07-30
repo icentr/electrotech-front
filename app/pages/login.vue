@@ -90,7 +90,6 @@ import { useRouter } from "vue-router";
 import api from "~/api";
 
 const router = useRouter();
-const auth = useAuthStore();
 
 const form = ref({
     email: "",
@@ -130,11 +129,12 @@ const handleLogin = async () => {
 
         const { token, refresh_token } = response.data;
 
-        auth.login(token);
-        localStorage.setItem("refresh_token", refresh_token);
+        const authStore = useAuthStore();
+        authStore.login(token, refresh_token);
 
         router.push("/account");
     } catch (error) {
+        console.error(error);
         errorMessage.value = error.response?.data?.message || "Неверный email или пароль";
     }
 };
