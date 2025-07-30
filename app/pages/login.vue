@@ -87,6 +87,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import api from "~/api";
 
 const router = useRouter();
 const auth = useAuthStore();

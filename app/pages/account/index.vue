@@ -223,6 +223,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import api from "@/api";
 
 // Данные пользователя
 const user = ref({
