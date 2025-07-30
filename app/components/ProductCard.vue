@@ -1,6 +1,5 @@
 <template>
-    <NuxtLink
-        :to="`/product/${product.id}`"
+    <div
         class="relative group bg-white rounded-xl shadow-sm p-5 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent h-full flex flex-col">
         <!-- Слой-ссылка -->
         <!-- Содержимое карточки -->
@@ -15,9 +14,9 @@
 
             <!-- Информация -->
             <div class="flex-grow">
-                <div class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 block mb-2">
+                <NuxtLink :to="`/product/${product.id}`" class="text-lg font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-2 block mb-2">
                     {{ product.name }}
-                </div>
+                </NuxtLink>
 
                 <div class="flex items-center mb-3">
                     <div class="flex text-yellow-400 mr-2">
@@ -50,7 +49,7 @@
                 </button>
             </div>
         </div>
-    </NuxtLink>
+    </div>
 </template>
 
 <script setup>
