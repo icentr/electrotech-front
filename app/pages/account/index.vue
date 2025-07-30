@@ -1,3 +1,98 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import api from "@/api";
+import { CheckIcon, XMarkIcon, ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
+
+// Данные пользователя
+const user = ref({
+    name: "",
+    email: "",
+    phone: "",
+});
+
+const auth = useAuthStore();
+
+onMounted(async () => {
+    try {
+        const { data } = await api.post("/user/get-data");
+
+        user.value.name = [data.surname, data.first_name, data.last_name].filter(Boolean).join(" ");
+        user.value.email = data.email;
+        user.value.phone = data.phone_number;
+    } catch (error) {
+        console.error("Ошибка при получении данных пользователя:", error);
+    }
+
+    try {
+        const { data } = await api.post("/user/get-company-data");
+
+        company.value.name = data.companyName;
+        company.value.inn = data.companyINN;
+        company.value.address = data.companyAddress;
+        company.value.position = data.positionInCompany;
+
+        company.value.allRequiredFields = data.allRequiredFields;
+    } catch (error) {
+        console.error("Ошибка при получении данных компании: " + error);
+    }
+});
+
+// Данные компании
+const company = ref({
+    name: "",
+    inn: "",
+    address: "",
+    position: "",
+    allRequiredFields: false,
+});
+
+// История заказов
+const orders = ref([
+    { id: 10245, date: "2023-05-15", amount: 87450, status: "Завершен" },
+    { id: 10232, date: "2023-04-28", amount: 124300, status: "Завершен" },
+    { id: 10218, date: "2023-04-10", amount: 56320, status: "Завершен" },
+    { id: 10195, date: "2023-03-22", amount: 187600, status: "Завершен" },
+    { id: 10172, date: "2023-03-05", amount: 43200, status: "Завершен" },
+]);
+
+// Форматирование даты
+const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("ru-RU", options);
+};
+
+// Форматирование валюты
+const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+    }).format(amount);
+};
+
+// Классы для статусов заказов
+const getStatusClass = (status) => {
+    switch (status) {
+        case "Новый":
+            return "bg-blue-100 text-blue-800";
+        case "В обработке":
+            return "bg-yellow-100 text-yellow-800";
+        case "Доставка":
+            return "bg-purple-100 text-purple-800";
+        case "Завершен":
+            return "bg-green-100 text-green-800";
+        case "Отменен":
+            return "bg-red-100 text-red-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+};
+
+// Повторить заказ
+const repeatOrder = (orderId) => {
+    console.log(`Повтор заказа #${orderId}`);
+    // Здесь будет логика повторения заказа
+};
+</script>
 <!-- src/views/Account.vue -->
 <template>
     <div class="bg-gray-50 min-h-screen pb-12">
@@ -70,37 +165,62 @@
                     <!-- Карточка компании -->
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex items-center mb-6">
-                            <div class="bg-blue-100 rounded-lg w-10 h-10 flex items-center justify-center mr-4 text-blue-600">
+                            <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mr-4 text-blue-600">
                                 <i class="fas fa-building"></i>
                             </div>
-                            <h2 class="text-xl font-bold text-gray-900">Информация о компании</h2>
+                            <div>
+                                <h2 class="text-xl font-bold text-gray-900">Информация о компании</h2>
+                                <p class="ps-0 p-0 text-red-400 font-normal text-sm flex gap-1" v-if="!company.allRequiredFields">
+                                    <ExclamationTriangleIcon class="size-5 p-0" />
+                                    Данные не заполнены
+                                </p>
+                            </div>
                         </div>
 
                         <div class="space-y-4">
                             <div>
                                 <p class="text-sm text-gray-500">Название компании</p>
-                                <p class="font-medium">{{ company.name }}</p>
+                                <p class="font-medium">
+                                    <span v-if="company.name">
+                                        {{ company.name }}
+                                    </span>
+                                    <span v-else> -- </span>
+                                </p>
                             </div>
 
                             <div>
                                 <p class="text-sm text-gray-500">ИНН</p>
-                                <p class="font-medium">{{ company.inn }}</p>
+                                <p class="font-medium">
+                                    <span v-if="company.inn">
+                                        {{ company.inn }}
+                                    </span>
+                                    <span v-else> -- </span>
+                                </p>
                             </div>
 
                             <div>
-                                <p class="text-sm text-gray-500">КПП</p>
-                                <p class="font-medium">{{ company.kpp }}</p>
+                                <p class="text-sm text-gray-500">Должность</p>
+                                <p class="font-medium">
+                                    <span v-if="company.position"> {{ company.position }}</span>
+                                    <span v-else> -- </span>
+                                </p>
                             </div>
 
                             <div>
                                 <p class="text-sm text-gray-500">Юридический адрес</p>
-                                <p class="font-medium">{{ company.legalAddress }}</p>
+                                <p class="font-medium">
+                                    <span v-if="company.address">{{ company.address }}</span>
+                                    <span v-else> -- </span>
+                                </p>
                             </div>
 
-                            <div>
-                                <p class="text-sm text-gray-500">Фактический адрес</p>
-                                <p class="font-medium">{{ company.actualAddress }}</p>
-                            </div>
+                            <!-- <div>
+                                <p class="text-sm text-gray-500">Все необходимые данные заполнены</p>
+                                <p class="font-medium">
+                                    <CheckIcon v-if="company.allRequiredFields" class="size-6 text-green-300" />
+                                    <XMarkIcon v-else class="size-6 text-red-400" />
+                                </p>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -220,88 +340,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { ref, onMounted } from "vue";
-import api from "@/api";
-
-// Данные пользователя
-const user = ref({
-    name: "",
-    email: "",
-    phone: "",
-});
-
-const auth = useAuthStore();
-
-onMounted(async () => {
-    try {
-        const { data } = await api.post("/user/get-data");
-
-        user.value.name = [data.surname, data.first_name, data.last_name].filter(Boolean).join(" ");
-        user.value.email = data.email;
-        user.value.phone = data.phone_number;
-    } catch (error) {
-        console.error("Ошибка при получении данных пользователя:", error);
-    }
-});
-
-// Данные компании
-const company = ref({
-    name: 'ООО "ПромТехСнаб"',
-    inn: "1234567890",
-    kpp: "123456001",
-    legalAddress: "г. Москва, ул. Ленина, д. 1, офис 101",
-    actualAddress: "г. Москва, ул. Промышленная, д. 15, склад 3",
-});
-
-// История заказов
-const orders = ref([
-    { id: 10245, date: "2023-05-15", amount: 87450, status: "Завершен" },
-    { id: 10232, date: "2023-04-28", amount: 124300, status: "Завершен" },
-    { id: 10218, date: "2023-04-10", amount: 56320, status: "Завершен" },
-    { id: 10195, date: "2023-03-22", amount: 187600, status: "Завершен" },
-    { id: 10172, date: "2023-03-05", amount: 43200, status: "Завершен" },
-]);
-
-// Форматирование даты
-const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("ru-RU", options);
-};
-
-// Форматирование валюты
-const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-    }).format(amount);
-};
-
-// Классы для статусов заказов
-const getStatusClass = (status) => {
-    switch (status) {
-        case "Новый":
-            return "bg-blue-100 text-blue-800";
-        case "В обработке":
-            return "bg-yellow-100 text-yellow-800";
-        case "Доставка":
-            return "bg-purple-100 text-purple-800";
-        case "Завершен":
-            return "bg-green-100 text-green-800";
-        case "Отменен":
-            return "bg-red-100 text-red-800";
-        default:
-            return "bg-gray-100 text-gray-800";
-    }
-};
-
-// Повторить заказ
-const repeatOrder = (orderId) => {
-    console.log(`Повтор заказа #${orderId}`);
-    // Здесь будет логика повторения заказа
-};
-</script>
 
 <style scoped>
 /* Дополнительные стили, если нужно */
