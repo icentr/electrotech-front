@@ -46,7 +46,7 @@
                         <div class="bg-blue-50 text-blue-800 px-4 py-2 rounded-full font-medium">Техническая поддержка</div>
                     </div>
                 </div>
-                <div class="relative">
+                <!-- <div class="relative">
                     <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
                         <img src="https://icentr.pro/images/about-1.jpg" alt="О компании ICENTR.PRO" class="w-full h-auto">
                     </div>
@@ -54,7 +54,7 @@
                         <div class="text-blue-600 text-4xl font-bold">10+</div>
                         <div class="text-gray-700 font-medium">лет на рынке</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>

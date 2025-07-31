@@ -78,6 +78,16 @@
                     required
                   >
                 </div>
+                <div>
+                  <label for="positionInCompany" class="block text-sm font-medium text-gray-700 mb-1">Должность в компании *</label>
+                  <input 
+                    type="text" 
+                    id="positionInCompany" 
+                    v-model="orderForm.positionInCompany"
+                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  >
+                </div>
               </div>
               
               <h2 class="text-lg font-bold text-gray-900 mb-6">Данные компании</h2>
@@ -101,15 +111,6 @@
                     v-model="orderForm.inn"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
-                  >
-                </div>
-                <div>
-                  <label for="kpp" class="block text-sm font-medium text-gray-700 mb-1">КПП</label>
-                  <input 
-                    type="text" 
-                    id="kpp" 
-                    v-model="orderForm.kpp"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   >
                 </div>
                 <div>
@@ -345,20 +346,18 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cart'
-import axios from 'axios' // Импорт axios, если не установлен - надо добавить
+import api from '@/api'
 
 const router = useRouter()
 const cartStore = useCartStore()
 
 const orderForm = ref({
-  lastName: '',
-  firstName: '',
   email: '',
-  phone: '',
+  phone_number: '',
+  positionInCompany: '',
   companyName: '',
-  inn: '',
-  kpp: '',
-  legalAddress: '',
+  companyINN: '',
+  companyAddress: '',
   deliveryType: 'pickup',
   deliveryAddress: '',
   paymentMethod: 'invoice',
@@ -383,29 +382,29 @@ const total = computed(() => {
 })
 
 onMounted(async () => {
-  // Перенаправление, если корзина пуста
   if (cartStore.totalItems === 0) {
     router.push('/cart')
     return
   }
 
-  // Автозаполнение из профиля
   try {
-    const response = await axios.get('/api/user/get-data')
-    if (response.data) {
-      const user = response.data
-      orderForm.value.lastName = user.surname || ''
-      orderForm.value.firstName = user.first_name || ''
-      orderForm.value.email = user.email || ''
-      orderForm.value.phone = user.phone_number || ''
-      // Можно добавить автозаполнение компании, если данные есть в профиле
-      orderForm.value.companyName = user.companyName || ''
-      orderForm.value.inn = user.inn || ''
-      orderForm.value.kpp = user.kpp || ''
-      orderForm.value.legalAddress = user.legalAddress || ''
+    // Получение email и телефона
+    const userResponse = await api.post('/user/get-data')
+    if (userResponse.data) {
+      orderForm.value.email = userResponse.data.email || ''
+      orderForm.value.phone_number = userResponse.data.phone_number || ''
+    }
+
+    // Получение данных компании
+    const companyResponse = await api.post('/user/get-company-data')
+    if (companyResponse.data) {
+      orderForm.value.positionInCompany = companyResponse.data.positionInCompany || ''
+      orderForm.value.companyName = companyResponse.data.companyName || ''
+      orderForm.value.companyINN = companyResponse.data.companyINN || ''
+      orderForm.value.companyAddress = companyResponse.data.companyAddress || ''
     }
   } catch (error) {
-    console.warn('Не удалось получить данные пользователя', error)
+    console.warn('Ошибка при автозаполнении данных', error)
   }
 })
 
@@ -423,50 +422,39 @@ const submitOrder = async () => {
   isSubmitting.value = true
 
   try {
-    // Формируем массив товаров для отправки
     const productsPayload = cartStore.cartItems.map(item => ({
       id: item.id,
       quantity: item.quantity
     }))
 
-    // Отправляем заказ на сервер
-    const response = await axios.post('/api/orders/create', {
-      products: productsPayload
-    })
-
-    if (response.status === 200) {
-      alert('Заказ успешно создан!')
-
-      // Можно сохранить заказ локально (если нужно)
-      localStorage.setItem('lastOrder', JSON.stringify({
-        products: productsPayload,
-        total: total.value,
-        deliveryCost: deliveryCost.value,
-        paymentMethod: orderForm.value.paymentMethod,
-        deliveryType: orderForm.value.deliveryType,
-        deliveryAddress: orderForm.value.deliveryAddress,
-        customer: {
-          lastName: orderForm.value.lastName,
-          firstName: orderForm.value.firstName,
-          email: orderForm.value.email,
-          phone: orderForm.value.phone,
-          companyName: orderForm.value.companyName,
-          inn: orderForm.value.inn,
-          kpp: orderForm.value.kpp,
-          legalAddress: orderForm.value.legalAddress,
-        },
-        comments: orderForm.value.comments
-      }))
-
-      cartStore.clearCart()
-
-      // Переход на страницу успешного заказа
-      router.push('/order-success')
-    } else {
-      alert('Не удалось создать заказ. Попробуйте позже.')
+    const orderData = {
+      products: productsPayload,
+      customer: {
+        email: orderForm.value.email,
+        phone_number: orderForm.value.phone_number,
+        position_in_company: orderForm.value.positionInCompany
+      },
+      company: {
+        company_name: orderForm.value.companyName,
+        company_inn: orderForm.value.companyINN,
+        company_address: orderForm.value.companyAddress
+      },
+      delivery: {
+        type: orderForm.value.deliveryType,
+        address: orderForm.value.deliveryAddress
+      },
+      payment_method: orderForm.value.paymentMethod,
+      comments: orderForm.value.comments
     }
+
+    await api.post('/api/order/create', orderData)
+
+    alert('Спасибо! Ваш заказ успешно оформлен.')
+    cartStore.clearCart()
+    router.push('/')
+
   } catch (error) {
-    console.error('Ошибка при отправке заказа', error)
+    console.error('Ошибка при оформлении заказа', error)
     alert('Произошла ошибка при оформлении заказа. Попробуйте еще раз.')
   } finally {
     isSubmitting.value = false

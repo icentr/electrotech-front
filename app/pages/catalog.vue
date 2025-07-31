@@ -111,9 +111,9 @@ onMounted(fetchProducts);
                         <div class="mb-6">
                             <h3 class="text-sm font-semibold text-gray-900 mb-3">Цена, ₽</h3>
                             <div class="flex items-center space-x-3 mb-3">
-                                <input v-model.number="priceMin" type="number" placeholder="От" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
+                                <input v-model.number="priceMin" type="number" placeholder="От" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" />
                                 <span class="text-gray-400">—</span>
-                                <input v-model.number="priceMax" type="number" placeholder="До" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
+                                <input v-model.number="priceMax" type="number" placeholder="До" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" />
                             </div>
                         </div>
 
@@ -141,7 +141,7 @@ onMounted(fetchProducts);
                     <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                             <h1 class="text-2xl font-bold text-gray-900 mb-4 md:mb-0">Каталог товаров</h1>
-                            <div class="flex items-center">
+                            <!-- <div class="flex items-center">
                                 <span class="text-gray-600 text-sm mr-3">Сортировать:</span>
                                 <select v-model="sortOption" class="border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-md text-sm">
                                     <option value="popularity">По популярности</option>
@@ -149,7 +149,7 @@ onMounted(fetchProducts);
                                     <option value="cheap">По цене (сначала дешевые)</option>
                                     <option value="expensive">По цене (сначала дорогие)</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

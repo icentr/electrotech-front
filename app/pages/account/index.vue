@@ -8,6 +8,7 @@ const user = ref({
     name: "",
     email: "",
     phone: "",
+    
 });
 
 const auth = useAuthStore();
@@ -35,6 +36,22 @@ onMounted(async () => {
     } catch (error) {
         console.error("Ошибка при получении данных компании: " + error);
     }
+    try {
+        const { data } = await api.get("/orders/get");
+
+        orders.value = data.orders.map((order) => {
+            const amount = order.products.reduce((sum, p) => sum + p.quantity * p.price, 0);
+
+            return {
+                id: order.id,
+                date: order.created_at,
+                amount,
+                status: "Завершен", // Пока в API нет статуса, используем заглушку
+            };
+        });
+    } catch (error) {
+        console.error("Ошибка при загрузке заказов:", error);
+    }
 });
 
 // Данные компании
@@ -47,13 +64,7 @@ const company = ref({
 });
 
 // История заказов
-const orders = ref([
-    { id: 10245, date: "2023-05-15", amount: 87450, status: "Завершен" },
-    { id: 10232, date: "2023-04-28", amount: 124300, status: "Завершен" },
-    { id: 10218, date: "2023-04-10", amount: 56320, status: "Завершен" },
-    { id: 10195, date: "2023-03-22", amount: 187600, status: "Завершен" },
-    { id: 10172, date: "2023-03-05", amount: 43200, status: "Завершен" },
-]);
+const orders = ref([]);
 
 // Форматирование даты
 const formatDate = (dateString) => {
@@ -197,13 +208,11 @@ const repeatOrder = (orderId) => {
                                 </p>
                             </div>
 
-                            <!-- <div>
-                                <p class="text-sm text-gray-500">Все необходимые данные заполнены</p>
-                                <p class="font-medium">
-                                    <CheckIcon v-if="company.allRequiredFields" class="size-6 text-green-300" />
-                                    <XMarkIcon v-else class="size-6 text-red-400" />
-                                </p>
-                            </div> -->
+                            <RouterLink
+                                to="/account/EditCompany"
+                                class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
+                                <i class="fas fa-edit mr-2"></i> Редактировать компанию
+                            </RouterLink>
                         </div>
                     </div>
                 </div>
@@ -305,19 +314,7 @@ const repeatOrder = (orderId) => {
                         </div>
                     </div>
 
-                    <!-- Быстрые действия -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-                            <div class="flex items-center mb-4">
-                                <div class="bg-blue-100 rounded-lg w-10 h-10 flex items-center justify-center mr-4 text-blue-600">
-                                    <i class="fas fa-file-invoice"></i>
-                                </div>
-                                <h3 class="text-lg font-bold text-gray-900">Реквизиты для оплаты</h3>
-                            </div>
-                            <p class="text-gray-600 mb-4">Скачайте актуальные реквизиты компании для оплаты по безналичному расчету</p>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"><i class="fas fa-download mr-2"></i> Скачать реквизиты</button>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>

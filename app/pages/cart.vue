@@ -105,7 +105,7 @@ const deliveryCost = computed(() => {
                                         <input
                                             type="number"
                                             min="1"
-                                            class="w-10 text-start ps-3 border-x border-gray-300 py-1 text-sm"
+                                            class="w-10 text-start ps-3 border-x border-gray-300 py-1 text-sm no-spinner"
                                             v-model.number="item.quantity"
                                             @change="updateQuantity(item.id, item.quantity)" />
                                         <button class="px-2 py-1 text-gray-600 hover:bg-gray-100" @click="updateQuantity(item.id, item.quantity + 1)">
