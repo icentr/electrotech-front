@@ -429,25 +429,9 @@ const submitOrder = async () => {
 
     const orderData = {
       products: productsPayload,
-      customer: {
-        email: orderForm.value.email,
-        phone_number: orderForm.value.phone_number,
-        position_in_company: orderForm.value.positionInCompany
-      },
-      company: {
-        company_name: orderForm.value.companyName,
-        company_inn: orderForm.value.companyINN,
-        company_address: orderForm.value.companyAddress
-      },
-      delivery: {
-        type: orderForm.value.deliveryType,
-        address: orderForm.value.deliveryAddress
-      },
-      payment_method: orderForm.value.paymentMethod,
-      comments: orderForm.value.comments
     }
 
-    await api.post('/api/order/create', orderData)
+    await api.post('/orders/create', orderData)
 
     alert('Спасибо! Ваш заказ успешно оформлен.')
     cartStore.clearCart()

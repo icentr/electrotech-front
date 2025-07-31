@@ -13,76 +13,129 @@ const totalPages = ref(1);
 const sortOption = ref("popularity");
 const priceMin = ref(null);
 const priceMax = ref(null);
+const filters = ref([]);
+const categories = ref([]);
 
-const selectedFilters = ref({
-    categories: [],
-    manufacturers: [],
-    stock: [],
-});
+const selectedFilters = ref({});
 
-const categories = ref([
-    { id: 1, name: "Промышленные контроллеры", count: 24 },
-    { id: 2, name: "Автоматические выключатели", count: 18 },
-    { id: 3, name: "Блоки питания", count: 15 },
-    { id: 4, name: "Клеммы и соединители", count: 32 },
-    { id: 5, name: "Кабельная продукция", count: 27 },
-]);
+const fetchFilters = async () => {
+  try {
+    const response = await api.get("/filters");
+    const rawFilters = response.data.parameters;
 
-const filters = ref([
-    {
-        id: 1,
-        name: "Производитель",
-        key: "manufacturers",
-        options: [
-            { id: 1, name: "ABB", count: 12 },
-            { id: 2, name: "Schneider Electric", count: 8 },
-            { id: 3, name: "Siemens", count: 15 },
-            { id: 4, name: "WAGO", count: 20 },
-        ],
-    },
-    {
-        id: 2,
-        name: "Наличие",
-        key: "stock",
-        options: [
-            { id: 1, name: "В наличии", count: 45 },
-            { id: 2, name: "Под заказ", count: 12 },
-        ],
-    },
-]);
+    filters.value = [];
+    categories.value = [];
+
+    rawFilters.forEach((f, index) => {
+      const name = f.name?.trim() || `Фильтр ${index + 1}`;
+
+      if (f.type === "list" && f.values && f.values.length > 0) {
+        const key = `filter_${index}`;
+        filters.value.push({
+          id: index,
+          name,
+          key,
+          options: f.values.filter(v => v).map((v, i) => ({
+            id: i,
+            name: v,
+            count: 0, // Можете заменить, если API возвращает count
+          })),
+        });
+
+        selectedFilters.value[key] = [];
+      }
+
+      if (name.toLowerCase().includes("категори")) {
+        categories.value = f.values.map((v, i) => ({
+          id: i,
+          name: v,
+          count: 0,
+        }));
+
+        selectedFilters.value.categories = [];
+      }
+
+      if (f.type === "number") {
+        if (name.toLowerCase().includes("цен")) {
+          priceMin.value = null;
+          priceMax.value = f.maxValue;
+        } else {
+          // Можно сохранить числовые фильтры, если нужно
+        }
+      }
+    });
+  } catch (error) {
+    console.error("Ошибка при загрузке фильтров:", error);
+  }
+};
 
 const fetchProducts = async () => {
-    try {
-        // Формируем путь с номером страницы
-        const response = await api.get(`/products/all/${page.value}`);
-        // Если API поддерживает сортировку/фильтрацию, нужно будет менять код
-        // Но сейчас в API сортировка и фильтры не указаны, значит их пока не используем
+  try {
+    const filtersPayload = [];
 
-        products.value = response.data.products || [];
-        totalPages.value = response.data.totalPages || 1; // Тут, возможно, придётся вычислять вручную, если API не возвращает totalPages
-    } catch (error) {
-        console.error("Ошибка при получении каталога:", error);
+    for (const key in selectedFilters.value) {
+      if (key === "categories") {
+        if (selectedFilters.value[key].length > 0) {
+          filtersPayload.push({
+            parameter: "category",
+            type: "list",
+            values: selectedFilters.value[key],
+          });
+        }
+      } else {
+        if (Array.isArray(selectedFilters.value[key]) && selectedFilters.value[key].length > 0) {
+          filtersPayload.push({
+            parameter: key,
+            type: "list",
+            values: selectedFilters.value[key],
+          });
+        }
+      }
     }
+
+    if (priceMin.value != null || priceMax.value != null) {
+      filtersPayload.push({
+        parameter: "price",
+        type: "number",
+        min: priceMin.value ?? undefined,
+        max: priceMax.value ?? undefined,
+      });
+    }
+
+    const response = await api.post("/products/filter", {
+      page: page.value - 1,
+      filters: filtersPayload,
+    });
+
+    products.value = response.data.products || [];
+    totalPages.value = response.data.totalPages || 1;
+  } catch (error) {
+    console.error("Ошибка при фильтрации товаров:", error);
+  }
 };
 
 const applyFilters = () => {
-    page.value = 1;
-    fetchProducts();
+  page.value = 1;
+  fetchProducts();
 };
 
 const goToPage = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages.value) {
-        page.value = newPage;
-        fetchProducts();
-    }
+  if (newPage >= 1 && newPage <= totalPages.value) {
+    page.value = newPage;
+    fetchProducts();
+  }
 };
 
 const addToCart = (product) => {
-    cart.addToCart(product);
+  cart.addToCart(product);
 };
 
-onMounted(fetchProducts);
+onMounted(async () => {
+  await fetchFilters();
+  await fetchProducts();
+});
 </script>
+
 <template>
     <div class="pb-12">
         <div class="container mx-auto px-4">
@@ -141,15 +194,7 @@ onMounted(fetchProducts);
                     <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                             <h1 class="text-2xl font-bold text-gray-900 mb-4 md:mb-0">Каталог товаров</h1>
-                            <!-- <div class="flex items-center">
-                                <span class="text-gray-600 text-sm mr-3">Сортировать:</span>
-                                <select v-model="sortOption" class="border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-md text-sm">
-                                    <option value="popularity">По популярности</option>
-                                    <option value="rating">По рейтингу</option>
-                                    <option value="cheap">По цене (сначала дешевые)</option>
-                                    <option value="expensive">По цене (сначала дорогие)</option>
-                                </select>
-                            </div> -->
+                           
                         </div>
                     </div>
 
