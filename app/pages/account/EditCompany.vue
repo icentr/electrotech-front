@@ -81,10 +81,10 @@ const submitForm = async () => {
 
   try {
     await api.post('/user/update-company-data', {
-      companyName: form.value.companyName,
-      companyAddress: form.value.companyAddress,
-      positionInCompany: form.value.positionInCompany,
-      companyINN: form.value.companyINN,
+      company_name: form.value.companyName,
+      company_address: form.value.companyAddress,
+      position_in_company: form.value.positionInCompany,
+      company_inn: form.value.companyINN,
     })
 
     successMessage.value = 'Данные успешно обновлены'

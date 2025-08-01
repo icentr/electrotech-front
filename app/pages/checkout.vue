@@ -73,17 +73,17 @@
                   <input 
                     type="tel" 
                     id="phone" 
-                    v-model="orderForm.phone"
+                    v-model="orderForm.phone_number"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
                 </div>
                 <div>
-                  <label for="positionInCompany" class="block text-sm font-medium text-gray-700 mb-1">Должность в компании *</label>
+                  <label for="position_in_company" class="block text-sm font-medium text-gray-700 mb-1">Должность в компании *</label>
                   <input 
                     type="text" 
-                    id="positionInCompany" 
-                    v-model="orderForm.positionInCompany"
+                    id="position_in_company" 
+                    v-model="orderForm.position_in_company"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
@@ -94,11 +94,11 @@
               
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label for="companyName" class="block text-sm font-medium text-gray-700 mb-1">Название компании *</label>
+                  <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1">Название компании *</label>
                   <input 
                     type="text" 
-                    id="companyName" 
-                    v-model="orderForm.companyName"
+                    id="company_name" 
+                    v-model="orderForm.company_name"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
@@ -108,7 +108,7 @@
                   <input 
                     type="text" 
                     id="inn" 
-                    v-model="orderForm.inn"
+                    v-model="orderForm.company_inn"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
@@ -118,7 +118,7 @@
                   <input 
                     type="text" 
                     id="legalAddress" 
-                    v-model="orderForm.legalAddress"
+                    v-model="orderForm.company_address"
                     class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   >
@@ -354,10 +354,10 @@ const cartStore = useCartStore()
 const orderForm = ref({
   email: '',
   phone_number: '',
-  positionInCompany: '',
-  companyName: '',
-  companyINN: '',
-  companyAddress: '',
+  position_in_company: '',
+  company_name: '',
+  company_inn: '',
+  company_address: '',
   deliveryType: 'pickup',
   deliveryAddress: '',
   paymentMethod: 'invoice',
@@ -398,10 +398,10 @@ onMounted(async () => {
     // Получение данных компании
     const companyResponse = await api.post('/user/get-company-data')
     if (companyResponse.data) {
-      orderForm.value.positionInCompany = companyResponse.data.positionInCompany || ''
-      orderForm.value.companyName = companyResponse.data.companyName || ''
-      orderForm.value.companyINN = companyResponse.data.companyINN || ''
-      orderForm.value.companyAddress = companyResponse.data.companyAddress || ''
+      orderForm.value.position_in_company = companyResponse.data.position_in_company || ''
+      orderForm.value.company_name = companyResponse.data.company_name || ''
+      orderForm.value.company_inn = companyResponse.data.company_inn || ''
+      orderForm.value.company_address = companyResponse.data.company_address || ''
     }
   } catch (error) {
     console.warn('Ошибка при автозаполнении данных', error)
@@ -430,6 +430,7 @@ const submitOrder = async () => {
     const orderData = {
       products: productsPayload,
     }
+    
 
     await api.post('/orders/create', orderData)
 
@@ -444,4 +445,5 @@ const submitOrder = async () => {
     isSubmitting.value = false
   }
 }
+
 </script>
