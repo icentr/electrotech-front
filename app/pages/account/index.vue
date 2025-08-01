@@ -40,15 +40,19 @@ onMounted(async () => {
         const { data } = await api.get("/orders/get");
 
         orders.value = data.orders.map((order) => {
-            const amount = order.products.reduce((sum, p) => sum + p.quantity * p.price, 0);
+    const rawDate = order.createdAt;
+    const isoDate = rawDate
+      .split(' ')[0] + 'T' + rawDate.split(' ')[1]; // Преобразуем в ISO формат
 
-            return {
-                id: order.id,
-                date: order.created_at,
-                amount,
-                status: "Завершен", // Пока в API нет статуса, используем заглушку
-            };
-        });
+    const amount = order.products.reduce((sum, p) => sum + p.quantity * p.price, 0);
+
+    return {
+        id: order.id,
+        date: isoDate,
+        amount,
+        status: "Завершен", // Заглушка пока
+    };
+});
     } catch (error) {
         console.error("Ошибка при загрузке заказов:", error);
     }
@@ -222,11 +226,11 @@ const repeatOrder = (orderId) => {
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-xl font-bold text-gray-900">История заказов</h2>
-                            <button class="text-blue-600 hover:text-blue-800 font-medium flex items-center"><i class="fas fa-file-export mr-2"></i> Экспорт в Excel</button>
+                            <!-- <button class="text-blue-600 hover:text-blue-800 font-medium flex items-center"><i class="fas fa-file-export mr-2"></i> Экспорт в Excel</button> -->
                         </div>
 
                         <!-- Фильтры -->
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0 md:space-x-4">
+                        <!-- <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0 md:space-x-4">
                             <div class="relative flex-1">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-search text-gray-400"></i>
@@ -254,7 +258,7 @@ const repeatOrder = (orderId) => {
                                     <option>За все время</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Таблица заказов -->
                         <div class="overflow-x-auto">
@@ -265,7 +269,7 @@ const repeatOrder = (orderId) => {
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Дата</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Сумма</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                                        <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th> -->
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -284,21 +288,21 @@ const repeatOrder = (orderId) => {
                                                 {{ order.status }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <RouterLink :to="`/orders/${order.id}`" class="text-blue-600 hover:text-blue-900 mr-4">
                                                 <i class="fas fa-eye"></i>
                                             </RouterLink>
                                             <button class="text-blue-600 hover:text-blue-900" @click="repeatOrder(order.id)">
                                                 <i class="fas fa-redo"></i>
                                             </button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <!-- Пагинация -->
-                        <div class="flex items-center justify-between mt-6">
+                        <!-- <div class="flex items-center justify-between mt-6">
                             <div class="text-sm text-gray-500">Показано с <span class="font-medium">1</span> по <span class="font-medium">5</span> из <span class="font-medium">12</span> заказов</div>
                             <div class="flex space-x-2">
                                 <button class="px-3 py-1 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
@@ -311,7 +315,7 @@ const repeatOrder = (orderId) => {
                                     <i class="fas fa-chevron-right"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                   

@@ -10,7 +10,6 @@ const cart = useCartStore();
 const products = ref([]);
 const page = ref(1);
 const totalPages = ref(1);
-const sortOption = ref("popularity");
 const priceMin = ref(null);
 const priceMax = ref(null);
 const filters = ref([]);
@@ -68,39 +67,49 @@ const fetchFilters = async () => {
     console.error("Ошибка при загрузке фильтров:", error);
   }
 };
-
 const fetchProducts = async () => {
   try {
     const filtersPayload = [];
 
+    // Проходим по выбранным фильтрам из selectedFilters
     for (const key in selectedFilters.value) {
-      if (key === "categories") {
-        if (selectedFilters.value[key].length > 0) {
-          filtersPayload.push({
-            parameter: "category",
-            type: "list",
-            values: selectedFilters.value[key],
-          });
-        }
-      } else {
-        if (Array.isArray(selectedFilters.value[key]) && selectedFilters.value[key].length > 0) {
-          filtersPayload.push({
-            parameter: key,
-            type: "list",
-            values: selectedFilters.value[key],
-          });
-        }
+      const selected = selectedFilters.value[key];
+
+      // Если это список выбранных значений (для фильтров типа list)
+      if (Array.isArray(selected) && selected.length > 0) {
+        // В API параметр должен точно совпадать с тем, что ожидает сервер
+        // Для категорий, если у тебя parameter на сервере называется "category", меняй здесь
+        const paramName = key === "categories" ? "category" : key;
+
+        filtersPayload.push({
+          parameter: paramName,
+          type: "list",
+          values: selected,
+        });
       }
     }
 
-    if (priceMin.value != null || priceMax.value != null) {
+    // Обработка фильтра по цене (числовой фильтр)
+    const priceFilter = {};
+    if (priceMin.value !== null && priceMin.value !== undefined && priceMin.value !== "") {
+      // Если хочешь исключить min=0, чтобы не ломать фильтр, убери условие или оставь как есть
+      if (priceMin.value > 0) {
+        priceFilter.min = priceMin.value;
+      }
+    }
+    if (priceMax.value !== null && priceMax.value !== undefined && priceMax.value !== "") {
+      priceFilter.max = priceMax.value;
+    }
+
+    if (Object.keys(priceFilter).length > 0) {
       filtersPayload.push({
         parameter: "price",
         type: "number",
-        min: priceMin.value ?? undefined,
-        max: priceMax.value ?? undefined,
+        ...priceFilter,
       });
     }
+
+    console.log("Отправляем фильтры:", filtersPayload);
 
     const response = await api.post("/products/filter", {
       page: page.value - 1,
@@ -113,6 +122,8 @@ const fetchProducts = async () => {
     console.error("Ошибка при фильтрации товаров:", error);
   }
 };
+
+
 
 const applyFilters = () => {
   page.value = 1;

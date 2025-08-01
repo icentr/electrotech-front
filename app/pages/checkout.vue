@@ -1,4 +1,3 @@
-<!-- src/views/CheckoutPage.vue -->
 <template>
   <div class="pb-12">
     <div class="container mx-auto px-4">
@@ -61,8 +60,9 @@
                     type="text"
                     id="surname"
                     v-model="orderForm.surname"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -75,8 +75,9 @@
                     type="text"
                     id="firstName"
                     v-model="orderForm.firstName"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -89,8 +90,9 @@
                     type="email"
                     id="email"
                     v-model="orderForm.email"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -103,8 +105,9 @@
                     type="tel"
                     id="phone"
                     v-model="orderForm.phone_number"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -117,8 +120,9 @@
                     type="text"
                     id="position_in_company"
                     v-model="orderForm.position_in_company"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
               </div>
@@ -138,8 +142,9 @@
                     type="text"
                     id="company_name"
                     v-model="orderForm.company_name"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -152,8 +157,9 @@
                     type="text"
                     id="inn"
                     v-model="orderForm.company_inn"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
                 </div>
                 <div>
@@ -166,117 +172,10 @@
                     type="text"
                     id="legalAddress"
                     v-model="orderForm.company_address"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
+                    disabled
                   />
-                </div>
-              </div>
-
-              <h2 class="text-lg font-bold text-gray-900 mb-6">Доставка</h2>
-
-              <div class="mb-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  <div>
-                    <input
-                      type="radio"
-                      id="deliveryPickup"
-                      v-model="orderForm.deliveryType"
-                      value="pickup"
-                      class="hidden peer"
-                    />
-                    <label
-                      for="deliveryPickup"
-                      class="block p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 peer-checked:bg-blue-50"
-                    >
-                      <div class="flex items-center">
-                        <div
-                          class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center mr-3"
-                        >
-                          <i class="fas fa-store text-blue-600 text-sm"></i>
-                        </div>
-                        <div>
-                          <h3 class="font-medium text-gray-900">Самовывоз</h3>
-                          <p class="text-sm text-gray-500">Бесплатно</p>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="deliveryCourier"
-                      v-model="orderForm.deliveryType"
-                      value="courier"
-                      class="hidden peer"
-                    />
-                    <label
-                      for="deliveryCourier"
-                      class="block p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 peer-checked:bg-blue-50"
-                    >
-                      <div class="flex items-center">
-                        <div
-                          class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center mr-3"
-                        >
-                          <i class="fas fa-truck text-blue-600 text-sm"></i>
-                        </div>
-                        <div>
-                          <h3 class="font-medium text-gray-900">Курьером</h3>
-                          <p class="text-sm text-gray-500">
-                            500 ₽ (бесплатно от 50 000 ₽)
-                          </p>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                  <div>
-                    <input
-                      type="radio"
-                      id="deliveryTransport"
-                      v-model="orderForm.deliveryType"
-                      value="transport"
-                      class="hidden peer"
-                    />
-                    <label
-                      for="deliveryTransport"
-                      class="block p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 peer-checked:border-blue-600 peer-checked:bg-blue-50"
-                    >
-                      <div class="flex items-center">
-                        <div
-                          class="bg-blue-100 rounded-full w-8 h-8 flex items-center justify-center mr-3"
-                        >
-                          <i
-                            class="fas fa-shipping-fast text-blue-600 text-sm"
-                          ></i>
-                        </div>
-                        <div>
-                          <h3 class="font-medium text-gray-900">
-                            Транспортная компания
-                          </h3>
-                          <p class="text-sm text-gray-500">По тарифам ТК</p>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-
-                <div
-                  v-if="
-                    orderForm.deliveryType === 'courier' ||
-                    orderForm.deliveryType === 'transport'
-                  "
-                >
-                  <label
-                    for="deliveryAddress"
-                    class="block text-sm font-medium text-gray-700 mb-1"
-                    >Адрес доставки *</label
-                  >
-                  <textarea
-                    id="deliveryAddress"
-                    v-model="orderForm.deliveryAddress"
-                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    rows="2"
-                    required
-                  ></textarea>
                 </div>
               </div>
 
@@ -392,33 +291,19 @@
 
             <div class="space-y-3 mb-6">
               <div class="flex justify-between">
-                <span class="text-gray-600"
-                  >Товары ({{ cartStore.totalItems }})</span
-                >
-                <span class="font-medium">{{
-                  formatCurrency(cartStore.subtotal)
-                }}</span>
+                <span class="text-gray-600">Товары ({{ totalItems }})</span>
+                <span class="font-medium">{{ formatCurrency(subtotal) }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Скидка</span>
-                <span class="text-red-600 font-medium"
-                  >-{{ formatCurrency(cartStore.discount) }}</span
-                >
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-600">Доставка</span>
-                <span class="font-medium">{{
-                  deliveryCost === 0
-                    ? "Бесплатно"
-                    : formatCurrency(deliveryCost)
-                }}</span>
+                <span class="text-red-600 font-medium">-{{ formatCurrency(discount) }}</span>
               </div>
             </div>
 
             <div class="border-t border-gray-200 pt-4 mb-6">
               <div class="flex justify-between text-lg font-bold text-gray-900">
                 <span>Итого</span>
-                <span>{{ formatCurrency(total) }}</span>
+                <span>{{ formatCurrency(total ) }}</span>
               </div>
             </div>
 
@@ -445,6 +330,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
@@ -463,8 +349,6 @@ const orderForm = ref({
   company_name: "",
   company_inn: "",
   company_address: "",
-  deliveryType: "pickup",
-  deliveryAddress: "",
   paymentMethod: "invoice",
   comments: "",
   agreeTerms: false,
@@ -480,26 +364,21 @@ const formatCurrency = (amount) => {
   }).format(amount);
 };
 
-const deliveryCost = computed(() => {
-  if (orderForm.value.deliveryType === "pickup") return 0;
-  if (cartStore.subtotal - cartStore.discount >= 50000) return 0;
-  return orderForm.value.deliveryType === "courier" ? 500 : 0;
-});
+// Вычисляемые свойства из стора
+const subtotal = computed(() => cartStore.subtotal);
+const discount = computed(() => cartStore.discount);
+const total = computed(() => subtotal.value - discount.value);
+const totalItems = computed(() => cartStore.totalItems);
 
-const total = computed(() => {
-  return cartStore.subtotal - cartStore.discount + deliveryCost.value;
-});
 
 onMounted(async () => {
-  if (cartStore.totalItems === 0) {
+  if (totalItems.value === 0) {
     router.push("/cart");
     return;
   }
 
   try {
-    // Получение email и телефона
     const userResponse = await api.post("/user/get-data");
-    
     if (userResponse.data) {
       orderForm.value.email = userResponse.data.email || "";
       orderForm.value.phone_number = userResponse.data.phone_number || "";
@@ -507,10 +386,7 @@ onMounted(async () => {
       orderForm.value.surname = userResponse.data.surname || "";
     }
 
-    // Получение данных компании
     const companyResponse = await api.post("/user/get-company-data");
-    console.log('Компания:', companyResponse.data)
-
     if (companyResponse.data) {
       orderForm.value.position_in_company = companyResponse.data.positionInCompany || "";
       orderForm.value.company_name = companyResponse.data.companyName || "";
@@ -528,7 +404,7 @@ const submitOrder = async () => {
     return;
   }
 
-  if (cartStore.totalItems === 0) {
+  if (totalItems.value === 0) {
     alert("Ваша корзина пуста");
     return;
   }
@@ -543,8 +419,9 @@ const submitOrder = async () => {
 
     const orderData = {
       products: productsPayload,
+      paymentMethod: orderForm.value.paymentMethod,
+      comments: orderForm.value.comments,
     };
-console.log('Отправляемый заказ:', orderData)
 
     await api.post("/orders/create", orderData);
 
@@ -552,7 +429,6 @@ console.log('Отправляемый заказ:', orderData)
     cartStore.clearCart();
     router.push("/");
   } catch (error) {
-    console.error("Ошибка при оформлении заказа", error);
     alert("Произошла ошибка при оформлении заказа. Попробуйте еще раз.");
   } finally {
     isSubmitting.value = false;

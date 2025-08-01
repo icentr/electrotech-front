@@ -41,13 +41,9 @@ const applyPromoCode = () => {
 // Вычисляемые свойства
 const subtotal = computed(() => cartStore.subtotal);
 const discount = computed(() => cartStore.discount);
-const total = computed(() => subtotal.value - discount.value + deliveryCost.value);
+const total = computed(() =>  cartStore.total);   
 const totalItems = computed(() => cartStore.totalItems);
 const cartItems = computed(() => cartStore.cartItems);
-
-const deliveryCost = computed(() => {
-    return subtotal.value - discount.value >= 50000 ? 0 : 500;
-});
 </script>
 
 <template>
@@ -166,10 +162,6 @@ const deliveryCost = computed(() => {
                             <div class="flex justify-between">
                                 <span class="text-gray-600">Скидка</span>
                                 <span class="text-red-600 font-medium">-{{ formatCurrency(discount) }}</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Доставка</span>
-                                <span class="font-medium">{{ deliveryCost === 0 ? "Бесплатно" : formatCurrency(deliveryCost) }}</span>
                             </div>
                         </div>
 

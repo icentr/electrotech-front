@@ -6,6 +6,7 @@ const cart = useCartStore();
 
 const handleLogout = () => {
     auth.logout();
+    cart.clearCart();      
     router.push("/login");
 };
 </script>
