@@ -1,6 +1,5 @@
 <!-- src/views/Login.vue -->
 <template>
-    <title>Авторизация</title>
     <div class="bg-gray-50 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-sm border border-gray-100">
             <div class="text-center">
@@ -139,4 +138,7 @@ const handleLogin = async () => {
         errorMessage.value = error.response?.data?.message || "Неверный email или пароль";
     }
 };
+useHead({
+    title:"Авторизация"
+})
 </script>
