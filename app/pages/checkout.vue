@@ -1,4 +1,5 @@
 <template>
+  <title>Оформление заказа</title>
   <div class="pb-12">
     <div class="container mx-auto px-4">
       <!-- Хлебные крошки -->
@@ -296,14 +297,16 @@
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-600">Скидка</span>
-                <span class="text-red-600 font-medium">-{{ formatCurrency(discount) }}</span>
+                <span class="text-red-600 font-medium"
+                  >-{{ formatCurrency(discount) }}</span
+                >
               </div>
             </div>
 
             <div class="border-t border-gray-200 pt-4 mb-6">
               <div class="flex justify-between text-lg font-bold text-gray-900">
                 <span>Итого</span>
-                <span>{{ formatCurrency(total ) }}</span>
+                <span>{{ formatCurrency(total) }}</span>
               </div>
             </div>
 
@@ -320,6 +323,17 @@
                 <i class="fas fa-credit-card mr-2"></i> Оформить заказ
               </template>
             </button>
+            <p
+              v-if="orderMessage"
+              :class="[
+                'mt-4 text-sm',
+                orderMessageType === 'success'
+                  ? 'text-green-600'
+                  : 'text-red-600',
+              ]"
+            >
+              {{ orderMessage }}
+            </p>
 
             <div class="mt-4 text-xs text-gray-500">
               После оформления заказа вам будет выставлен счет на оплату
@@ -336,6 +350,9 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "../stores/cart";
 import api from "@/api";
+
+const orderMessage = ref("");
+const orderMessageType = ref(""); // "success" или "error"
 
 const router = useRouter();
 const cartStore = useCartStore();
@@ -370,7 +387,6 @@ const discount = computed(() => cartStore.discount);
 const total = computed(() => subtotal.value - discount.value);
 const totalItems = computed(() => cartStore.totalItems);
 
-
 onMounted(async () => {
   if (totalItems.value === 0) {
     router.push("/cart");
@@ -388,10 +404,12 @@ onMounted(async () => {
 
     const companyResponse = await api.post("/user/get-company-data");
     if (companyResponse.data) {
-      orderForm.value.position_in_company = companyResponse.data.positionInCompany || "";
+      orderForm.value.position_in_company =
+        companyResponse.data.positionInCompany || "";
       orderForm.value.company_name = companyResponse.data.companyName || "";
       orderForm.value.company_inn = companyResponse.data.companyINN || "";
-      orderForm.value.company_address = companyResponse.data.companyAddress || "";
+      orderForm.value.company_address =
+        companyResponse.data.companyAddress || "";
     }
   } catch (error) {
     console.warn("Ошибка при автозаполнении данных", error);
@@ -400,12 +418,14 @@ onMounted(async () => {
 
 const submitOrder = async () => {
   if (!orderForm.value.agreeTerms) {
-    alert("Пожалуйста, согласитесь с условиями обработки данных");
+    orderMessage.value = "Пожалуйста, согласитесь с условиями обработки данных";
+    orderMessageType.value = "error";
     return;
   }
 
   if (totalItems.value === 0) {
-    alert("Ваша корзина пуста");
+    orderMessage.value = "Ваша корзина пуста";
+    orderMessageType.value = "error";
     return;
   }
 
@@ -425,13 +445,31 @@ const submitOrder = async () => {
 
     await api.post("/orders/create", orderData);
 
-    alert("Спасибо! Ваш заказ успешно оформлен.");
-    cartStore.clearCart();
-    router.push("/");
+    const { data } = await api.get("/orders/get");
+
+    const sortedOrders = [...data.orders].sort((a, b) => b.id - a.id);
+    const lastOrder = sortedOrders[0];
+
+    if (lastOrder?.id) {
+      orderMessage.value = "Спасибо! Ваш заказ успешно оформлен.";
+      orderMessageType.value = "success";
+
+      cartStore.clearCart();
+
+      router.push(`/orders/${lastOrder.id}`);
+    } else {
+      router.push("/orders");
+    }
   } catch (error) {
-    alert("Произошла ошибка при оформлении заказа. Попробуйте еще раз.");
+    orderMessage.value = "Произошла ошибка при оформлении заказа. Попробуйте еще раз.";
+    orderMessageType.value = "error";
   } finally {
     isSubmitting.value = false;
   }
 };
+
+
+useHead({
+  title:"Оформление заказа"
+})
 </script>

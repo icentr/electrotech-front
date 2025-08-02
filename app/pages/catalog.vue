@@ -5,6 +5,10 @@ import api from "../api";
 import { useCartStore } from "../stores/cart";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/16/solid";
 
+useHead({
+  title: 'Каталог',
+})
+
 const cart = useCartStore();
 
 const products = ref([]);

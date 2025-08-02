@@ -95,4 +95,7 @@ const submitForm = async () => {
     loading.value = false
   }
 }
+useHead({
+  title:"Редактирование информации о компании"
+})
 </script>

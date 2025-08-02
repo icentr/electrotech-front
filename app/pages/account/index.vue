@@ -3,6 +3,9 @@ import { ref, onMounted } from "vue";
 import api from "@/api";
 import { CheckIcon, XMarkIcon, ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 
+useHead({
+    title:"Аккаунт"
+})
 // Данные пользователя
 const user = ref({
     name: "",
@@ -75,6 +78,7 @@ const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("ru-RU", options);
 };
+
 
 // Форматирование валюты
 const formatCurrency = (amount) => {

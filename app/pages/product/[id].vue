@@ -3,7 +3,6 @@
   <Breadcrumbs
     :breadcrumbs="[{ name: 'Каталог', url: '/catalog' }]"
      :page="product?.name || 'Загрузка...'" />
-  />
   <div class="pb-12" v-if="product">
     <div class="container mx-auto px-4" v-if="product">
       <!-- Хлебные крошки -->
@@ -283,6 +282,7 @@ import api, { getImageUrl } from "@/api";
 import { useCartStore } from "@/stores/cart";
 // import { useToast } from "vue-toastification"; // если используешь уведомления
 
+
 const route = useRoute();
 const product = ref();
 const loading = ref(true);
@@ -305,6 +305,7 @@ const fetchProduct = async (id) => {
 
 onMounted(() => {
   fetchProduct(route.params.id);
+ 
 });
 
 const addToCart = () => {
@@ -313,5 +314,8 @@ const addToCart = () => {
     // toast.success(`«${product.value.name}» добавлен в корзину`);
   }
 };
+const pageTitle = computed(() => product.value?.name || 'Загрузка...')
 
+useHead({
+  title: pageTitle})
 </script>
