@@ -180,7 +180,7 @@
                 </div>
               </div>
 
-              <h2 class="text-lg font-bold text-gray-900 mb-6">Оплата</h2>
+              <!-- <h2 class="text-lg font-bold text-gray-900 mb-6">Оплата</h2>
 
               <div class="mb-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -243,7 +243,7 @@
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="mb-6">
                 <label

@@ -156,14 +156,14 @@ onMounted(async () => {
                         <h2 class="text-lg font-bold text-gray-900 mb-5">Фильтры</h2>
 
                         <!-- Цена -->
-                        <div class="mb-6">
+                        <!-- <div class="mb-6">
                             <h3 class="text-sm font-semibold text-gray-900 mb-3">Цена, ₽</h3>
                             <div class="flex items-center space-x-3 mb-3">
                                 <input v-model.number="priceMin" type="number" placeholder="От" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" />
                                 <span class="text-gray-400">—</span>
                                 <input v-model.number="priceMax" type="number" placeholder="До" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" />
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Остальные фильтры -->
                         <div class="mb-6" v-for="filter in filters" :key="filter.id">
