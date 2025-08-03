@@ -16,7 +16,10 @@ import { ref, onMounted } from 'vue';
 import ChangeEmail from '@/pages/account/change-email.vue';
 import ChangePhone from '@/pages/account/change-phone.vue';
 import ChangePassword from '@/pages/account/change-password.vue';
-import api from '@/api';
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 const user = ref({});
 

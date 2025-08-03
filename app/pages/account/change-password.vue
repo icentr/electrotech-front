@@ -50,7 +50,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import api from '@/api'
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 
 const currentPassword = ref('')

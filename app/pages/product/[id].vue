@@ -278,7 +278,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import api, { getImageUrl } from "@/api";
+import { getApi } from "@/api";
+
+const api = getApi();
+import { getImageUrl } from "@/api";
 import { useCartStore } from "@/stores/cart";
 // import { useToast } from "vue-toastification"; // если используешь уведомления
 

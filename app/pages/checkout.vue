@@ -349,7 +349,10 @@
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "../stores/cart";
-import api from "@/api";
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 const orderMessage = ref("");
 const orderMessageType = ref(""); // "success" или "error"

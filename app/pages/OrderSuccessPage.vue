@@ -151,7 +151,10 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '@/api'
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 const orderData = ref(null)
 const isLoading = ref(true)

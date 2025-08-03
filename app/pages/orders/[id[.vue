@@ -96,7 +96,10 @@ import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 import { getImageUrl } from "~/api";
-import api from "@/api";
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 const route = useRoute();
 const order = ref(null);

@@ -79,7 +79,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import api from '../api'
+import { getApi } from "@/api";
+
+const api = getApi();
+
 
 const router = useRouter()
 

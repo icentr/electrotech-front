@@ -1,68 +1,65 @@
+// api.js
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 
-const BASE_URL = "http://localhost:1488/api/";
+// НЕ определяем BASE_URL здесь!
 
-const api = axios.create({
-    baseURL: BASE_URL,
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
+let api; // будет инициализирован в плагине
 
-//  Перехватчик ответов — пытается обновить токен при 401
-api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        const auth = useAuthStore();
-        const originalRequest = error.config;
+export const createApi = (baseURL) => {
+    api = axios.create({
+        baseURL,
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
 
-        // Пропускаем, если уже пробовали рефреш
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+    // Перехватчики
+    api.interceptors.response.use(
+        (response) => response,
+        async (error) => {
+            const auth = useAuthStore();
+            const originalRequest = error.config;
 
-            try {
-                if (!auth.refreshToken) throw new Error("No refresh token");
+            if (error.response?.status === 401 && !originalRequest._retry) {
+                originalRequest._retry = true;
 
-                const { data } = await axios.post("/auth/refresh", {
-                    refresh_token: auth.refreshToken,
-                });
+                try {
+                    if (!auth.refreshToken) throw new Error("No refresh token");
 
-                // Обновляем токен в хранилище и в localStorage
-                auth.token = data.token;
+                    const { data } = await axios.post(`${baseURL}auth/refresh`, {
+                        refresh_token: auth.refreshToken,
+                    });
 
-                // Повторяем оригинальный запрос с новым токеном
-                originalRequest.headers["Authorization"] = data.token;
-                return api(originalRequest);
-            } catch (refreshErr) {
-                // Если refresh не сработал — выкидываем пользователя
-                auth.logout();
-                window.location.href = "/login";
-                return Promise.reject(refreshErr);
+                    auth.token = data.token;
+                    originalRequest.headers["Authorization"] = data.token;
+                    return api(originalRequest);
+                } catch (refreshErr) {
+                    auth.logout();
+                    window.location.href = "/login";
+                    return Promise.reject(refreshErr);
+                }
             }
+
+            return Promise.reject(error);
         }
+    );
 
-        return Promise.reject(error);
-    }
-);
+    api.interceptors.request.use((config) => {
+        const auth = useAuthStore();
+        if (auth.token) {
+            config.headers["Authorization"] = auth.token;
+        }
+        return config;
+    });
+};
 
-// Перехватчик запроса — подставляет токен
-api.interceptors.request.use((config) => {
-    const auth = useAuthStore();
-    if (auth.token) {
-        config.headers["Authorization"] = auth.token;
-    }
-    return config;
-});
+export const getApi = () => api;
 
-const getImageUrl = (filename) => {
+export const getImageUrl = (filename) => {
     if (!filename) {
         console.warn("No filename provided");
         return "";
     }
-    return `${BASE_URL}files/` + filename;
+    return `${api?.defaults.baseURL}files/${filename}`;
 };
-
-export { BASE_URL, getImageUrl };
-
-export default api;

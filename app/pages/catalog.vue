@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import ProductCard from "../components/ProductCard.vue";
-import api from "../api";
 import { useCartStore } from "../stores/cart";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/16/solid";
+import { getApi } from "@/api";
+
+const api = getApi();
 
 useHead({
   title: 'Каталог',

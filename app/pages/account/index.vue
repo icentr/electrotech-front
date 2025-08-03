@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import api from "@/api";
+import { getApi } from "@/api";
+
+const api = getApi();
+
 import { CheckIcon, XMarkIcon, ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 
 useHead({
