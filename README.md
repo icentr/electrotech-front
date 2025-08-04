@@ -1,5 +1,35 @@
-# Vue 3 + Vite
+Вот оформленный `.md` файл с инструкцией:
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+```markdown
+# Инструкция по настройке и запуску проекта
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Шаг 1: Создание `.env` файла
+
+В корневой директории проекта (`app`) создайте файл с именем `.env` и добавьте в него следующую строку:
+
+```
+
+NUXT\_API\_BASE\_URL=[http://адрес:Порт/api/](http://адрес:Порт/api/)
+
+````
+
+Замените `http://адрес:Порт` на актуальный адрес вашего API-сервера.
+
+---
+
+## Шаг 2: Установка и запуск проекта
+
+Откройте Bash-терминал и выполните следующие команды по порядку:
+
+```bash
+# Установка зависимостей
+npm i
+
+# Сборка проекта
+npm run build
+
+# Запуск сервера
+node .output/server/index.mjs
+````
+
+После выполнения этих команд проект будет собран и запущен.
