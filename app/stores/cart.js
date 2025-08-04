@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { getImageUrl } from "../api";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
@@ -37,7 +38,7 @@ export const useCartStore = defineStore("cart", {
           code: product.code || `PRD-${product.id}`,
           price: parseFloat(product.price.toString().replace(/\s/g, "")),
           quantity: 1,
-          imagePath: product.imagePath,
+          imagePath: getImageUrl(product.imagePath),
         });
       }
     },

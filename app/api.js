@@ -5,6 +5,7 @@ import { useAuthStore } from "@/stores/auth";
 // НЕ определяем BASE_URL здесь!
 
 let api; // будет инициализирован в плагине
+export const getApi = () => api;
 
 export const createApi = (baseURL) => {
     api = axios.create({
@@ -54,7 +55,6 @@ export const createApi = (baseURL) => {
     });
 };
 
-export const getApi = () => api;
 
 export const getImageUrl = (filename) => {
     if (!filename) {

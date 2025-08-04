@@ -8,10 +8,15 @@ import {
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { getImageUrl } from "../api";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 useHead({
-  title: 'Корзина'
+  title: "Корзина",
 });
+
+const router = useRouter();
+const auth = useAuthStore();
 
 const cartStore = useCartStore();
 const message = ref("");
@@ -25,6 +30,14 @@ const formatCurrency = (amount) => {
     currency: "RUB",
     maximumFractionDigits: 0,
   }).format(amount);
+};
+
+const handleCheckout = () => {
+  if (!auth.token) {
+    router.push("/login");
+  } else {
+    router.push("/checkout");
+  }
 };
 
 // Методы корзины
@@ -98,7 +111,7 @@ const cartItems = computed(() => cartStore.cartItems);
                     class="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center mr-4"
                   >
                     <img
-                      :src="getImageUrl(item.imagePath)"
+                      :src="item.imagePath"
                       :alt="item.name"
                       class="max-h-full"
                     />
@@ -258,13 +271,13 @@ const cartItems = computed(() => cartStore.cartItems);
               </div>
             </div>
 
-            <RouterLink
+            <button
               v-if="cartItems.length > 0"
-              to="/checkout"
+              @click="handleCheckout"
               class="w-full bg-blue-600 text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
             >
               <i class="fas fa-credit-card mr-2"></i> Оформить заказ
-            </RouterLink>
+            </button>
 
             <div class="mt-4 text-xs text-gray-500">
               Нажимая на кнопку, вы соглашаетесь с
