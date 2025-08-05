@@ -16,6 +16,15 @@ const user = ref({
     phone: "",
     
 });
+// Данные компании
+const company = ref({
+    name: "",
+    inn: "",
+    address: "",
+    position: "",
+    okpo: "",
+    allRequiredFields: false,
+});
 
 const auth = useAuthStore();
 
@@ -37,7 +46,7 @@ onMounted(async () => {
         company.value.inn = data.companyINN;
         company.value.address = data.companyAddress;
         company.value.position = data.positionInCompany;
-
+        company.value.okpo = data.companyOKPO;
         company.value.allRequiredFields = data.allRequiredFields;
     } catch (error) {
         console.error("Ошибка при получении данных компании: " + error);
@@ -64,14 +73,7 @@ onMounted(async () => {
     }
 });
 
-// Данные компании
-const company = ref({
-    name: "",
-    inn: "",
-    address: "",
-    position: "",
-    allRequiredFields: false,
-});
+
 
 // История заказов
 const orders = ref([]);
@@ -215,6 +217,13 @@ const repeatOrder = (orderId) => {
                                 <p class="text-sm text-gray-500">Юридический адрес</p>
                                 <p class="font-medium">
                                     <span v-if="company.address">{{ company.address }}</span>
+                                    <span v-else> -- </span>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">ОКПО</p>
+                                <p class="font-medium">
+                                    <span v-if="company.okpo">{{ company.okpo }}</span>
                                     <span v-else> -- </span>
                                 </p>
                             </div>

@@ -178,6 +178,21 @@
                     disabled
                   />
                 </div>
+                <div>
+                  <label
+                    for="legalAddress"
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                    >ОКПО *</label
+                  >
+                  <input
+                    type="text"
+                    id="legalAddress"
+                    v-model="orderForm.company_okpo"
+                    class="w-full border border-gray-300 bg-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    required
+                    disabled
+                  />
+                </div>
               </div>
 
               <!-- <h2 class="text-lg font-bold text-gray-900 mb-6">Оплата</h2>
@@ -369,6 +384,7 @@ const orderForm = ref({
   company_name: "",
   company_inn: "",
   company_address: "",
+  company_okpo: "",
   paymentMethod: "invoice",
   comments: "",
   agreeTerms: false,
@@ -413,6 +429,7 @@ onMounted(async () => {
       orderForm.value.company_inn = companyResponse.data.companyINN || "";
       orderForm.value.company_address =
         companyResponse.data.companyAddress || "";
+      orderForm.value.company_okpo = companyResponse.data.companyOKPO || "";
     }
   } catch (error) {
     console.warn("Ошибка при автозаполнении данных", error);
