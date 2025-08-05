@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
 
@@ -107,6 +107,18 @@ const errors = ref({
   positionInCompany: "",
   companyINN: "",
   companyOKPO: "",
+});
+onMounted(async () => {
+  try {
+    const { data } = await api.post("/user/get-company-data");
+    form.value.companyName = data.companyName || "";
+    form.value.companyAddress = data.companyAddress || "";
+    form.value.positionInCompany = data.positionInCompany || "";
+    form.value.companyINN = data.companyINN || "";
+    form.value.companyOKPO = data.companyOKPO || "";
+  } catch (err) {
+    console.error("Ошибка при получении данных компании", err);
+  }
 });
 
 const validateForm = () => {
@@ -161,6 +173,8 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+
+
 
 useHead({
   title: "Редактирование информации о компании",
