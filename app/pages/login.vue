@@ -1,7 +1,7 @@
 <!-- src/views/Login.vue -->
 <template>
-    <div class="bg-gray-50 min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-sm border border-gray-100">
+    <div class="bg-gray-50 flex items-start md:items-center justify-center md:py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-4 md:p-10 rounded-xl shadow-sm border border-gray-100">
             <div class="text-center">
                 <div class="flex justify-center">
                     <div class="bg-blue-600 p-3 rounded-lg shadow-sm">
@@ -14,7 +14,7 @@
             <p v-if="errorMessage" class="text-red-500 text-sm text-center">{{ errorMessage }}</p>
 
             <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
-                <div class="rounded-md shadow-sm space-y-4">
+                <div class="rounded-md space-y-4">
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <div class="relative">

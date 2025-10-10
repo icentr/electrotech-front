@@ -214,7 +214,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
             <div class="container mx-auto px-4">
                 <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
                     <div class="md:flex">
-                        <div class="md:w-1/2 bg-gradient-to-b from-blue-700 to-blue-600 text-white p-10">
+                        <div class="md:w-1/2 bg-gradient-to-b from-blue-700 to-blue-600 text-white p-4 md:p-10">
                             <h2 class="text-2xl font-bold mb-4">КОНТАКТЫ</h2>
                             <p class="mb-6 opacity-90">Оставьте заявку для получения коммерческого предложения</p>
 
@@ -249,7 +249,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                             </div>
                         </div>
 
-                        <div class="md:w-1/2 p-10">
+                        <div class="md:w-1/2 p-4 md:p-10">
                             <form>
                                 <div class="mb-5">
                                     <label for="company" class="block text-gray-700 mb-2 font-medium">Название компании*</label>

@@ -26,7 +26,14 @@ const company = ref({
 });
 
 const auth = useAuthStore();
+const cart = useCartStore();
+const router = useRouter();
 
+const handleLogout = () => {
+    auth.logout();
+    cart.clearCart();
+    router.push("/login");
+};
 onMounted(async () => {
     try {
         const { data } = await api.post("/user/get-data");
@@ -166,6 +173,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     </div>
                     <div class="flex">
                         <button
+                            @click="handleLogout"
                             class="flex gap-3 items-center justify-center py-3 rounded-lg px-2 cursor-pointer bg-red-200 text-red-500 hover:bg-red-200/80 active:bg-red-300 active:text-red-600 transition-all duration-200 grow">
                             <ArrowLeftStartOnRectangleIcon class="size-6" />
                             Выйти из аккаунта

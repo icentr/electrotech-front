@@ -33,6 +33,7 @@ export const useAuthStore = defineStore(
         // Выход — очищаем токен и состояние
         function logout() {
             token.value = null;
+            refreshToken.value = null;
         }
 
         return { token, refreshToken, isAuthenticated, login, logout };
