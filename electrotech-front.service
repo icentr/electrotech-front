@@ -6,6 +6,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/electrotech/frontend
+Environment=PORT=80
 ExecStart=/root/.nvm/versions/node/v22.20.0/bin/node /opt/electrotech/frontend/server/index.mjs
 Restart=always
 RestartSec=5
