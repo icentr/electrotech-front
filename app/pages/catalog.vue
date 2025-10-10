@@ -346,7 +346,7 @@ onMounted(async () => {
                             </div>
 
                             <!-- Кнопка применения -->
-                            <div class="p-4 border-t border-gray-200 bg-white">
+                            <div class="p-4 pb-20 border-t border-gray-200 bg-white">
                                 <button 
                                     @click="applyFilters" 
                                     class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg text-base font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
