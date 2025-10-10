@@ -7,14 +7,13 @@ const api = getApi();
 import { CheckIcon, XMarkIcon, ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
 
 useHead({
-    title:"Аккаунт"
-})
+    title: "Аккаунт",
+});
 // Данные пользователя
 const user = ref({
     name: "",
     email: "",
     phone: "",
-    
 });
 // Данные компании
 const company = ref({
@@ -55,25 +54,22 @@ onMounted(async () => {
         const { data } = await api.get("/orders/get");
 
         orders.value = data.orders.map((order) => {
-    const rawDate = order.createdAt;
-    const isoDate = rawDate
-      .split(' ')[0] + 'T' + rawDate.split(' ')[1]; // Преобразуем в ISO формат
+            const rawDate = order.createdAt;
+            const isoDate = rawDate.split(" ")[0] + "T" + rawDate.split(" ")[1]; // Преобразуем в ISO формат
 
-    const amount = order.products.reduce((sum, p) => sum + p.quantity * p.price, 0);
+            const amount = order.products.reduce((sum, p) => sum + p.quantity * p.price, 0);
 
-    return {
-        id: order.id,
-        date: isoDate,
-        amount,
-        status: "Завершен", // Заглушка пока
-    };
-});
+            return {
+                id: order.id,
+                date: isoDate,
+                amount,
+                status: "Завершен", // Заглушка пока
+            };
+        });
     } catch (error) {
         console.error("Ошибка при загрузке заказов:", error);
     }
 });
-
-
 
 // История заказов
 const orders = ref([]);
@@ -83,7 +79,6 @@ const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("ru-RU", options);
 };
-
 
 // Форматирование валюты
 const formatCurrency = (amount) => {
@@ -116,6 +111,7 @@ const repeatOrder = (orderId) => {
     console.log(`Повтор заказа #${orderId}`);
     // Здесь будет логика повторения заказа
 };
+import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 </script>
 <!-- src/views/Account.vue -->
 <template>
@@ -168,7 +164,13 @@ const repeatOrder = (orderId) => {
                             </RouterLink>
                         </div>
                     </div>
-
+                    <div class="flex">
+                        <button
+                            class="flex gap-3 items-center justify-center py-3 rounded-lg px-2 cursor-pointer bg-red-200 text-red-500 hover:bg-red-200/80 active:bg-red-300 active:text-red-600 transition-all duration-200 grow">
+                            <ArrowLeftStartOnRectangleIcon class="size-6" />
+                            Выйти из аккаунта
+                        </button>
+                    </div>
                     <!-- Карточка компании -->
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex items-center mb-6">
@@ -333,8 +335,6 @@ const repeatOrder = (orderId) => {
                             </div>
                         </div> -->
                     </div>
-
-                  
                 </div>
             </div>
         </div>

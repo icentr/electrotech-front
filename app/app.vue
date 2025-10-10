@@ -17,7 +17,7 @@ const handleLogout = () => {
         <Header class="bg-white shadow-md sticky top-0 z-50"></Header>
 
         <!-- Контент -->
-        <main class="container mx-auto px-4 py-6 grow">
+        <main class="container mx-auto md:px-4 py-2 md:py-6 grow">
             <NuxtPage />
         </main>
 
