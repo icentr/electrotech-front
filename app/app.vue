@@ -6,7 +6,7 @@ const cart = useCartStore();
 
 const handleLogout = () => {
     auth.logout();
-    cart.clearCart();      
+    cart.clearCart();
     router.push("/login");
 };
 </script>
@@ -14,7 +14,7 @@ const handleLogout = () => {
 <template>
     <div class="bg-gray-50 min-h-svh flex flex-col">
         <!-- Хедер -->
-         <Header class="bg-white shadow-md sticky top-0 z-50"></Header>
+        <Header class="bg-white shadow-md sticky top-0 z-50"></Header>
 
         <!-- Контент -->
         <main class="container mx-auto px-4 py-6 grow">
@@ -22,11 +22,8 @@ const handleLogout = () => {
         </main>
 
         <!-- Футер -->
-        <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
-            <div class="container mx-auto px-4">
-                <p class="text-center text-gray-500 text-sm mt-8">© 2025 ЭЛЕКТРОТЕХ. Все права защищены.</p>
-            </div>
-        </footer>
+        <TheFooter />
+        <MobileNav />
     </div>
 </template>
 

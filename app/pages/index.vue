@@ -5,7 +5,7 @@ useHead({
 import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 </script>
 <template>
-    <div class="bg-gray-50 antialiased">
+    <div class="bg-gray-50">
         <!-- Верхняя панель с контактами -->
 
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -294,11 +294,11 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
         </section>
 
         <!-- Плавающая кнопка "Позвонить" -->
-        <a
+        <!-- <a
             href="tel:+74951234567"
-            class="fixed bottom-8 right-8 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300 z-50 group">
+            class="fixed bottom-24 right-8 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300 z-50 group">
             <i class="fas fa-phone-alt text-xl"></i>
-        </a>
+        </a> -->
     </div>
 </template>
 

@@ -14,16 +14,16 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 </script>
 
 <template>
-    <header class="bg-white shadow-md sticky top-0 z-50">
+    <header class="bg-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between py-4">
                 <!-- Логотип -->
                 <div class="flex items-center">
                     <div class="bg-blue-600 p-2 rounded-lg mr-3 shadow-sm">
                         <i class="fas fa-bolt text-white text-xl"></i>
                     </div>
                     <div>
-                        <NuxtLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600"> ЭЛЕКТРО<span class="text-blue-600">ТЕХ</span> </NuxtLink>
+                        <NuxtLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600 uppercase"> ИЦ Электро<span class="text-blue-600">техника</span> </NuxtLink>
                         <p class="text-xs text-gray-500">Поставки электротехнического оборудования</p>
                     </div>
                 </div>
@@ -49,17 +49,8 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                     </ul>
                 </nav>
 
-                <!-- Панель справа -->
-                <div class="flex items-center space-x-6">
-                    <div class="hidden md:flex items-center space-x-5"></div>
-
-                    <button class="lg:hidden text-gray-600 hover:text-blue-600">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
-                </div>
-
                 <!-- Контакты -->
-                <div class="flex items-center ml-4">
+                <div class="hidden md:flex items-center ml-4">
                     <i class="fas fa-phone-alt mr-2 text-blue-400"></i>
                     <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="font-medium hover:text-blue-400">
                         {{ PHONE_NUMBER }}
@@ -69,7 +60,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                     <i class="far fa-clock mr-2 text-blue-400"></i>
                     <span>Пн-Пт: 9:00–18:00</span>
                 </div>
-                <div class="flex gap-3">
+                <div class="hidden md:flex gap-3">
                     <NuxtLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
                         <UserIcon class="size-5 me-1" />
                         <span class="ml-2">Аккаунт</span>
