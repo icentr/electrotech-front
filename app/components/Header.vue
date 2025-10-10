@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
+import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon } from "@heroicons/vue/16/solid";
 const router = useRouter();
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -34,42 +34,24 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                         <li><NuxtLink to="/" class="nav-link">Главная</NuxtLink></li>
                         <li><NuxtLink to="/catalog" class="nav-link">Каталог</NuxtLink></li>
                         <li><NuxtLink to="/company" class="nav-link">О компании</NuxtLink></li>
+                        <li>
+                            <NuxtLink to="/cart" class="nav-link relative">
+                                Корзина
+                                <Transition enter-to-class="scale-250 -y-offset-5" leave-to-class="scale-0">
+                                    <span
+                                        v-if="cart.totalItems != 0"
+                                        class="font-mono duration-200 absolute -top-2 -right-2 transition-all bg-[#2563eb] text-white text-sm font-semibold rounded-full w-6 h-6 flex justify-center items-center">
+                                        {{ cart.totalItems }}
+                                    </span>
+                                </Transition>
+                            </NuxtLink>
+                        </li>
                     </ul>
                 </nav>
 
                 <!-- Панель справа -->
                 <div class="flex items-center space-x-6">
-                    <div class="hidden md:flex items-center space-x-5">
-                        <template v-if="auth.isAuthenticated">
-                            <NuxtLink class="auth-button cursor-pointer" @click="handleLogout">
-                                <ArrowLeftStartOnRectangleIcon class="size-6 me-2" />
-                                <span class="font-medium">Выход</span>
-                            </NuxtLink>
-                        </template>
-                        <template v-else>
-                            <NuxtLink to="/login" class="auth-button">
-                                <ArrowLeftEndOnRectangleIcon class="size-6 me-2" />
-                                <span class="font-medium">Вход</span>
-                            </NuxtLink>
-                        </template>
-
-                        <NuxtLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
-                            <UserIcon class="size-5 me-1" />
-                            <span class="ml-2">Аккаунт</span>
-                        </NuxtLink>
-                    </div>
-
-                    <NuxtLink to="/cart" class="icon-button relative">
-                        <ShoppingCartIcon class="size-5 me-1" />
-                        Корзина
-                        <Transition enter-to-class="scale-250 -y-offset-5" leave-to-class="scale-0">
-                            <span
-                                v-if="cart.totalItems != 0"
-                                class="duration-200 absolute -top-2 -right-2 transition-all bg-[#2563eb] text-white text-sm font-semibold rounded-full w-6 h-6 flex justify-center items-center">
-                                {{ cart.totalItems }}
-                            </span>
-                        </Transition>
-                    </NuxtLink>
+                    <div class="hidden md:flex items-center space-x-5"></div>
 
                     <button class="lg:hidden text-gray-600 hover:text-blue-600">
                         <i class="fas fa-bars text-xl"></i>
@@ -86,6 +68,23 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                 <div class="hidden md:flex space-x-6 ml-4">
                     <i class="far fa-clock mr-2 text-blue-400"></i>
                     <span>Пн-Пт: 9:00–18:00</span>
+                </div>
+                <div class="flex gap-3">
+                    <NuxtLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
+                        <UserIcon class="size-5 me-1" />
+                        <span class="ml-2">Аккаунт</span>
+                    </NuxtLink>
+                    <NuxtLink
+                        v-if="auth.isAuthenticated"
+                        title="Выход из аккаунта"
+                        class="flex items-center rounded-md px-2 py-1 cursor-pointer bg-red-200 text-red-500 hover:bg-red-200/80 active:bg-red-300 active:text-red-600 transition-all duration-200"
+                        @click="handleLogout">
+                        <ArrowLeftStartOnRectangleIcon class="size-6" />
+                    </NuxtLink>
+                    <NuxtLink v-else to="/login" class="auth-button">
+                        <span class="text-md">Вход</span>
+                        <ArrowRightEndOnRectangleIcon class="size-5 ms-2" />
+                    </NuxtLink>
                 </div>
             </div>
         </div>
@@ -113,7 +112,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
     display: flex;
     align-items: center;
     color: #4b5563;
-    background-color: #f3f4f6;
+    /* background-color: #f3f4f6; */
     border-radius: 0.5rem;
     padding: 0.5rem 0.75rem;
     transition: color 0.2s, background-color 0.2s;
