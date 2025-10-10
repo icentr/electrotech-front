@@ -8,10 +8,9 @@ export default defineNuxtConfig({
         plugins: [tailwindcss()],
     },
     css: ["~/style.css"],
-     runtimeConfig: {
-    public: {
-      apiBase: process.env.NUXT_API_BASE_URL,
+    runtimeConfig: {
+        public: {
+            apiBase: process.env.NUXT_API_BASE_URL,
+        },
     },
-  },
-
 });
