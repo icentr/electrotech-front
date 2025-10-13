@@ -291,7 +291,6 @@ onMounted(async () => {
                                     class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 rounded-xl"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span class="font-semibold text-gray-900 text-base">
                                             {{ getFilterButtonText(filter) }}
                                         </span>
@@ -430,7 +429,7 @@ onMounted(async () => {
                                         class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
                                     >
                                         <div class="flex items-center gap-3">
-                                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                            
                                             <span class="font-semibold text-gray-900">{{ filter.name }}</span>
                                             <span 
                                                 v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0"
