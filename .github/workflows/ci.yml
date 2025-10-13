@@ -24,7 +24,7 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key root@${DEPLOY_SERVER_ADDR} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key root@${SERVER_IP} << 'EOF'
             cd /root/electrotech-front
             make restart
           EOF
