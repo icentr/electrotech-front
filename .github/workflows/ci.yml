@@ -19,12 +19,12 @@ jobs:
     steps:
       - name: SSH into server
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           SERVER_IP: ${{ secrets.DEPLOY_SERVER_ADDR }}
         run: |
-          echo "$SSH_PRIVATE_KEY" > private_key
-          chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key root@${SERVER_IP} << 'EOF'
+          echo "$SSH_PASSWORD" > password
+          chmod 600 password
+          sshpass -f password ssh -o StrictHostKeyChecking=no root@${SERVER_IP} << 'EOF'
             cd /root/electrotech-front
             make restart
           EOF
