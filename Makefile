@@ -8,3 +8,12 @@ install:
 	cp  .env /opt/electrotech/frontend
 	cp electrotech-front.service /lib/systemd/system/
 	systemctl enable --now electrotech-front
+
+IMAGE_NAME=electrotech-front
+
+restart:
+	docker stop $(IMAGE_NAME)
+	docker rm $(IMAGE_NAME)
+	git pull
+	docker build -t $(IMAGE_NAME) .
+	docker run -d --name $(IMAGE_NAME) -p 80:3000 $(IMAGE_NAME)
