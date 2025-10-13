@@ -1,0 +1,29 @@
+name: 'CI/CD'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: docker build -t electrotech-front .
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: SSH into server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" &gt; private_key
+          chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key user@your_vm_ip &lt;&lt; 'EOF'
+            cd /root/electrotech-front
+            make restart
+          EOF
