@@ -2,57 +2,20 @@
 useHead({
   title: "О Компании",
 });
+
+import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP, ADDRESS } from "~/data";
 </script>
 <template>
   <div class="bg-gray-50 antialiased">
     <!-- Верхняя панель с контактами -->
-    <div class="bg-gray-900 text-gray-300 text-sm">
-      <div
-        class="container mx-auto px-4 py-2 flex justify-between items-center"
-      >
-        <div class="flex items-center space-x-5">
-          <a
-            href="#"
-            class="text-gray-300 hover:text-blue-400 transition-colors"
-            ><i class="fab fa-vk text-lg"></i
-          ></a>
-          <a
-            href="#"
-            class="text-gray-300 hover:text-blue-400 transition-colors"
-            ><i class="fab fa-telegram text-lg"></i
-          ></a>
-          <a
-            href="#"
-            class="text-gray-300 hover:text-blue-400 transition-colors"
-            ><i class="fab fa-whatsapp text-lg"></i
-          ></a>
-        </div>
-      </div>
-    </div>
 
-    <!-- Видео о компании -->
-    <section class="relative bg-gray-900">
-      <div class="container mx-auto px-4 py-16">
-        <div
-          class="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-2xl"
-        >
-          <iframe
-            class="w-full h-full"
-            src="https://www.youtube.com/embed/ВАШЕ_ВИДЕО"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-    </section>
 
     <!-- О компании -->
     <section class="py-16 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
           <h2 class="text-4xl font-bold text-gray-900 mb-4">
-            О КОМПАНИИ ICENTR.PRO
+            О КОМПАНИИ {{COMPANY_NAME}}
           </h2>
           <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
         </div>
@@ -61,7 +24,7 @@ useHead({
           <div>
             <h3 class="text-2xl font-bold text-gray-900 mb-6">Наша миссия</h3>
             <p class="text-gray-600 mb-6 text-lg leading-relaxed">
-              Компания ICENTR.PRO уже более 10 лет является надежным поставщиком
+              Компания {{COMPANY_NAME}}уже более 10 лет является надежным поставщиком
               электротехнических компонентов для промышленных предприятий. Мы
               специализируемся на поставках контроллеров, автоматических
               выключателей, блоков питания и других комплектующих от ведущих
@@ -224,7 +187,7 @@ useHead({
                 <div>
                   <h4 class="font-bold text-gray-900 mb-1">Адрес</h4>
                   <p class="text-gray-600">
-                    г. Москва, ул. Промышленная, д. 15, офис 304
+                    {{ADDRESS}}
                   </p>
                 </div>
               </div>
@@ -237,7 +200,7 @@ useHead({
                 </div>
                 <div>
                   <h4 class="font-bold text-gray-900 mb-1">Телефон</h4>
-                  <p class="text-gray-600">+7 (495) 123-45-67</p>
+                  <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="text-gray-600">{{PHONE_NUMBER}}</a>
                 </div>
               </div>
 
@@ -249,7 +212,7 @@ useHead({
                 </div>
                 <div>
                   <h4 class="font-bold text-gray-900 mb-1">Email</h4>
-                  <p class="text-gray-600">info@icentr.pro</p>
+                  <p class="text-gray-600">{{EMAIL}}</p>
                 </div>
               </div>
 
@@ -270,12 +233,8 @@ useHead({
           </div>
 
           <div class="h-96 rounded-xl overflow-hidden shadow-lg">
-            <iframe
-              src="https://yandex.ru/map-widget/v1/?um=constructor%3AВАШ_КОНСТРУКТОР_КАРТЫ&amp;source=constructor"
-              width="100%"
-              height="100%"
-              frameborder="0"
-            ></iframe>
+            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f57d74ae9e3bebc9d78f87bc8cfb77f24c313897c3ab5eaf13562d430075cfe&amp;source=constructor" 
+            width="653" height="506" frameborder="0"></iframe>
           </div>
         </div>
       </div>
@@ -306,9 +265,9 @@ useHead({
                   <div>
                     <h3 class="font-bold text-sm text-blue-200">Телефон</h3>
                     <a
-                      href="tel:+74951234567"
+                      :href="'tel:' + PHONE_NUMBER_NORMALIZED"
                       class="text-lg font-medium hover:underline"
-                      >+7 (495) 123-45-67</a
+                      >{{PHONE_NUMBER}}</a
                     >
                   </div>
                 </div>
@@ -321,9 +280,9 @@ useHead({
                   <div>
                     <h3 class="font-bold text-sm text-blue-200">Email</h3>
                     <a
-                      href="mailto:info@icentr.pro"
+                      :href="'mailto:' + EMAIL"
                       class="text-lg font-medium hover:underline"
-                      >info@icentr.pro</a
+                      >{{EMAIL}}</a
                     >
                   </div>
                 </div>
@@ -336,7 +295,7 @@ useHead({
                   <div>
                     <h3 class="font-bold text-sm text-blue-200">Адрес</h3>
                     <p class="text-sm font-medium">
-                      г. Москва, ул. Промышленная, д. 15, офис 304
+                      {{ADDRESS}}
                     </p>
                   </div>
                 </div>
@@ -409,7 +368,7 @@ useHead({
 
     <!-- Плавающая кнопка "Позвонить" -->
     <a
-      href="tel:+74951234567"
+      :href="'tel:' + PHONE_NUMBER_NORMALIZED"
       class="fixed bottom-8 right-8 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300 z-50 group"
     >
       <i class="fas fa-phone-alt text-xl"></i>

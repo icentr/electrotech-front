@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import ProductCard from "../components/ProductCard.vue";
 import { useCartStore } from "../stores/cart";
-import { ArrowLeftIcon, ArrowRightIcon, XMarkIcon, FunnelIcon } from "@heroicons/vue/16/solid";
+import { ArrowLeftIcon, ArrowRightIcon, XMarkIcon, FunnelIcon, ChevronDownIcon } from "@heroicons/vue/16/solid";
 import { getApi } from "@/api";
 
 const api = getApi();
@@ -21,9 +21,10 @@ const priceMax = ref(null);
 const filters = ref([]);
 const categories = ref([]);
 
-// Новые реактивные переменные для мобильной фильтрации
+// Реактивные переменные для управления фильтрами
 const isFiltersOpen = ref(false);
 const activeFilterSection = ref(null);
+const desktopExpandedFilters = ref(new Set()); // Для хранения открытых фильтров на десктопе
 
 const fetchFilters = async () => {
     try {
@@ -146,7 +147,7 @@ const addToCart = (product) => {
     cart.addToCart(product);
 };
 
-// Функции для мобильной фильтрации
+// Функции для управления фильтрами
 const openFilters = () => {
     isFiltersOpen.value = true;
 };
@@ -158,6 +159,14 @@ const closeFilters = () => {
 
 const toggleFilterSection = (filterName) => {
     activeFilterSection.value = activeFilterSection.value === filterName ? null : filterName;
+};
+
+const toggleDesktopFilter = (filterName) => {
+    if (desktopExpandedFilters.value.has(filterName)) {
+        desktopExpandedFilters.value.delete(filterName);
+    } else {
+        desktopExpandedFilters.value.add(filterName);
+    }
 };
 
 const clearAllFilters = () => {
@@ -186,6 +195,26 @@ const activeFiltersCount = () => {
         }
     });
     return count;
+};
+
+// Получить количество выбранных опций для фильтра
+const getSelectedOptionsCount = (filter) => {
+    if (filter.type === 'list') {
+        return filter.options.filter(option => option.selected).length;
+    }
+    return 0;
+};
+
+// Получить текст для кнопки фильтра на десктопе
+const getFilterButtonText = (filter) => {
+    const baseText = filter.name;
+    const selectedCount = getSelectedOptionsCount(filter);
+    
+    if (selectedCount > 0) {
+        return `${baseText} (${selectedCount})`;
+    }
+    
+    return baseText;
 };
 
 onMounted(async () => {
@@ -220,32 +249,93 @@ onMounted(async () => {
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
-                <!-- Боковая панель фильтров для десктопа -->
-                <aside class="hidden lg:block lg:w-1/4">
+                <!-- Боковая панель фильтров для десктопа - компактная версия -->
+                <aside class="hidden lg:block lg:w-64">
                     <div class="bg-white rounded-lg shadow-sm p-5 sticky top-4">
-                        <h2 class="text-lg font-bold text-gray-900 mb-5">Фильтры</h2>
+                        <div class="flex items-center justify-between mb-5">
+                            <h2 class="text-lg font-bold text-gray-900">Фильтры</h2>
+                            <button 
+                                v-if="activeFiltersCount() > 0"
+                                @click="clearAllFilters" 
+                                class="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                            >
+                                Сбросить
+                            </button>
+                        </div>
 
-                        <div class="mb-6" v-for="filter in filters" :key="filter.id">
-                            <h3 class="text-sm font-semibold text-gray-900 mb-3 flex justify-between items-center">
-                                <span>{{ filter.name }}</span>
-                            </h3>
-                            <ul v-if="filter.type == 'list'" class="space-y-2">
-                                <li v-for="option in filter.options" :key="option.id">
-                                    <label class="text-gray-600 hover:text-blue-600 text-sm flex items-center cursor-pointer">
-                                        <input type="checkbox" class="mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500" :value="option.name" v-model="option.selected" />
-                                        {{ option.name }} ({{ option.count }})
-                                    </label>
-                                </li>
-                            </ul>
-                            <div v-if="filter.type == 'number'" class="flex gap-2">
-                                <input type="number" placeholder="От" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" v-model.number="filter.inputMin" />
-                                <span class="text-gray-400 flex items-center">—</span>
-                                <input type="number" placeholder="До" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm no-spinner" v-model.number="filter.inputMax" />
+                        <!-- Компактные выпадающие фильтры -->
+                        <div class="space-y-2">
+                            <div v-for="filter in filters" :key="filter.name" class="border border-gray-200 rounded-lg">
+                                <!-- Кнопка для раскрытия фильтра -->
+                                <button 
+                                    @click="toggleDesktopFilter(filter.name)"
+                                    class="w-full p-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-lg"
+                                >
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-medium text-gray-900 text-sm">
+                                            {{ getFilterButtonText(filter) }}
+                                        </span>
+                                    </div>
+                                    <ChevronDownIcon 
+                                        class="size-4 text-gray-400 transition-transform duration-200"
+                                        :class="{ 'rotate-180': desktopExpandedFilters.has(filter.name) }"
+                                    />
+                                </button>
+
+                                <!-- Контент фильтра -->
+                                <div 
+                                    v-if="desktopExpandedFilters.has(filter.name)"
+                                    class="px-3 pb-3 border-t border-gray-100"
+                                >
+                                    <!-- Список опций -->
+                                    <ul v-if="filter.type == 'list'" class="space-y-2 mt-3 max-h-60 overflow-y-auto">
+                                        <li v-for="option in filter.options" :key="option.id">
+                                            <label class="text-gray-600 hover:text-blue-600 text-sm flex items-center cursor-pointer">
+                                                <input 
+                                                    type="checkbox" 
+                                                    class="mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500" 
+                                                    :value="option.name" 
+                                                    v-model="option.selected" 
+                                                />
+                                                <span class="flex-1 truncate">{{ option.name }}</span>
+                                                <span class="text-gray-400 text-xs ml-1">({{ option.count }})</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+
+                                    <!-- Числовые поля -->
+                                    <div v-if="filter.type == 'number'" class="space-y-2 mt-3">
+                                        <div class="flex gap-2">
+                                            <input 
+                                                type="number" 
+                                                placeholder="От" 
+                                                class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm no-spinner" 
+                                                v-model.number="filter.inputMin" 
+                                            />
+                                            <span class="text-gray-400 flex items-center text-sm">—</span>
+                                            <input 
+                                                type="number" 
+                                                placeholder="До" 
+                                                class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm no-spinner" 
+                                                v-model.number="filter.inputMax" 
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <button @click="applyFilters" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
-                            Применить фильтры
+                        <button 
+                            @click="applyFilters" 
+                            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors mt-4 flex items-center justify-center gap-2"
+                        >
+                            <span>Применить</span>
+                            <span 
+                                v-if="activeFiltersCount() > 0" 
+                                class="bg-blue-500 text-white text-xs rounded-full px-2 py-1"
+                            >
+                                {{ activeFiltersCount() }}
+                            </span>
                         </button>
                     </div>
                 </aside>
@@ -277,7 +367,7 @@ onMounted(async () => {
 
                             <!-- Список фильтров -->
                             <div class="flex-1 overflow-y-auto">
-                                <div v-for="filter in filters" :key="filter.id" class="border-b border-gray-200">
+                                <div v-for="filter in filters" :key="filter.name" class="border-b border-gray-200">
                                     <!-- Заголовок секции фильтра -->
                                     <button 
                                         @click="toggleFilterSection(filter.name)"
@@ -365,7 +455,7 @@ onMounted(async () => {
                 </div>
 
                 <!-- Основная область с товарами -->
-                <div class="lg:w-3/4">
+                <div class="flex-1 min-w-0">
                     <div class="bg-white rounded-lg shadow-sm p-5 mb-6">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                             <h1 class="text-2xl font-bold text-gray-900 mb-4 md:mb-0">Каталог товаров</h1>
@@ -419,14 +509,22 @@ onMounted(async () => {
     -moz-appearance: textfield;
 }
 
-/* Плавная анимация для мобильных фильтров */
-.slide-enter-active,
-.slide-leave-active {
-    transition: transform 0.3s ease;
+/* Стили для скроллбара в выпадающих списках */
+.max-h-60::-webkit-scrollbar {
+    width: 4px;
 }
 
-.slide-enter-from,
-.slide-leave-to {
-    transform: translateX(100%);
+.max-h-60::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 2px;
+}
+
+.max-h-60::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+.max-h-60::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }
 </style>

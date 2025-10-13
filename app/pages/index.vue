@@ -2,7 +2,7 @@
 useHead({
     title: "ЭлектроТех",
 });
-import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
+import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP } from "~/data";
 </script>
 <template>
     <div class="bg-gray-50">
@@ -22,10 +22,10 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 mb-12 md:mb-0">
                         <div class="bg-white bg-opacity-20 rounded-full px-5 py-1.5 inline-block mb-6">
-                            <span class="font-medium text-sm tracking-wide text-blue-600">БЕСПЛАТНАЯ ДОСТАВКА ДО ТК ОТ 50 000 ₽</span>
+                            <span class="font-medium text-sm tracking-wide text-blue-600">БЕСПЛАТНАЯ ДОСТАВКА ДО ТК</span>
                         </div>
                         <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">КОМПЛЕКТУЮЩИЕ ДЛЯ ПРОМЫШЛЕННОЙ ЭЛЕКТРОТЕХНИКИ</h1>
-                        <p class="text-xl mb-8 opacity-90 max-w-lg">Контроллеры, автоматические выключатели, блоки питания, клеммы и другие электротехнические компоненты для предприятий</p>
+                        <p class="text-xl mb-8 opacity-90 max-w-lg">Автоматические выключатели, блоки питания, клеммы, контроллеры и другие электротехнические компоненты для предприятий</p>
 
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <a
@@ -94,7 +94,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                             <i class="fas fa-truck text-blue-600 text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-900">Доставка до ТК</h3>
-                        <p class="text-gray-600">Бесплатная доставка до транспортной компании при заказе от 50 000 рублей</p>
+                        <p class="text-gray-600">Бесплатная доставка до транспортной компании. Бесплатная доставка по Москве в пределах МКАД при заказе от 50 000 ₽</p>
                     </div>
 
                     <div class="feature-card bg-gray-50 rounded-xl p-8 transition-all duration-300 border border-gray-100 hover:border-blue-200">
@@ -102,7 +102,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                             <i class="fas fa-boxes text-blue-600 text-2xl"></i>
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-900">Широкий ассортимент</h3>
-                        <p class="text-gray-600">Контроллеры, автоматы, блоки питания, клеммы и другие электротехнические компоненты</p>
+                        <p class="text-gray-600">Автоматы, блоки питания, клеммы, контроллеры и другие электротехнические компоненты</p>
                     </div>
 
                     <div class="feature-card bg-gray-50 rounded-xl p-8 transition-all duration-300 border border-gray-100 hover:border-blue-200">
@@ -124,29 +124,17 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                         <h2 class="text-3xl font-bold text-gray-900 mb-2">КАТЕГОРИИ ТОВАРОВ</h2>
                         <p class="text-gray-600">Широкий ассортимент электротехнических компонентов</p>
                     </div>
-                    <a href="#" class="mt-4 md:mt-0 flex items-center text-blue-600 font-medium hover:text-blue-800 group">
+                    <a href="catalog" class="mt-4 md:mt-0 flex items-center text-blue-600 font-medium hover:text-blue-800 group">
                         <span class="border-b border-transparent group-hover:border-blue-600 transition-colors">Весь каталог</span>
                         <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
                     </a>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <a
-                        href="#"
-                        class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
-                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
-                            <i class="fas fa-microchip text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Промышленные контроллеры</h3>
-                        <p class="text-gray-600 text-sm">Широкий выбор моделей для автоматизации</p>
-                        <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
-                            Смотреть товары
-                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
-                        </div>
-                    </a>
+                    
 
                     <a
-                        href="#"
+                        href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
                         <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
                             <i class="fas fa-plug text-xl"></i>
@@ -160,7 +148,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                     </a>
 
                     <a
-                        href="#"
+                        href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
                         <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
                             <i class="fas fa-battery-full text-xl"></i>
@@ -174,13 +162,27 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                     </a>
 
                     <a
-                        href="#"
+                        href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
                         <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
                             <i class="fas fa-link text-xl"></i>
                         </div>
                         <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Клеммы и соединители</h3>
                         <p class="text-gray-600 text-sm">Надежные решения для монтажа</p>
+                        <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
+                            Смотреть товары
+                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                        </div>
+                    </a>
+
+                    <a
+                        href="catalog"
+                        class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
+                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
+                            <i class="fas fa-microchip text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Промышленные контроллеры</h3>
+                        <p class="text-gray-600 text-sm">Широкий выбор моделей для автоматизации</p>
                         <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
                             Смотреть товары
                             <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
@@ -199,7 +201,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <a
-                            href="tel:+74951234567"
+                            :href="'tel:' + PHONE_NUMBER_NORMALIZED"
                             class="bg-white text-blue-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
                             <i class="fas fa-phone-alt mr-3"></i>
                             Позвонить сейчас
@@ -225,7 +227,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Телефон отдела продаж</h3>
-                                        <a href="tel:+74951234567" class="text-lg font-medium hover:underline">+7 (495) 123-45-67</a>
+                                        <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="text-lg font-medium hover:underline">{{PHONE_NUMBER}}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
@@ -234,7 +236,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Email для заявок</h3>
-                                        <a href="mailto:sales@electro-tech.ru" class="text-lg font-medium hover:underline">sales@electro-tech.ru</a>
+                                        <a :href="'mailto:' + EMAIL" class="text-lg font-medium hover:underline">{{EMAIL}}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
@@ -243,7 +245,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Реквизиты</h3>
-                                        <p class="text-sm font-medium">ИНН 1234567890, КПП 123456001</p>
+                                        <p class="text-sm font-medium">ИНН {{COMPANY_INN}}, КПП {{COMPANY_KPP}}</p>
                                     </div>
                                 </div>
                             </div>
