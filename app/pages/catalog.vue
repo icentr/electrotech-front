@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import ProductCard from "../components/ProductCard.vue";
 import { useCartStore } from "../stores/cart";
 import { ArrowLeftIcon, ArrowRightIcon, XMarkIcon, FunnelIcon, ChevronDownIcon, AdjustmentsHorizontalIcon } from "@heroicons/vue/16/solid";
@@ -24,7 +24,7 @@ const categories = ref([]);
 // Реактивные переменные для управления фильтрами
 const isFiltersOpen = ref(false);
 const activeFilterSection = ref(null);
-const desktopExpandedFilters = ref(new Set()); // Для хранения открытых фильтров на десктопе
+const desktopExpandedFilters = ref(new Set());
 
 const fetchFilters = async () => {
     try {
@@ -69,8 +69,6 @@ const fetchFilters = async () => {
                     name: v,
                     count: 0,
                 }));
-
-                selectedFilters.value.categories = [];
             }
 
             if (f.type === "number") {
@@ -102,7 +100,6 @@ const fetchProducts = async () => {
                 });
             } else if (f.type === "number") {
                 if (f.inputMax == f.max && f.inputMin == f.min) {
-                    console.warn(`Фильтр ${f.name} не имеет значений`);
                     return;
                 }
                 filtersPayload.push({
@@ -111,12 +108,8 @@ const fetchProducts = async () => {
                     min: f.inputMin,
                     max: f.inputMax,
                 });
-            } else {
-                console.warn(`Неизвестный тип фильтра: ${f.type}`);
             }
         });
-
-        console.log("Отправляем фильтры:", filtersPayload);
 
         const response = await api.post("/products/filter", {
             page: page.value - 1,
@@ -133,7 +126,7 @@ const fetchProducts = async () => {
 const applyFilters = () => {
     page.value = 1;
     fetchProducts();
-    isFiltersOpen.value = false; // Закрываем фильтры после применения
+    isFiltersOpen.value = false;
 };
 
 const goToPage = (newPage) => {
@@ -182,7 +175,7 @@ const clearAllFilters = () => {
     });
 };
 
-// Подсчет активных фильтров для бейджа
+// Подсчет активных фильтров
 const activeFiltersCount = () => {
     let count = 0;
     filters.value.forEach(filter => {
@@ -197,24 +190,66 @@ const activeFiltersCount = () => {
     return count;
 };
 
-// Получить количество выбранных опций для фильтра
-const getSelectedOptionsCount = (filter) => {
-    if (filter.type === 'list') {
-        return filter.options.filter(option => option.selected).length;
+// Получить список активных фильтров с названиями
+const activeFiltersList = computed(() => {
+    const activeFilters = [];
+    
+    filters.value.forEach(filter => {
+        if (filter.type === 'list') {
+            const selectedOptions = filter.options.filter(option => option.selected);
+            selectedOptions.forEach(option => {
+                activeFilters.push({
+                    filterName: filter.name,
+                    optionName: option.name,
+                    type: 'list'
+                });
+            });
+        } else if (filter.type === 'number') {
+            if (filter.inputMin !== filter.min || filter.inputMax !== filter.max) {
+                activeFilters.push({
+                    filterName: filter.name,
+                    min: filter.inputMin,
+                    max: filter.inputMax,
+                    type: 'number'
+                });
+            }
+        }
+    });
+    
+    return activeFilters;
+});
+
+// Удалить конкретный фильтр
+const removeFilter = (filterToRemove) => {
+    if (filterToRemove.type === 'list') {
+        const filter = filters.value.find(f => f.name === filterToRemove.filterName);
+        if (filter) {
+            const option = filter.options.find(o => o.name === filterToRemove.optionName);
+            if (option) {
+                option.selected = false;
+            }
+        }
+    } else if (filterToRemove.type === 'number') {
+        const filter = filters.value.find(f => f.name === filterToRemove.filterName);
+        if (filter) {
+            filter.inputMin = filter.min;
+            filter.inputMax = filter.max;
+        }
     }
-    return 0;
 };
 
-// Получить текст для кнопки фильтра на десктопе
-const getFilterButtonText = (filter) => {
-    const baseText = filter.name;
-    const selectedCount = getSelectedOptionsCount(filter);
-    
-    if (selectedCount > 0) {
-        return `${baseText} (${selectedCount})`;
+// Получить текст для числового фильтра
+const getNumberFilterText = (filter) => {
+    if (filter.inputMin === filter.min && filter.inputMax === filter.max) {
+        return `${filter.name}: все значения`;
     }
-    
-    return baseText;
+    if (filter.inputMin === filter.min) {
+        return `${filter.name}: до ${filter.inputMax}`;
+    }
+    if (filter.inputMax === filter.max) {
+        return `${filter.name}: от ${filter.inputMin}`;
+    }
+    return `${filter.name}: ${filter.inputMin} - ${filter.inputMax}`;
 };
 
 onMounted(async () => {
@@ -249,7 +284,7 @@ onMounted(async () => {
             </div>
 
             <div class="flex flex-col lg:flex-row gap-8">
-                <!-- Боковая панель фильтров для десктопа - ШИРОКАЯ версия -->
+                <!-- Боковая панель фильтров для десктопа -->
                 <aside class="hidden lg:block lg:w-80 xl:w-96 flex-shrink-0">
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-6">
                         <!-- Заголовок с иконкой -->
@@ -272,13 +307,40 @@ onMounted(async () => {
                             </button>
                         </div>
 
-                        <!-- Статус активных фильтров -->
-                        <div v-if="activeFiltersCount() > 0" class="mb-6 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                            <div class="flex items-center gap-2 text-sm text-blue-700">
-                                <span class="font-medium">Активные фильтры:</span>
-                                <span class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs font-medium">
+                        <!-- Блок активных фильтров -->
+                        <div v-if="activeFiltersCount() > 0" class="mb-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-medium text-gray-700">Активные фильтры:</span>
+                                <span class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 font-medium">
                                     {{ activeFiltersCount() }}
                                 </span>
+                            </div>
+                            
+                            <!-- Список активных фильтров -->
+                            <div class="space-y-2">
+                                <div 
+                                    v-for="(activeFilter, index) in activeFiltersList" 
+                                    :key="index"
+                                    class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
+                                >
+                                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                                        <span class="text-sm text-blue-800 truncate">
+                                            <template v-if="activeFilter.type === 'list'">
+                                                {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
+                                            </template>
+                                            <template v-else-if="activeFilter.type === 'number'">
+                                                {{ getNumberFilterText(filters.find(f => f.name === activeFilter.filterName)) }}
+                                            </template>
+                                        </span>
+                                    </div>
+                                    <button 
+                                        @click="removeFilter(activeFilter)"
+                                        class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors"
+                                    >
+                                        <XMarkIcon class="size-4" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -291,8 +353,12 @@ onMounted(async () => {
                                     class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 rounded-xl"
                                 >
                                     <div class="flex items-center gap-3">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span class="font-semibold text-gray-900 text-base">
-                                            {{ getFilterButtonText(filter) }}
+                                            {{ filter.name }}
+                                            <span v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0" class="text-blue-600 ml-1">
+                                                ({{ filter.options.filter(o => o.selected).length }})
+                                            </span>
                                         </span>
                                     </div>
                                     <ChevronDownIcon 
@@ -338,7 +404,7 @@ onMounted(async () => {
                                                 <label class="block text-xs font-medium text-gray-500 mb-2">От</label>
                                                 <input 
                                                     type="number" 
-                                                    placeholder="Мин." 
+                                                    :placeholder="filter.min" 
                                                     class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
                                                     v-model.number="filter.inputMin" 
                                                 />
@@ -347,7 +413,7 @@ onMounted(async () => {
                                                 <label class="block text-xs font-medium text-gray-500 mb-2">До</label>
                                                 <input 
                                                     type="number" 
-                                                    placeholder="Макс." 
+                                                    :placeholder="filter.max" 
                                                     class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
                                                     v-model.number="filter.inputMax" 
                                                 />
@@ -402,7 +468,7 @@ onMounted(async () => {
                                         @click="clearAllFilters" 
                                         class="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1 rounded-lg hover:bg-blue-50"
                                     >
-                                        Сбросить
+                                        Сбросить все
                                     </button>
                                     <button @click="closeFilters" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                         <XMarkIcon class="size-6" />
@@ -410,13 +476,40 @@ onMounted(async () => {
                                 </div>
                             </div>
 
-                            <!-- Статус активных фильтров -->
-                            <div v-if="activeFiltersCount() > 0" class="mx-6 mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                                <div class="flex items-center gap-2 text-sm text-blue-700">
-                                    <span class="font-medium">Активных фильтров:</span>
-                                    <span class="bg-blue-600 text-white rounded-full px-2 py-1 text-xs font-medium">
+                            <!-- Блок активных фильтров для мобильной версии -->
+                            <div v-if="activeFiltersCount() > 0" class="mx-6 mt-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-sm font-medium text-gray-700">Активные фильтры:</span>
+                                    <span class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 font-medium">
                                         {{ activeFiltersCount() }}
                                     </span>
+                                </div>
+                                
+                                <!-- Список активных фильтров -->
+                                <div class="space-y-2 mb-4">
+                                    <div 
+                                        v-for="(activeFilter, index) in activeFiltersList" 
+                                        :key="index"
+                                        class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
+                                    >
+                                        <div class="flex items-center gap-2 flex-1 min-w-0">
+                                            <div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                                            <span class="text-sm text-blue-800 truncate">
+                                                <template v-if="activeFilter.type === 'list'">
+                                                    {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
+                                                </template>
+                                                <template v-else-if="activeFilter.type === 'number'">
+                                                    {{ getNumberFilterText(filters.find(f => f.name === activeFilter.filterName)) }}
+                                                </template>
+                                            </span>
+                                        </div>
+                                        <button 
+                                            @click="removeFilter(activeFilter)"
+                                            class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors"
+                                        >
+                                            <XMarkIcon class="size-4" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -429,7 +522,7 @@ onMounted(async () => {
                                         class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
                                     >
                                         <div class="flex items-center gap-3">
-                                            
+                                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                             <span class="font-semibold text-gray-900">{{ filter.name }}</span>
                                             <span 
                                                 v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0"
@@ -486,7 +579,7 @@ onMounted(async () => {
                                                     <label class="block text-xs font-medium text-gray-500 mb-2">От</label>
                                                     <input 
                                                         type="number" 
-                                                        placeholder="Мин." 
+                                                        :placeholder="filter.min" 
                                                         class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner" 
                                                         v-model.number="filter.inputMin" 
                                                     />
@@ -495,7 +588,7 @@ onMounted(async () => {
                                                     <label class="block text-xs font-medium text-gray-500 mb-2">До</label>
                                                     <input 
                                                         type="number" 
-                                                        placeholder="Макс." 
+                                                        :placeholder="filter.max" 
                                                         class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner" 
                                                         v-model.number="filter.inputMax" 
                                                     />
@@ -601,12 +694,5 @@ onMounted(async () => {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
-}
-
-/* Плавные переходы для всех интерактивных элементов */
-* {
-    transition-property: color, background-color, border-color, transform, box-shadow;
-    transition-duration: 200ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
