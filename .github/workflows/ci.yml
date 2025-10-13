@@ -20,10 +20,11 @@ jobs:
       - name: SSH into server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_IP: ${{ secrets.DEPLOY_SERVER_ADDR }}
         run: |
           echo "$SSH_PRIVATE_KEY" > private_key
           chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key user@your_vm_ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key root@${DEPLOY_SERVER_ADDR} << 'EOF'
             cd /root/electrotech-front
             make restart
           EOF
