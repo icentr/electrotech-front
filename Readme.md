@@ -22,3 +22,17 @@ node .output/server/index.mjs
 ```
 
 После выполнения этих команд проект будет собран и запущен.
+
+## Docker
+
+Test build:
+
+```bash
+docker build -t electrotech-front .
+```
+
+Test run:
+
+```bash
+docker run -p 4000:3000 electrotech-front
+```
