@@ -324,7 +324,7 @@ onMounted(async () => {
                                     class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
                                 >
                                     <div class="flex items-center gap-2 flex-1 min-w-0">
-                                        <div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+
                                         <span class="text-sm text-blue-800 truncate">
                                             <template v-if="activeFilter.type === 'list'">
                                                 {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
@@ -353,7 +353,7 @@ onMounted(async () => {
                                     class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 rounded-xl"
                                 >
                                     <div class="flex items-center gap-3">
-                                        <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+
                                         <span class="font-semibold text-gray-900 text-base">
                                             {{ filter.name }}
                                             <span v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0" class="text-blue-600 ml-1">
@@ -493,7 +493,7 @@ onMounted(async () => {
                                         class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
                                     >
                                         <div class="flex items-center gap-2 flex-1 min-w-0">
-                                            <div class="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+
                                             <span class="text-sm text-blue-800 truncate">
                                                 <template v-if="activeFilter.type === 'list'">
                                                     {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
@@ -522,7 +522,7 @@ onMounted(async () => {
                                         class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
                                     >
                                         <div class="flex items-center gap-3">
-                                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+
                                             <span class="font-semibold text-gray-900">{{ filter.name }}</span>
                                             <span 
                                                 v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0"
