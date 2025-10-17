@@ -1,5 +1,5 @@
 <script setup>
-import { PlusIcon, MinusIcon, TrashIcon, ChevronRightIcon } from "@heroicons/vue/16/solid";
+import { PlusIcon, MinusIcon, TrashIcon, ChevronRightIcon, ShoppingCartIcon, ArrowLeftIcon, CreditCardIcon } from "@heroicons/vue/16/solid";
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { getImageUrl } from "../api";
@@ -65,10 +65,9 @@ const cartItems = computed(() => cartStore.cartItems);
 </script>
 
 <template>
+    <Breadcrumbs :page="'Корзина'" />
     <div class="pb-12">
         <div class="container mx-auto px-4">
-            <Breadcrumbs :page="'Корзина'" />
-
             <h1 class="text-2xl font-bold text-gray-900 mb-6">Корзина</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -148,7 +147,8 @@ const cartItems = computed(() => cartStore.cartItems);
                                     <button class="bg-blue-600 text-white px-4 py-2 rounded-r-md text-sm font-medium hover:bg-blue-700 transition-colors">Применить</button>
                                 </form>
                                 <button class="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center" @click="clearCart">
-                                    <i class="fas fa-trash-alt mr-2"></i> Очистить корзину
+                                    <TrashIcon class="size-4 mr-2" />
+                                    Очистить корзину
                                 </button>
                             </div>
                             <p v-if="message" :class="message === 'Промокод недействителен' ? 'text-red-600' : 'text-green-600'" class="mt-2 text-sm">
@@ -159,12 +159,13 @@ const cartItems = computed(() => cartStore.cartItems);
                         <!-- Пустая корзина -->
                         <div v-else class="py-12 text-center">
                             <div class="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-shopping-cart text-gray-400 text-xl"></i>
+                                <ShoppingCartIcon class="size-6 text-gray-400" />
                             </div>
                             <h3 class="text-lg font-medium text-gray-900 mb-2">Ваша корзина пуста</h3>
                             <p class="text-gray-500 mb-6">Добавьте товары из каталога, чтобы продолжить</p>
                             <RouterLink to="/catalog" class="bg-blue-600 text-white py-2 px-6 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors inline-flex items-center">
-                                <i class="fas fa-arrow-left mr-2"></i> Перейти в каталог
+                                <ArrowLeftIcon class="size-4 mr-2" />
+                                Перейти в каталог
                             </RouterLink>
                         </div>
                     </div>
@@ -197,7 +198,7 @@ const cartItems = computed(() => cartStore.cartItems);
                             v-if="cartItems.length > 0"
                             @click="handleCheckout"
                             class="w-full bg-blue-600 text-white py-3 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center justify-center">
-                            <i class="fas fa-credit-card mr-2"></i> Оформить заказ
+                            <CreditCardIcon class="size-4 mr-2" /> Оформить заказ
                         </button>
 
                         <div class="mt-4 text-xs text-gray-500">

@@ -5,7 +5,7 @@
             <div class="text-center">
                 <div class="flex justify-center">
                     <div class="bg-blue-600 p-3 rounded-lg shadow-sm">
-                        <i class="fas fa-bolt text-white text-2xl"></i>
+                        <BoltIcon class="size-6 text-white" />
                     </div>
                 </div>
                 <h2 class="mt-6 text-3xl font-bold text-gray-900">Вход в личный кабинет</h2>
@@ -19,7 +19,7 @@
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-envelope text-gray-400"></i>
+                                <EnvelopeIcon class="size-5 text-gray-400" />
                             </div>
                             <input
                                 id="email"
@@ -28,7 +28,7 @@
                                 type="email"
                                 autocomplete="email"
                                 required
-                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="block w-full px-4 ps-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="your@email.com" />
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Пароль</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
+                                <LockClosedIcon class="size-6 text-gray-400" />
                             </div>
                             <input
                                 id="password"
@@ -46,7 +46,7 @@
                                 type="password"
                                 autocomplete="current-password"
                                 required
-                                class="block w-full px-4 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="block w-full px-4 ps-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="••••••••" />
                         </div>
                     </div>
@@ -66,11 +66,9 @@
                 <div>
                     <button
                         type="submit"
-                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                            <i class="fas fa-sign-in-alt text-blue-300 group-hover:text-blue-200"></i>
-                        </span>
+                        class="group relative w-full items-center gap-2 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                         Войти
+                        <ArrowRightEndOnRectangleIcon class="size-5 text-blue-300 group-hover:text-blue-200" />
                     </button>
                 </div>
             </form>
@@ -88,6 +86,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
+import { ArrowRightEndOnRectangleIcon, BoltIcon, EnvelopeIcon, LockClosedIcon } from "@heroicons/vue/16/solid";
 
 const api = getApi();
 

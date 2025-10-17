@@ -2,20 +2,23 @@
 useHead({
     title: "ЭлектроТех",
 });
+import {
+    ArchiveBoxIcon,
+    ArrowRightIcon,
+    CheckCircleIcon,
+    ChevronRightIcon,
+    CpuChipIcon,
+    CurrencyDollarIcon,
+    DocumentTextIcon,
+    EnvelopeIcon,
+    ListBulletIcon,
+    PhoneIcon,
+    TruckIcon,
+} from "@heroicons/vue/16/solid";
 import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP } from "~/data";
 </script>
 <template>
     <div class="bg-gray-50">
-        <!-- Верхняя панель с контактами -->
-
-        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center space-x-5">
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors"><i class="fab fa-vk text-lg"></i></a>
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors"><i class="fab fa-telegram text-lg"></i></a>
-                <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors"><i class="fab fa-whatsapp text-lg"></i></a>
-            </div>
-        </div>
-
         <!-- Герой-секция с акцентом на ваши товары -->
         <section class="hero-gradient text-white">
             <div class="container mx-auto px-4 py-20 md:py-28">
@@ -31,28 +34,28 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                             <a
                                 href="#contact-form"
                                 class="bg-white text-blue-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
-                                <i class="fas fa-phone-alt mr-3"></i>
+                                <PhoneIcon class="size-6 me-3" />
                                 ЗАКАЗАТЬ ЗВОНОК
                             </a>
                             <RouterLink
                                 to="catalog"
                                 class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg hover:bg-white hover:text-blue-600 transition duration-300 flex items-center justify-center hover:shadow-lg">
-                                <i class="fas fa-list-alt mr-3"></i>
+                                <ListBulletIcon class="size-6 mr-3" />
                                 СМОТРЕТЬ КАТАЛОГ
                             </RouterLink>
                         </div>
 
                         <div class="mt-10 flex flex-wrap gap-3">
-                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
-                                <i class="fas fa-check-circle mr-2 text-blue-300"></i>
+                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm gap-2">
+                                <CheckCircleIcon class="size-6 text-blue-600" />
                                 <span class="text-sm text-blue-600">Собственный склад</span>
                             </div>
-                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
-                                <i class="fas fa-check-circle mr-2 text-blue-300"></i>
+                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm gap-2">
+                                <CheckCircleIcon class="size-6 text-blue-600" />
                                 <span class="text-sm text-blue-600">Оригинальные компоненты</span>
                             </div>
-                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm">
-                                <i class="fas fa-check-circle mr-2 text-blue-300"></i>
+                            <div class="flex items-center bg-white bg-opacity-20 rounded-full px-4 py-2 backdrop-blur-sm gap-2">
+                                <CheckCircleIcon class="size-6 text-blue-600" />
                                 <span class="text-sm text-blue-600">Техническая консультация</span>
                             </div>
                         </div>
@@ -70,7 +73,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                         <div class="absolute m-x-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-4 md:p-6 rounded-xl shadow-hard w-max md:min-w-48 floating-phone border border-gray-100">
                             <div class="flex items-center mb-2">
                                 <div class="bg-blue-600 rounded-full p-2 mr-3 pulse-animation">
-                                    <i class="fas fa-phone text-white text-sm"></i>
+                                    <PhoneIcon class="size-6 text-white" />
                                 </div>
                                 <span class="font-bold text-sm">Отдел продаж</span>
                             </div>
@@ -91,7 +94,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="feature-card bg-gray-50 rounded-xl p-8 transition-all duration-300 border border-gray-100 hover:border-blue-200">
                         <div class="bg-blue-600 bg-opacity-10 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-                            <i class="fas fa-truck text-blue-600 text-2xl"></i>
+                            <TruckIcon class="size-9 text-white" />
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-900">Доставка до ТК</h3>
                         <p class="text-gray-600">Бесплатная доставка до транспортной компании. Бесплатная доставка по Москве в пределах МКАД при заказе от 50 000 ₽</p>
@@ -99,7 +102,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
 
                     <div class="feature-card bg-gray-50 rounded-xl p-8 transition-all duration-300 border border-gray-100 hover:border-blue-200">
                         <div class="bg-blue-600 bg-opacity-10 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-                            <i class="fas fa-boxes text-blue-600 text-2xl"></i>
+                            <ArchiveBoxIcon class="size-9 text-white" />
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-900">Широкий ассортимент</h3>
                         <p class="text-gray-600">Автоматы, блоки питания, клеммы, контроллеры и другие электротехнические компоненты</p>
@@ -107,7 +110,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
 
                     <div class="feature-card bg-gray-50 rounded-xl p-8 transition-all duration-300 border border-gray-100 hover:border-blue-200">
                         <div class="bg-blue-600 bg-opacity-10 rounded-full w-14 h-14 flex items-center justify-center mb-6">
-                            <i class="fas fa-file-invoice-dollar text-blue-600 text-2xl"></i>
+                            <CurrencyDollarIcon class="size-9 text-white" />
                         </div>
                         <h3 class="text-xl font-bold mb-3 text-gray-900">Гибкие условия</h3>
                         <p class="text-gray-600">Работаем по безналичному расчету с НДС. Индивидуальные условия для постоянных клиентов</p>
@@ -126,52 +129,44 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                     </div>
                     <a href="catalog" class="mt-4 md:mt-0 flex items-center text-blue-600 font-medium hover:text-blue-800 group">
                         <span class="border-b border-transparent group-hover:border-blue-600 transition-colors">Весь каталог</span>
-                        <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                        <ArrowRightIcon class="ml-2 size-6 transition-transform group-hover:translate-x-1" />
                     </a>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    
-
                     <a
                         href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
-                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
-                            <i class="fas fa-plug text-xl"></i>
-                        </div>
+                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">В</div>
                         <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Автоматические выключатели</h3>
                         <p class="text-gray-600 text-sm">Защита электроцепей от перегрузок и КЗ</p>
                         <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
                             Смотреть товары
-                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                            <ChevronRightIcon class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                         </div>
                     </a>
 
                     <a
                         href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
-                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
-                            <i class="fas fa-battery-full text-xl"></i>
-                        </div>
+                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">БП</div>
                         <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Блоки питания</h3>
                         <p class="text-gray-600 text-sm">Стабилизированные источники питания</p>
                         <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
                             Смотреть товары
-                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                            <ChevronRightIcon class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                         </div>
                     </a>
 
                     <a
                         href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
-                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
-                            <i class="fas fa-link text-xl"></i>
-                        </div>
+                        <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">К</div>
                         <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Клеммы и соединители</h3>
                         <p class="text-gray-600 text-sm">Надежные решения для монтажа</p>
                         <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
                             Смотреть товары
-                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                            <ChevronRightIcon class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                         </div>
                     </a>
 
@@ -179,13 +174,13 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                         href="catalog"
                         class="group bg-white rounded-xl shadow-sm p-6 transition-all duration-300 hover:shadow-md hover:border-blue-600 hover:border hover:-translate-y-1 border border-transparent">
                         <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white text-blue-600 transition-colors">
-                            <i class="fas fa-microchip text-xl"></i>
+                            <CpuChipIcon class="size-7" />
                         </div>
                         <h3 class="text-lg font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">Промышленные контроллеры</h3>
                         <p class="text-gray-600 text-sm">Широкий выбор моделей для автоматизации</p>
                         <div class="mt-4 text-blue-600 font-medium flex items-center text-sm group-hover:text-blue-800 transition-colors">
                             Смотреть товары
-                            <i class="fas fa-chevron-right ml-2 text-xs transition-transform group-hover:translate-x-1"></i>
+                            <ChevronRightIcon class="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                         </div>
                     </a>
                 </div>
@@ -203,7 +198,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                         <a
                             :href="'tel:' + PHONE_NUMBER_NORMALIZED"
                             class="bg-white text-blue-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
-                            <i class="fas fa-phone-alt mr-3"></i>
+                            <PhoneIcon class="size-6 mr-3" />
                             Позвонить сейчас
                         </a>
                     </div>
@@ -223,29 +218,29 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                             <div class="space-y-5">
                                 <div class="flex items-start">
                                     <div class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <i class="fas fa-phone-alt"></i>
+                                        <PhoneIcon class="size-6" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Телефон отдела продаж</h3>
-                                        <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="text-lg font-medium hover:underline">{{PHONE_NUMBER}}</a>
+                                        <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="text-lg font-medium hover:underline">{{ PHONE_NUMBER }}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
                                     <div class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <i class="fas fa-envelope"></i>
+                                        <EnvelopeIcon class="size-6" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Email для заявок</h3>
-                                        <a :href="'mailto:' + EMAIL" class="text-lg font-medium hover:underline">{{EMAIL}}</a>
+                                        <a :href="'mailto:' + EMAIL" class="text-lg font-medium hover:underline">{{ EMAIL }}</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
                                     <div class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <i class="fas fa-file-invoice"></i>
+                                        <DocumentTextIcon class="size-6" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Реквизиты</h3>
-                                        <p class="text-sm font-medium">ИНН {{COMPANY_INN}}, КПП {{COMPANY_KPP}}</p>
+                                        <p class="text-sm font-medium">ИНН {{ COMPANY_INN }}, КПП {{ COMPANY_KPP }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -294,13 +289,6 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                 </div>
             </div>
         </section>
-
-        <!-- Плавающая кнопка "Позвонить" -->
-        <!-- <a
-            href="tel:+74951234567"
-            class="fixed bottom-24 right-8 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300 z-50 group">
-            <i class="fas fa-phone-alt text-xl"></i>
-        </a> -->
     </div>
 </template>
 

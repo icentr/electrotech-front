@@ -1,4 +1,5 @@
 <template>
+    <Breadcrumbs :page="order ? 'Заказ №' + order.id : 'Неизвестный заказ'" :breadcrumbs="[{ url: '/account/', name: 'Профиль' }]" />
     <div class="container mx-auto px-4 py-8">
         <div v-if="order">
             <h1 class="text-2xl font-bold mb-4">Заказ №{{ order.id }}</h1>
@@ -47,7 +48,8 @@
                                 </div>
                             </div>
                             <div v-if="product.quantity > 0" class="text-gray-500 text-sm font-medium flex items-center">
-                                <i class="fas fa-check-circle mr-1"></i> Количество ({{ product.quantity }})
+                                <CheckCircleIcon class="size-4 mr-1" />
+                                Количество ({{ product.quantity }})
                             </div>
                         </div>
                     </div>
@@ -56,8 +58,16 @@
 
             <div class="text-right text-xl font-bold mt-8">Итого: {{ formatCurrency(orderTotal) }}</div>
         </div>
-
-        <div v-else class="text-center py-12 text-gray-500">Загрузка данных заказа...</div>
+        <div v-else-if="loading" class="text-center py-12 text-gray-500">
+            Загрузка
+            <div class="flex items-center justify-center">
+                <ArrowPathIcon class="size-10 mr-2 animate-spin" />
+            </div>
+        </div>
+        <div v-else class="text-center py-12 text-gray-500">
+            <div class="font-mono text-3xl text-orange-500">404</div>
+            Нет такого заказа
+        </div>
     </div>
 </template>
 <script setup>
@@ -66,6 +76,9 @@ import { useRoute } from "vue-router";
 
 import { getImageUrl } from "~/api";
 import { getApi } from "@/api";
+import { ArrowPathIcon, CheckCircleIcon } from "@heroicons/vue/16/solid";
+
+const loading = ref(true);
 
 const api = getApi();
 
@@ -75,6 +88,8 @@ const order = ref(null);
 onMounted(async () => {
     try {
         const { data } = await api.get("/orders/get");
+
+        loading.value = false;
         const orders = data.orders;
         const id = Number(route.params.id);
 
