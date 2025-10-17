@@ -4,7 +4,7 @@ import { getApi } from "@/api";
 
 const api = getApi();
 
-import { CheckIcon, EnvelopeIcon, ExclamationTriangleIcon, PhoneIcon, PhoneXMarkIcon } from "@heroicons/vue/16/solid";
+import { BuildingOfficeIcon, CheckIcon, EnvelopeIcon, ExclamationTriangleIcon, PhoneIcon, PhoneXMarkIcon } from "@heroicons/vue/16/solid";
 import { PencilIcon } from "@heroicons/vue/24/outline";
 
 useHead({
@@ -140,7 +140,6 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                         <div class="flex flex-col items-center mb-6">
                             <div class="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
                                 <img v-if="user.avatarUrl" loading="lazy" :src="user.avatarUrl" class="w-20 h-20 rounded-full" alt="" />
-                                <i class="fas fa-user text-blue-600 text-3xl"></i>
                             </div>
                             <h2 class="text-xl font-bold text-gray-900">{{ user.name }}</h2>
                             <p class="text-gray-500">{{ user.position }}</p>
@@ -159,7 +158,6 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 
                             <div class="flex items-start">
                                 <div class="bg-blue-50 rounded-lg w-10 h-10 flex items-center justify-center mr-4 text-blue-600">
-                                    <i class="fas fa-phone-alt"></i>
                                     <PhoneIcon v-if="user.phone" class="size-6" />
                                     <PhoneXMarkIcon v-else class="size-6" />
                                 </div>
@@ -189,7 +187,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex items-center mb-6">
                             <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mr-4 text-blue-600">
-                                <i class="fas fa-building"></i>
+                                <BuildingOfficeIcon class="size-6" />
                             </div>
                             <div>
                                 <h2 class="text-xl font-bold text-gray-900">Информация о компании</h2>
@@ -259,14 +257,12 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-xl font-bold text-gray-900">История заказов</h2>
-                            <!-- <button class="text-blue-600 hover:text-blue-800 font-medium flex items-center"><i class="fas fa-file-export mr-2"></i> Экспорт в Excel</button> -->
                         </div>
 
                         <!-- Фильтры -->
                         <!-- <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0 md:space-x-4">
                             <div class="relative flex-1">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-search text-gray-400"></i>
                                 </div>
                                 <input
                                     type="text"
@@ -321,14 +317,6 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                                                 {{ order.status }}
                                             </span>
                                         </td>
-                                        <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <RouterLink :to="`/orders/${order.id}`" class="text-blue-600 hover:text-blue-900 mr-4">
-                                                <i class="fas fa-eye"></i>
-                                            </RouterLink>
-                                            <button class="text-blue-600 hover:text-blue-900" @click="repeatOrder(order.id)">
-                                                <i class="fas fa-redo"></i>
-                                            </button>
-                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -339,13 +327,11 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                             <div class="text-sm text-gray-500">Показано с <span class="font-medium">1</span> по <span class="font-medium">5</span> из <span class="font-medium">12</span> заказов</div>
                             <div class="flex space-x-2">
                                 <button class="px-3 py-1 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    <i class="fas fa-chevron-left"></i>
                                 </button>
                                 <button class="px-3 py-1 rounded-lg border border-blue-500 bg-blue-50 text-blue-600 font-medium">1</button>
                                 <button class="px-3 py-1 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">2</button>
                                 <button class="px-3 py-1 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">3</button>
                                 <button class="px-3 py-1 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                                    <i class="fas fa-chevron-right"></i>
                                 </button>
                             </div>
                         </div> -->

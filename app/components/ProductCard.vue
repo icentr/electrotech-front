@@ -34,15 +34,21 @@
                         <div class="text-gray-900 font-bold text-xl">{{ product.price }} ₽</div>
                         <div v-if="product.oldPrice" class="text-gray-400 text-sm line-through">{{ product.oldPrice }} ₽</div>
                     </div>
-                    <div v-if="product.count > 0" class="text-green-600 text-sm font-medium"><i class="fas fa-check-circle mr-1"></i>В наличии ({{ product.count }})</div>
-                    <div v-else class="text-gray-500 text-sm"><i class="fas fa-clock mr-1"></i> Под заказ</div>
+                    <div v-if="product.count > 0" class="text-green-600 text-sm font-medium flex gap-1">
+                        <CheckCircleIcon class="text-green-600 size-5" />
+                        В наличии ({{ product.count }})
+                    </div>
+                    <div v-else class="text-gray-500 text-sm flex gap-1">
+                        <ClockIcon class="text-gray-500 size-5" />
+                        Под заказ
+                    </div>
                 </div>
 
                 <button
                     :disabled="product.count == 0"
                     class="relative z-20 w-full bg-blue-600 disabled:bg-blue-200 disabled:text-blue-50 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
                     @click.stop="$emit('add-to-cart', product)">
-                    <i class="fas fa-shopping-cart mr-2"></i>
+                    <ShoppingCartIcon class="size-5 mr-2" />
                     В корзину
                 </button>
             </div>
@@ -51,6 +57,7 @@
 </template>
 
 <script setup>
+import { CheckCircleIcon, ClockIcon, ShoppingCartIcon } from "@heroicons/vue/16/solid";
 import { RouterLink } from "vue-router";
 import { getImageUrl } from "~/api";
 

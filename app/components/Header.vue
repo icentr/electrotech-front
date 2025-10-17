@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon } from "@heroicons/vue/16/solid";
+import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, PhoneIcon, ClockIcon, BoltIcon } from "@heroicons/vue/16/solid";
 const router = useRouter();
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -20,7 +20,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                 <!-- Логотип -->
                 <div class="flex items-center">
                     <div class="bg-blue-600 p-2 rounded-lg mr-3 shadow-sm">
-                        <i class="fas fa-bolt text-white text-xl"></i>
+                        <BoltIcon class="text-white size-6" />
                     </div>
                     <div>
                         <NuxtLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600 uppercase"> ИЦ Электро<span class="text-blue-600">техника</span> </NuxtLink>
@@ -51,13 +51,13 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 
                 <!-- Контакты -->
                 <div class="hidden md:flex items-center ml-4">
-                    <i class="fas fa-phone-alt mr-2 text-blue-400"></i>
+                    <PhoneIcon class="size-5 mr-2" />
                     <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="font-medium hover:text-blue-400">
                         {{ PHONE_NUMBER }}
                     </a>
                 </div>
                 <div class="hidden md:flex space-x-6 ml-4">
-                    <i class="far fa-clock mr-2 text-blue-400"></i>
+                    <ClockIcon class="size-5 mr-2" />
                     <span>Пн-Пт: 9:00–18:00</span>
                 </div>
                 <div class="hidden md:flex gap-3">
