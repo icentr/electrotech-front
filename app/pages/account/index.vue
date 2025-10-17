@@ -4,7 +4,8 @@ import { getApi } from "@/api";
 
 const api = getApi();
 
-import { CheckIcon, XMarkIcon, ExclamationTriangleIcon } from "@heroicons/vue/16/solid";
+import { CheckIcon, EnvelopeIcon, ExclamationTriangleIcon, PhoneIcon, PhoneXMarkIcon } from "@heroicons/vue/16/solid";
+import { PencilIcon } from "@heroicons/vue/24/outline";
 
 useHead({
     title: "Аккаунт",
@@ -41,6 +42,7 @@ onMounted(async () => {
         user.value.name = [data.surname, data.first_name, data.last_name].filter(Boolean).join(" ");
         user.value.email = data.email;
         user.value.phone = data.phone_number;
+        user.value.avatarUrl = data.avatarUrl;
     } catch (error) {
         console.error("Ошибка при получении данных пользователя:", error);
     }
@@ -137,6 +139,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                         <div class="flex flex-col items-center mb-6">
                             <div class="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                                <img v-if="user.avatarUrl" loading="lazy" :src="user.avatarUrl" class="w-20 h-20 rounded-full" alt="" />
                                 <i class="fas fa-user text-blue-600 text-3xl"></i>
                             </div>
                             <h2 class="text-xl font-bold text-gray-900">{{ user.name }}</h2>
@@ -146,7 +149,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                         <div class="space-y-4">
                             <div class="flex items-start">
                                 <div class="bg-blue-50 rounded-lg w-10 h-10 flex items-center justify-center mr-4 text-blue-600">
-                                    <i class="fas fa-envelope"></i>
+                                    <EnvelopeIcon class="size-6" />
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-500">Email</p>
@@ -157,6 +160,8 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                             <div class="flex items-start">
                                 <div class="bg-blue-50 rounded-lg w-10 h-10 flex items-center justify-center mr-4 text-blue-600">
                                     <i class="fas fa-phone-alt"></i>
+                                    <PhoneIcon v-if="user.phone" class="size-6" />
+                                    <PhoneXMarkIcon v-else class="size-6" />
                                 </div>
                                 <div>
                                     <p class="text-sm text-gray-500">Телефон</p>
@@ -166,8 +171,9 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 
                             <RouterLink
                                 to="/account/edit"
-                                class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                                <i class="fas fa-edit mr-2"></i> Редактировать профиль
+                                class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <PencilIcon class="size-5" />
+                                Редактировать профиль
                             </RouterLink>
                         </div>
                     </div>
@@ -240,8 +246,9 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 
                             <RouterLink
                                 to="/account/EditCompany"
-                                class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center">
-                                <i class="fas fa-edit mr-2"></i> Редактировать компанию
+                                class="w-full mt-6 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                <PencilIcon class="size-5" />
+                                Редактировать компанию
                             </RouterLink>
                         </div>
                     </div>
