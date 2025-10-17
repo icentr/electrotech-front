@@ -65,10 +65,9 @@ const cartItems = computed(() => cartStore.cartItems);
 </script>
 
 <template>
+    <Breadcrumbs :page="'Корзина'" />
     <div class="pb-12">
         <div class="container mx-auto px-4">
-            <Breadcrumbs :page="'Корзина'" />
-
             <h1 class="text-2xl font-bold text-gray-900 mb-6">Корзина</h1>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

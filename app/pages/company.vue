@@ -4,7 +4,7 @@ useHead({
 });
 
 import { ArchiveBoxIcon, ClockIcon, DocumentDuplicateIcon, DocumentTextIcon, EnvelopeIcon, MapPinIcon, PercentBadgeIcon, PhoneIcon, TruckIcon, UserGroupIcon } from "@heroicons/vue/16/solid";
-import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP, ADDRESS } from "~/data";
+import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, COMPANY_INN, COMPANY_KPP, ADDRESS } from "~/data";
 </script>
 <template>
     <div class="bg-gray-50 antialiased">
@@ -22,8 +22,9 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP,
                     <div>
                         <h3 class="text-2xl font-bold text-gray-900 mb-6">Наша миссия</h3>
                         <p class="text-gray-600 mb-6 text-lg leading-relaxed">
-                            Компания {{ COMPANY_NAME }}уже более 10 лет является надежным поставщиком электротехнических компонентов для промышленных предприятий. Мы специализируемся на поставках
-                            контроллеров, автоматических выключателей, блоков питания и других комплектующих от ведущих мировых производителей.
+                            Компания <span class="font-semibold">{{ COMPANY_NAME }}</span> уже более 10 лет является надежным поставщиком электротехнических компонентов для промышленных предприятий.
+                            Мы специализируемся проектирование и сборка НКУ любой сложности и конфигурации.
+                            <a class="text-blue-600 hover:text-blue-800 hover:underline active:underline" href="https://icentr.pro/">Наш сайт</a>
                         </p>
                         <p class="text-gray-600 mb-6 text-lg leading-relaxed">
                             Наша цель - обеспечить предприятия качественными электротехническими компонентами, сократив их затраты на поиск и закупку оборудования.

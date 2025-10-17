@@ -1,6 +1,6 @@
 <template>
+    <Breadcrumbs :page="order ? 'Заказ №' + order.id : 'Неизвестный заказ'" :breadcrumbs="[{ url: '/account/', name: 'Профиль' }]" />
     <div class="container mx-auto px-4 py-8">
-        <Breadcrumbs :page="order ? 'Заказ №' + order.id : 'Неизвестный заказ'" />
         <div v-if="order">
             <h1 class="text-2xl font-bold mb-4">Заказ №{{ order.id }}</h1>
             <p class="mb-2"><strong>Дата:</strong> {{ formatDate(order.date) }}</p>
