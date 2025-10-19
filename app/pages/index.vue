@@ -64,10 +64,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                     <div class="md:w-1/2 relative">
                         <div class="bg-white bg-opacity-20 rounded-2xl p-3 shadow-2xl backdrop-blur-sm">
                             <div class="bg-gray-100 border-2 border-gray-200 rounded-xl w-full h-80 flex items-center justify-center">
-                                <img
-                                    src="https://via.placeholder.com/500x300/1e3a8a/ffffff?text=Промышленные+контроллеры+и+автоматы"
-                                    alt="Электротехника"
-                                    class="rounded-lg object-cover h-full w-full" />
+                                <img src="https://dummyimage.com/500x300" alt="Электротехника" class="rounded-lg object-cover h-full w-full" />
                             </div>
                         </div>
                         <div class="absolute m-x-4 md:-bottom-6 md:-right-6 bg-white text-gray-900 p-4 md:p-6 rounded-xl shadow-hard w-max md:min-w-48 floating-phone border border-gray-100">
