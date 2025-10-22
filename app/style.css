@@ -11,3 +11,7 @@ input.no-spinner::-webkit-outer-spin-button {
 input.no-spinner {
   -moz-appearance: textfield;
 }
+
+@theme {
+  --color-accent: #0081b6;
+}

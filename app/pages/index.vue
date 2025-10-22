@@ -25,7 +25,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                 <div class="flex flex-col md:flex-row items-center">
                     <div class="md:w-1/2 mb-12 md:mb-0">
                         <div class="bg-white bg-opacity-20 rounded-full px-5 py-1.5 inline-block mb-6">
-                            <span class="font-medium text-sm tracking-wide text-[#0081b6]">БЕСПЛАТНАЯ ДОСТАВКА ДО
+                            <span class="font-medium text-sm tracking-wide text-accent">БЕСПЛАТНАЯ ДОСТАВКА ДО
                                 ТК</span>
                         </div>
                         <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">КОМПЛЕКТУЮЩИЕ ДЛЯ ПРОМЫШЛЕННОЙ
@@ -226,7 +226,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
 
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <a :href="'tel:' + PHONE_NUMBER_NORMALIZED"
-                            class="bg-white text-blue-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
+                            class="bg-white text-accent font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
                             <PhoneIcon class="size-6 mr-3" />
                             Позвонить сейчас
                         </a>
@@ -240,15 +240,15 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
             <div class="container mx-auto px-4">
                 <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
                     <div class="md:flex">
-                        <div class="md:w-1/2 bg-gradient-to-b from-blue-700 to-blue-600 text-white p-4 md:p-10">
+                        <div class="md:w-1/2 bg-accent text-white p-4 md:p-10">
                             <h2 class="text-2xl font-bold mb-4">КОНТАКТЫ</h2>
                             <p class="mb-6 opacity-90">Оставьте заявку для получения коммерческого предложения</p>
 
                             <div class="space-y-5">
                                 <div class="flex items-start">
                                     <div
-                                        class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <PhoneIcon class="size-6" />
+                                        class="bg-white bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                        <PhoneIcon class="size-6 text-accent" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Телефон отдела продаж</h3>
@@ -258,8 +258,8 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                                 </div>
                                 <div class="flex items-start">
                                     <div
-                                        class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <EnvelopeIcon class="size-6" />
+                                        class="bg-white bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                        <EnvelopeIcon class="text-accent size-6" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Email для заявок</h3>
@@ -269,8 +269,8 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                                 </div>
                                 <div class="flex items-start">
                                     <div
-                                        class="bg-blue-500 bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
-                                        <DocumentTextIcon class="size-6" />
+                                        class="bg-white bg-opacity-30 rounded-full w-10 h-10 flex items-center justify-center mr-4">
+                                        <DocumentTextIcon class="text-accent size-6" />
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-sm text-blue-200">Реквизиты</h3>
@@ -310,7 +310,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP 
                                         placeholder="Например: контроллеры ABB, клеммы WAGO..."></textarea>
                                 </div>
                                 <button type="submit"
-                                    class="w-full bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                                    class="w-full bg-accent text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
                                     Получить коммерческое предложение
                                 </button>
                             </form>

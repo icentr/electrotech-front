@@ -8,7 +8,7 @@ import { getApi } from "@/api";
 const api = getApi();
 
 useHead({
-  title: 'Каталог',
+    title: 'Каталог',
 })
 
 const cart = useCartStore();
@@ -193,7 +193,7 @@ const activeFiltersCount = () => {
 // Получить список активных фильтров с названиями
 const activeFiltersList = computed(() => {
     const activeFilters = [];
-    
+
     filters.value.forEach(filter => {
         if (filter.type === 'list') {
             const selectedOptions = filter.options.filter(option => option.selected);
@@ -215,7 +215,7 @@ const activeFiltersList = computed(() => {
             }
         }
     });
-    
+
     return activeFilters;
 });
 
@@ -263,17 +263,13 @@ onMounted(async () => {
         <div class="container mx-auto px-4">
             <!-- Кнопка открытия фильтров для мобильных -->
             <div class="lg:hidden mb-4">
-                <button 
-                    @click="openFilters" 
-                    class="w-full bg-white rounded-lg shadow-sm p-4 flex items-center justify-between text-gray-900 hover:bg-gray-50 transition-colors border border-gray-200"
-                >
+                <button @click="openFilters"
+                    class="w-full bg-white rounded-lg shadow-sm p-4 flex items-center justify-between text-gray-900 hover:bg-gray-50 transition-colors border border-gray-200">
                     <div class="flex items-center gap-2">
                         <AdjustmentsHorizontalIcon class="size-5 text-blue-600" />
                         <span class="font-medium">Фильтры</span>
-                        <span 
-                            v-if="activeFiltersCount() > 0" 
-                            class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 min-w-5 h-5 flex items-center justify-center"
-                        >
+                        <span v-if="activeFiltersCount() > 0"
+                            class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 min-w-5 h-5 flex items-center justify-center">
                             {{ activeFiltersCount() }}
                         </span>
                     </div>
@@ -291,18 +287,15 @@ onMounted(async () => {
                         <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
                             <div class="flex items-center gap-3">
                                 <div class="p-2 bg-blue-50 rounded-lg">
-                                    <AdjustmentsHorizontalIcon class="size-5 text-blue-600" />
+                                    <AdjustmentsHorizontalIcon class="size-5 text-accent" />
                                 </div>
                                 <div>
                                     <h2 class="text-xl font-bold text-gray-900">Фильтры</h2>
                                     <p class="text-sm text-gray-500 mt-1">Уточните параметры поиска</p>
                                 </div>
                             </div>
-                            <button 
-                                v-if="activeFiltersCount() > 0"
-                                @click="clearAllFilters" 
-                                class="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors px-3 py-1 rounded-lg hover:bg-blue-50"
-                            >
+                            <button v-if="activeFiltersCount() > 0" @click="clearAllFilters"
+                                class="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors px-3 py-1 rounded-lg hover:bg-blue-50">
                                 Сбросить все
                             </button>
                         </div>
@@ -315,14 +308,11 @@ onMounted(async () => {
                                     {{ activeFiltersCount() }}
                                 </span>
                             </div>
-                            
+
                             <!-- Список активных фильтров -->
                             <div class="space-y-2">
-                                <div 
-                                    v-for="(activeFilter, index) in activeFiltersList" 
-                                    :key="index"
-                                    class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
-                                >
+                                <div v-for="(activeFilter, index) in activeFiltersList" :key="index"
+                                    class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
                                     <div class="flex items-center gap-2 flex-1 min-w-0">
 
                                         <span class="text-sm text-blue-800 truncate">
@@ -330,14 +320,13 @@ onMounted(async () => {
                                                 {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
                                             </template>
                                             <template v-else-if="activeFilter.type === 'number'">
-                                                {{ getNumberFilterText(filters.find(f => f.name === activeFilter.filterName)) }}
+                                                {{getNumberFilterText(filters.find(f => f.name ===
+                                                    activeFilter.filterName))}}
                                             </template>
                                         </span>
                                     </div>
-                                    <button 
-                                        @click="removeFilter(activeFilter)"
-                                        class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors"
-                                    >
+                                    <button @click="removeFilter(activeFilter)"
+                                        class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors">
                                         <XMarkIcon class="size-4" />
                                     </button>
                                 </div>
@@ -346,50 +335,43 @@ onMounted(async () => {
 
                         <!-- Широкие выпадающие фильтры -->
                         <div class="space-y-3">
-                            <div v-for="filter in filters" :key="filter.name" class="border border-gray-200 rounded-xl hover:border-gray-300 transition-colors">
+                            <div v-for="filter in filters" :key="filter.name"
+                                class="border border-gray-200 rounded-xl hover:border-gray-300 transition-colors">
                                 <!-- Кнопка для раскрытия фильтра -->
-                                <button 
-                                    @click="toggleDesktopFilter(filter.name)"
-                                    class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 rounded-xl"
-                                >
+                                <button @click="toggleDesktopFilter(filter.name)"
+                                    class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-all duration-200 rounded-xl">
                                     <div class="flex items-center gap-3">
 
                                         <span class="font-semibold text-gray-900 text-base">
                                             {{ filter.name }}
-                                            <span v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0" class="text-blue-600 ml-1">
-                                                ({{ filter.options.filter(o => o.selected).length }})
+                                            <span
+                                                v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0"
+                                                class="text-blue-600 ml-1">
+                                                ({{filter.options.filter(o => o.selected).length}})
                                             </span>
                                         </span>
                                     </div>
-                                    <ChevronDownIcon 
-                                        class="size-5 text-gray-400 transition-transform duration-300"
-                                        :class="{ 'rotate-180': desktopExpandedFilters.has(filter.name) }"
-                                    />
+                                    <ChevronDownIcon class="size-5 text-gray-400 transition-transform duration-300"
+                                        :class="{ 'rotate-180': desktopExpandedFilters.has(filter.name) }" />
                                 </button>
 
                                 <!-- Контент фильтра -->
-                                <div 
-                                    v-if="desktopExpandedFilters.has(filter.name)"
-                                    class="px-4 pb-4 border-t border-gray-100 bg-gray-50/50 rounded-b-xl"
-                                >
+                                <div v-if="desktopExpandedFilters.has(filter.name)"
+                                    class="px-4 pb-4 border-t border-gray-100 bg-gray-50/50 rounded-b-xl">
                                     <!-- Список опций -->
                                     <div v-if="filter.type == 'list'" class="mt-4">
                                         <div class="max-h-72 overflow-y-auto custom-scrollbar pr-2">
                                             <div class="space-y-3">
-                                                <label 
-                                                    v-for="option in filter.options" 
-                                                    :key="option.id"
+                                                <label v-for="option in filter.options" :key="option.id"
                                                     class="flex items-center p-3 rounded-lg cursor-pointer transition-all duration-200 hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200"
-                                                    :class="{ 'bg-white shadow-sm border-gray-200': option.selected }"
-                                                >
-                                                    <input 
-                                                        type="checkbox" 
-                                                        class="mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 size-5" 
-                                                        :value="option.name" 
-                                                        v-model="option.selected" 
-                                                    />
-                                                    <span class="flex-1 text-gray-700 font-medium text-sm">{{ option.name }}</span>
-                                                    <span class="text-gray-400 text-xs bg-gray-100 px-2 py-1 rounded-full min-w-8 text-center">
+                                                    :class="{ 'bg-white shadow-sm border-gray-200': option.selected }">
+                                                    <input type="checkbox"
+                                                        class="mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 size-5"
+                                                        :value="option.name" v-model="option.selected" />
+                                                    <span class="flex-1 text-gray-700 font-medium text-sm">{{
+                                                        option.name }}</span>
+                                                    <span
+                                                        class="text-gray-400 text-xs bg-gray-100 px-2 py-1 rounded-full min-w-8 text-center">
                                                         {{ option.count }}
                                                     </span>
                                                 </label>
@@ -402,21 +384,15 @@ onMounted(async () => {
                                         <div class="flex gap-3">
                                             <div class="flex-1">
                                                 <label class="block text-xs font-medium text-gray-500 mb-2">От</label>
-                                                <input 
-                                                    type="number" 
-                                                    :placeholder="filter.min" 
-                                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
-                                                    v-model.number="filter.inputMin" 
-                                                />
+                                                <input type="number" :placeholder="filter.min"
+                                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                    v-model.number="filter.inputMin" />
                                             </div>
                                             <div class="flex-1">
                                                 <label class="block text-xs font-medium text-gray-500 mb-2">До</label>
-                                                <input 
-                                                    type="number" 
-                                                    :placeholder="filter.max" 
-                                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
-                                                    v-model.number="filter.inputMax" 
-                                                />
+                                                <input type="number" :placeholder="filter.max"
+                                                    class="w-full border border-gray-300 rounded-lg px-4 py-3 text-base no-spinner focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                    v-model.number="filter.inputMax" />
                                             </div>
                                         </div>
                                         <!-- Диапазон значений -->
@@ -429,16 +405,13 @@ onMounted(async () => {
                         </div>
 
                         <!-- Кнопка применения -->
-                        <button 
-                            @click="applyFilters" 
-                            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm hover:shadow-md mt-6 flex items-center justify-center gap-3 group"
-                        >
-                            <AdjustmentsHorizontalIcon class="size-5 text-white group-hover:scale-110 transition-transform" />
+                        <button @click="applyFilters"
+                            class="w-full bg-accent text-white py-4 px-6 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm hover:shadow-md mt-6 flex items-center justify-center gap-3 group">
+                            <AdjustmentsHorizontalIcon
+                                class="size-5 text-white group-hover:scale-110 transition-transform" />
                             <span>Применить фильтры</span>
-                            <span 
-                                v-if="activeFiltersCount() > 0" 
-                                class="bg-white text-blue-600 text-xs rounded-full px-2 py-1 font-bold min-w-6"
-                            >
+                            <span v-if="activeFiltersCount() > 0"
+                                class="bg-white text-blue-600 text-xs rounded-full px-2 py-1 font-bold min-w-6">
                                 {{ activeFiltersCount() }}
                             </span>
                         </button>
@@ -449,9 +422,10 @@ onMounted(async () => {
                 <div v-if="isFiltersOpen" class="fixed inset-0 z-50 lg:hidden">
                     <!-- Затемненный фон -->
                     <div class="absolute inset-0 bg-black bg-opacity-50" @click="closeFilters"></div>
-                    
+
                     <!-- Панель фильтров -->
-                    <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform transition-transform">
+                    <div
+                        class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform transition-transform">
                         <div class="flex flex-col h-full">
                             <!-- Заголовок -->
                             <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-white">
@@ -463,14 +437,12 @@ onMounted(async () => {
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <button 
-                                        v-if="activeFiltersCount() > 0"
-                                        @click="clearAllFilters" 
-                                        class="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1 rounded-lg hover:bg-blue-50"
-                                    >
+                                    <button v-if="activeFiltersCount() > 0" @click="clearAllFilters"
+                                        class="text-sm text-blue-600 hover:text-blue-700 font-medium px-3 py-1 rounded-lg hover:bg-blue-50">
                                         Сбросить все
                                     </button>
-                                    <button @click="closeFilters" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <button @click="closeFilters"
+                                        class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                         <XMarkIcon class="size-6" />
                                     </button>
                                 </div>
@@ -484,14 +456,11 @@ onMounted(async () => {
                                         {{ activeFiltersCount() }}
                                     </span>
                                 </div>
-                                
+
                                 <!-- Список активных фильтров -->
                                 <div class="space-y-2 mb-4">
-                                    <div 
-                                        v-for="(activeFilter, index) in activeFiltersList" 
-                                        :key="index"
-                                        class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2"
-                                    >
+                                    <div v-for="(activeFilter, index) in activeFiltersList" :key="index"
+                                        class="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
                                         <div class="flex items-center gap-2 flex-1 min-w-0">
 
                                             <span class="text-sm text-blue-800 truncate">
@@ -499,14 +468,13 @@ onMounted(async () => {
                                                     {{ activeFilter.filterName }}: {{ activeFilter.optionName }}
                                                 </template>
                                                 <template v-else-if="activeFilter.type === 'number'">
-                                                    {{ getNumberFilterText(filters.find(f => f.name === activeFilter.filterName)) }}
+                                                    {{getNumberFilterText(filters.find(f => f.name ===
+                                                        activeFilter.filterName))}}
                                                 </template>
                                             </span>
                                         </div>
-                                        <button 
-                                            @click="removeFilter(activeFilter)"
-                                            class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors"
-                                        >
+                                        <button @click="removeFilter(activeFilter)"
+                                            class="ml-2 flex-shrink-0 text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100 transition-colors">
                                             <XMarkIcon class="size-4" />
                                         </button>
                                     </div>
@@ -515,56 +483,45 @@ onMounted(async () => {
 
                             <!-- Список фильтров -->
                             <div class="flex-1 overflow-y-auto py-4">
-                                <div v-for="filter in filters" :key="filter.name" class="mx-6 mb-4 border border-gray-200 rounded-xl">
+                                <div v-for="filter in filters" :key="filter.name"
+                                    class="mx-6 mb-4 border border-gray-200 rounded-xl">
                                     <!-- Заголовок секции фильтра -->
-                                    <button 
-                                        @click="toggleFilterSection(filter.name)"
-                                        class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl"
-                                    >
+                                    <button @click="toggleFilterSection(filter.name)"
+                                        class="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-xl">
                                         <div class="flex items-center gap-3">
 
                                             <span class="font-semibold text-gray-900">{{ filter.name }}</span>
-                                            <span 
+                                            <span
                                                 v-if="filter.type === 'list' && filter.options.filter(o => o.selected).length > 0"
-                                                class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 font-medium"
-                                            >
-                                                {{ filter.options.filter(o => o.selected).length }}
+                                                class="bg-blue-600 text-white text-xs rounded-full px-2 py-1 font-medium">
+                                                {{filter.options.filter(o => o.selected).length}}
                                             </span>
                                         </div>
-                                        <svg 
-                                            class="size-5 text-gray-400 transition-transform duration-300" 
-                                            :class="{ 'rotate-90': activeFilterSection === filter.name }"
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        <svg class="size-5 text-gray-400 transition-transform duration-300"
+                                            :class="{ 'rotate-90': activeFilterSection === filter.name }" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 5l7 7-7 7" />
                                         </svg>
                                     </button>
 
                                     <!-- Контент секции фильтра -->
-                                    <div 
-                                        v-if="activeFilterSection === filter.name" 
-                                        class="px-4 pb-4 bg-gray-50/50 rounded-b-xl"
-                                    >
+                                    <div v-if="activeFilterSection === filter.name"
+                                        class="px-4 pb-4 bg-gray-50/50 rounded-b-xl">
                                         <!-- Список опций -->
                                         <div v-if="filter.type == 'list'" class="mt-3">
                                             <div class="max-h-60 overflow-y-auto custom-scrollbar pr-2">
                                                 <div class="space-y-2">
-                                                    <label 
-                                                        v-for="option in filter.options" 
-                                                        :key="option.id"
+                                                    <label v-for="option in filter.options" :key="option.id"
                                                         class="flex items-center p-3 rounded-lg cursor-pointer transition-all hover:bg-white border border-transparent hover:border-gray-200"
-                                                        :class="{ 'bg-white border-gray-200': option.selected }"
-                                                    >
-                                                        <input 
-                                                            type="checkbox" 
-                                                            class="mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 size-5" 
-                                                            :value="option.name" 
-                                                            v-model="option.selected" 
-                                                        />
-                                                        <span class="flex-1 text-gray-700 font-medium">{{ option.name }}</span>
-                                                        <span class="text-gray-400 text-xs bg-gray-100 px-2 py-1 rounded-full">
+                                                        :class="{ 'bg-white border-gray-200': option.selected }">
+                                                        <input type="checkbox"
+                                                            class="mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500 size-5"
+                                                            :value="option.name" v-model="option.selected" />
+                                                        <span class="flex-1 text-gray-700 font-medium">{{ option.name
+                                                        }}</span>
+                                                        <span
+                                                            class="text-gray-400 text-xs bg-gray-100 px-2 py-1 rounded-full">
                                                             {{ option.count }}
                                                         </span>
                                                     </label>
@@ -576,22 +533,18 @@ onMounted(async () => {
                                         <div v-if="filter.type == 'number'" class="mt-3 space-y-3">
                                             <div class="flex gap-3">
                                                 <div class="flex-1">
-                                                    <label class="block text-xs font-medium text-gray-500 mb-2">От</label>
-                                                    <input 
-                                                        type="number" 
-                                                        :placeholder="filter.min" 
-                                                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner" 
-                                                        v-model.number="filter.inputMin" 
-                                                    />
+                                                    <label
+                                                        class="block text-xs font-medium text-gray-500 mb-2">От</label>
+                                                    <input type="number" :placeholder="filter.min"
+                                                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner"
+                                                        v-model.number="filter.inputMin" />
                                                 </div>
                                                 <div class="flex-1">
-                                                    <label class="block text-xs font-medium text-gray-500 mb-2">До</label>
-                                                    <input 
-                                                        type="number" 
-                                                        :placeholder="filter.max" 
-                                                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner" 
-                                                        v-model.number="filter.inputMax" 
-                                                    />
+                                                    <label
+                                                        class="block text-xs font-medium text-gray-500 mb-2">До</label>
+                                                    <input type="number" :placeholder="filter.max"
+                                                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-base no-spinner"
+                                                        v-model.number="filter.inputMax" />
                                                 </div>
                                             </div>
                                         </div>
@@ -601,16 +554,12 @@ onMounted(async () => {
 
                             <!-- Кнопка применения -->
                             <div class="p-6 pb-8 border-t border-gray-200 bg-white">
-                                <button 
-                                    @click="applyFilters" 
-                                    class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm flex items-center justify-center gap-3"
-                                >
+                                <button @click="applyFilters"
+                                    class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-sm flex items-center justify-center gap-3">
                                     <AdjustmentsHorizontalIcon class="size-5 text-white" />
                                     <span>Показать результаты</span>
-                                    <span 
-                                        v-if="activeFiltersCount() > 0" 
-                                        class="bg-white text-blue-600 text-xs rounded-full px-2 py-1 font-bold min-w-6"
-                                    >
+                                    <span v-if="activeFiltersCount() > 0"
+                                        class="bg-white text-blue-600 text-xs rounded-full px-2 py-1 font-bold min-w-6">
                                         {{ activeFiltersCount() }}
                                     </span>
                                 </button>
@@ -635,27 +584,26 @@ onMounted(async () => {
 
                     <!-- Список товаров -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <ProductCard v-for="product in products" :key="product.id" :product="product" @add-to-cart="addToCart" />
+                        <ProductCard v-for="product in products" :key="product.id" :product="product"
+                            @add-to-cart="addToCart" />
                     </div>
 
                     <!-- Пагинация -->
                     <div class="mt-10 flex justify-center">
                         <nav class="inline-flex rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                            <button @click="goToPage(page - 1)" :disabled="page === 1" class="px-4 py-3 border-r border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            <button @click="goToPage(page - 1)" :disabled="page === 1"
+                                class="px-4 py-3 border-r border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                                 <ArrowLeftIcon class="size-5" />
                             </button>
-                            <button
-                                v-for="n in totalPages"
-                                :key="n"
-                                @click="goToPage(n)"
-                                class="px-5 py-3 border-r border-gray-200 last:border-r-0 transition-colors"
-                                :class="{
+                            <button v-for="n in totalPages" :key="n" @click="goToPage(n)"
+                                class="px-5 py-3 border-r border-gray-200 last:border-r-0 transition-colors" :class="{
                                     'bg-white text-gray-500 hover:bg-gray-50': n !== page,
                                     'bg-blue-50 text-blue-600 font-semibold border-blue-200': n === page,
                                 }">
                                 {{ n }}
                             </button>
-                            <button @click="goToPage(page + 1)" :disabled="page === totalPages" class="px-4 py-3 border-l border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            <button @click="goToPage(page + 1)" :disabled="page === totalPages"
+                                class="px-4 py-3 border-l border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                                 <ArrowRightIcon class="size-5" />
                             </button>
                         </nav>
