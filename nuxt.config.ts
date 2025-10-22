@@ -13,4 +13,9 @@ export default defineNuxtConfig({
             apiBase: process.env.NUXT_API_BASE_URL,
         },
     },
+    app: {
+        head: {
+            link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]
+        }
+    },
 });
