@@ -1,5 +1,6 @@
 <script setup>
 import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, PhoneIcon, ClockIcon, BoltIcon } from "@heroicons/vue/16/solid";
+import { Logo_Header } from "@/assets/Logo_Header.PNG";
 const router = useRouter();
 const auth = useAuthStore();
 const cart = useCartStore();
@@ -19,27 +20,30 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
             <div class="flex flex-col md:flex-row items-center justify-between py-4">
                 <!-- Логотип -->
                 <div class="flex items-center">
-                    <div class="bg-blue-600 p-2 rounded-lg mr-3 shadow-sm">
-                        <BoltIcon class="text-white size-6" />
-                    </div>
+
                     <div>
-                        <NuxtLink to="/" class="text-xl font-bold text-gray-900 hover:text-blue-600 uppercase"> ИЦ Электро<span class="text-blue-600">техника</span> </NuxtLink>
-                        <p class="text-xs text-gray-500">Поставки электротехнического оборудования</p>
+                        <NuxtLink to="/" class="  text-xl font-bold text-gray-900 hover:text-blue-600 uppercase"> <img
+                                src="assets/Logo_Header.png" alt="Электротехника" class="max-w-50"></img> </NuxtLink>
                     </div>
                 </div>
 
                 <!-- Навигация -->
                 <nav class="hidden lg:block">
                     <ul class="flex space-x-8">
-                        <li><NuxtLink to="/" class="nav-link">Главная</NuxtLink></li>
-                        <li><NuxtLink to="/catalog" class="nav-link">Каталог</NuxtLink></li>
-                        <li><NuxtLink to="/company" class="nav-link">О компании</NuxtLink></li>
+                        <li>
+                            <NuxtLink to="/" class="nav-link">Главная</NuxtLink>
+                        </li>
+                        <li>
+                            <NuxtLink to="/catalog" class="nav-link">Каталог</NuxtLink>
+                        </li>
+                        <li>
+                            <NuxtLink to="/company" class="nav-link">О компании</NuxtLink>
+                        </li>
                         <li>
                             <NuxtLink to="/cart" class="nav-link relative">
                                 Корзина
                                 <Transition enter-to-class="scale-250 -y-offset-5" leave-to-class="scale-0">
-                                    <span
-                                        v-if="cart.totalItems != 0"
+                                    <span v-if="cart.totalItems != 0"
                                         class="font-mono duration-200 absolute -top-2 -right-2 transition-all bg-[#2563eb] text-white text-sm font-semibold rounded-full w-6 h-6 flex justify-center items-center">
                                         {{ cart.totalItems }}
                                     </span>
@@ -65,9 +69,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
                         <UserIcon class="size-5 me-1" />
                         <span class="ml-2">Аккаунт</span>
                     </NuxtLink>
-                    <NuxtLink
-                        v-if="auth.isAuthenticated"
-                        title="Выход из аккаунта"
+                    <NuxtLink v-if="auth.isAuthenticated" title="Выход из аккаунта"
                         class="flex items-center rounded-md px-2 py-1 cursor-pointer bg-red-200 text-red-500 hover:bg-red-200/80 active:bg-red-300 active:text-red-600 transition-all duration-200"
                         @click="handleLogout">
                         <ArrowLeftStartOnRectangleIcon class="size-6" />
@@ -90,15 +92,18 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
     border-color: transparent;
     transition: color 0.2s;
 }
+
 .nav-link:hover {
-    color: #2563eb;
+    color: #0081b6;
     border-color: #2563eb;
 }
+
 .nav-link.router-link-active {
     color: #111827;
     font-weight: 500;
     border-color: #2563eb;
 }
+
 .auth-button {
     display: flex;
     align-items: center;
@@ -108,10 +113,12 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
     padding: 0.5rem 0.75rem;
     transition: color 0.2s, background-color 0.2s;
 }
+
 .auth-button:hover {
-    color: #2563eb;
+    color: #0081b6;
     background-color: #e5e7eb;
 }
+
 .icon-button {
     display: flex;
     align-items: center;
@@ -121,8 +128,9 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
     padding: 0.5rem;
     transition: color 0.2s, background-color 0.2s;
 }
+
 .icon-button:hover {
-    color: #2563eb;
+    color: #0081b6;
     background-color: #e5e7eb;
 }
 </style>

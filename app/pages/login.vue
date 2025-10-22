@@ -21,12 +21,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <EnvelopeIcon class="size-5 text-gray-400" />
                             </div>
-                            <input
-                                id="email"
-                                v-model="form.email"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
+                            <input id="email" v-model="form.email" name="email" type="email" autocomplete="email"
                                 required
                                 class="block w-full px-4 ps-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="your@email.com" />
@@ -39,13 +34,8 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <LockClosedIcon class="size-6 text-gray-400" />
                             </div>
-                            <input
-                                id="password"
-                                v-model="form.password"
-                                name="password"
-                                type="password"
-                                autocomplete="current-password"
-                                required
+                            <input id="password" v-model="form.password" name="password" type="password"
+                                autocomplete="current-password" required
                                 class="block w-full px-4 ps-10 py-3 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 placeholder="••••••••" />
                         </div>
@@ -59,13 +49,13 @@
                     </div>
 
                     <div class="text-sm">
-                        <RouterLink to="/forgot-password" class="font-medium text-blue-600 hover:text-blue-500"> Забыли пароль? </RouterLink>
+                        <RouterLink to="/ForgotPassword" class="font-medium text-blue-600 hover:text-blue-500"> Забыли
+                            пароль? </RouterLink>
                     </div>
                 </div>
 
                 <div>
-                    <button
-                        type="submit"
+                    <button type="submit"
                         class="group relative w-full items-center gap-2 flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                         Войти
                         <ArrowRightEndOnRectangleIcon class="size-5 text-blue-300 group-hover:text-blue-200" />
@@ -76,7 +66,8 @@
             <div class="text-center">
                 <p class="text-sm text-gray-600">
                     Еще нет аккаунта?
-                    <RouterLink to="/Register" class="font-medium text-blue-600 hover:text-blue-500"> Зарегистрироваться </RouterLink>
+                    <RouterLink to="/Register" class="font-medium text-blue-600 hover:text-blue-500"> Зарегистрироваться
+                    </RouterLink>
                 </p>
             </div>
         </div>
