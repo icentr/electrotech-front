@@ -11,9 +11,18 @@ install:
 
 IMAGE_NAME=electrotech-front
 
-restart:
-	git pull
+build-docker:
 	docker build -t $(IMAGE_NAME) .
+
+remove-docker:
 	docker stop $(IMAGE_NAME) || true
 	docker rm $(IMAGE_NAME) || true
+
+run-docker:
 	docker run -d --name $(IMAGE_NAME) -p 80:3000 $(IMAGE_NAME)
+
+
+pull:
+	git pull
+
+restart: pull build-docker remove-docker run-docker
