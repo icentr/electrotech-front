@@ -1,33 +1,18 @@
 <script setup>
-import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
-
-
-useMeta({
+useHead({
     meta: [
         {
-            name: 'mailru-domain',
-            content: 'wxnnsnigYdZwQSET'
-        }
-    ]
-})
-
-const router = useRouter();
-const auth = useAuthStore();
-const cart = useCartStore();
-
-const handleLogout = () => {
-    auth.logout();
-    cart.clearCart();
-    router.push("/login");
-};
+            name: "mailru-domain",
+            content: "wxnnsnigYdZwQSET",
+        },
+    ],
+});
 </script>
 
 <template>
     <div class="bg-gray-50 min-h-svh flex flex-col">
-
         <!-- Хедер -->
         <Header class="bg-white shadow-md sticky top-0 z-50"></Header>
-
 
         <!-- Контент -->
         <main class="container mx-auto md:px-4 py-2 md:py-6 grow">
