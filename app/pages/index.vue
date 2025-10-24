@@ -18,6 +18,11 @@ import {
 import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_INN, COMPANY_KPP } from "~/data";
 </script>
 <template>
+
+    <head>
+        <meta name="mailru-domain" content="wxnnsnigYdZwQSET">
+        </meta>
+    </head>
     <div class="bg-gray-50">
         <!-- Герой-секция с акцентом на ваши товары -->
         <section class="hero-gradient text-white">
