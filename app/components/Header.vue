@@ -1,6 +1,5 @@
 <script setup>
-import { ArrowLeftEndOnRectangleIcon, UserIcon, ShoppingCartIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, PhoneIcon, ClockIcon, BoltIcon } from "@heroicons/vue/16/solid";
-import { Logo_Header } from "@/assets/Logo_Header.PNG";
+import {  UserIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, PhoneIcon, ClockIcon } from "@heroicons/vue/16/solid";
 const router = useRouter();
 const auth = useAuthStore();
 const cart = useCartStore();
