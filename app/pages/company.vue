@@ -4,48 +4,60 @@ useHead({
 });
 
 import { ArchiveBoxIcon, ClockIcon, DocumentDuplicateIcon, DocumentTextIcon, EnvelopeIcon, MapPinIcon, PercentBadgeIcon, PhoneIcon, TruckIcon, UserGroupIcon } from "@heroicons/vue/16/solid";
-import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, COMPANY_INN, COMPANY_KPP, ADDRESS } from "~/data";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
+import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, ADDRESS } from "~/data";
 </script>
 <template>
     <div class="bg-gray-50 antialiased">
         <!-- Верхняя панель с контактами -->
 
         <!-- О компании -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">О КОМПАНИИ {{ COMPANY_NAME }}</h2>
-                    <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Наша миссия</h3>
-                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
-                            Компания <span class="font-semibold">{{ COMPANY_NAME }}</span> уже более 10 лет является надежным поставщиком электротехнических компонентов для промышленных предприятий.
-                            Мы специализируемся проектирование и сборка НКУ любой сложности и конфигурации.
-                            <a class="text-blue-600 hover:text-blue-800 hover:underline active:underline" href="https://icentr.pro/">Наш сайт</a>
-                        </p>
-                        <p class="text-gray-600 mb-6 text-lg leading-relaxed">
-                            Наша цель - обеспечить предприятия качественными электротехническими компонентами, сократив их затраты на поиск и закупку оборудования.
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <div class="bg-accent text-white px-4 py-2 rounded-full font-medium">Собственный склад</div>
-                            <div class="bg-accent text-white px-4 py-2 rounded-full font-medium">Оригинальные компоненты</div>
-                            <div class="bg-accent text-white px-4 py-2 rounded-full font-medium">Техническая поддержка</div>
-                            <a href="https://icentr.pro" class="bg-accent text-white px-4 py-2 rounded-full font-medium">Собственное производство </a>
+        <section class="py-16">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">
+                    О компании
+                    <span class="text-black">
+                        {{ COMPANY_NAME }}
+                    </span>
+                </h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <div class="px-4 md:w-1/2">
+                    <div class="flex flex-col items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Наша миссия</h3>
+                            <p class="text-gray-600 mb-6 text-lg leading-relaxed text-balance">
+                                Компания
+                                <span class="font-semibold">
+                                    {{ COMPANY_NAME }}
+                                </span>
+                                уже более 10 лет является надежным поставщиком электротехнических компонентов для промышленных предприятий. Мы специализируемся проектирование и сборка НКУ любой
+                                сложности и конфигурации.
+                                <a class="transition-all duration-200 text-accent hover:text-blue-800 hover:underline active:underline" href="https://icentr.pro/" target="_blank">
+                                    Наш сайт
+                                    <ArrowTopRightOnSquareIcon class="inline size-5 pb-1" />
+                                </a>
+                            </p>
+                            <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                                Наша цель - обеспечить предприятия качественными электротехническими компонентами, сократив их затраты на поиск и закупку оборудования.
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <div class="bg-accent text-white px-4 py-2 rounded-full">Собственный склад</div>
+                                <div class="bg-accent text-white px-4 py-2 rounded-full">Оригинальные компоненты</div>
+                                <div class="bg-accent text-white px-4 py-2 rounded-full">Техническая поддержка</div>
+                                <a
+                                    href="https://icentr.pro"
+                                    target="_blank"
+                                    class="bg-accent hover:bg-accent/90 hover:scale-110 transition-all duration-150 active:scale-105 text-white px-4 py-2 rounded-full flex gap-2 items-center">
+                                    Собственное производство
+                                    <ArrowTopRightOnSquareIcon class="size-5" />
+                                </a>
+                            </div>
                         </div>
-                        <!-- <div class="relative">
-                    <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                        <img src="https://icentr.pro/images/about-1.jpg" alt="О компании ICENTR.PRO" class="w-full h-auto">
-                    </div>
-                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-                        <div class="text-blue-600 text-4xl font-bold">10+</div>
-                        <div class="text-gray-700 font-medium">лет на рынке</div>
-                    </div>
-                </div> -->
                     </div>
                 </div>
+                <CompanyCarousel class="md:w-1/2" />
             </div>
         </section>
 
@@ -108,7 +120,6 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, COMPANY_INN
                 </div>
             </div>
         </section>
-        <CompanyCarousel />
         <!-- Карта с местоположением -->
         <section class="py-16 bg-gray-50">
             <div class="container mx-auto px-4">
@@ -261,13 +272,6 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, COMPANY_INN
                 </div>
             </div>
         </section>
-
-        <!-- Плавающая кнопка "Позвонить" -->
-        <a
-            :href="'tel:' + PHONE_NUMBER_NORMALIZED"
-            class="fixed bottom-8 right-8 bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300 z-50 group">
-            <i class="fas fa-phone-alt text-xl"></i>
-        </a>
     </div>
 </template>
 
@@ -276,28 +280,6 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, EMAIL, COMPANY_NAME, COMPANY_INN
 
 body {
     font-family: "Inter", sans-serif;
-}
-
-.hero-gradient {
-    background: linear-gradient(135deg, #006699 0%, #0081b6 100%);
-}
-
-.floating-phone {
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-15px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
 }
 
 .feature-card:hover {
