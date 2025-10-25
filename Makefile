@@ -23,6 +23,9 @@ run-docker:
 
 
 pull:
-	git pull
+	git pull origin main
 
 restart: pull build-docker remove-docker run-docker
+
+clear clean:
+	rm -rf node_modules/ .nuxt/ .output/
