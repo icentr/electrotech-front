@@ -148,28 +148,26 @@ const cartItems = computed(() => cartStore.cartItems);
                 <!-- Количество -->
                 <div class="col-span-1 flex items-baseline gap-2 md:col-span-2">
                   <div class="mb-1 text-gray-500 md:hidden">Кол-во</div>
-                  <div
-                    class="flex items-center rounded-md border border-gray-300"
-                  >
+                  <div class="text-l flex h-10 max-w-35 items-stretch">
                     <button
-                      class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                      class="base-btn w-10 rounded-l-md border border-gray-300 px-2 text-gray-600 hover:bg-gray-100"
                       @click="updateQuantity(item.id, item.quantity - 1)"
                       :disabled="item.quantity <= 1"
                     >
-                      <MinusIcon class="size-4" />
+                      <MinusIcon class="size-5" />
                     </button>
                     <input
                       type="number"
                       min="1"
-                      class="no-spinner w-10 border-x border-gray-300 py-1 ps-3 text-start text-sm"
+                      class="entry-base w-15 border-y border-gray-300 py-1 ps-3 text-center text-sm"
                       v-model.number="item.quantity"
                       @change="updateQuantity(item.id, item.quantity)"
                     />
                     <button
-                      class="px-2 py-1 text-gray-600 hover:bg-gray-100"
+                      class="base-btn w-10 rounded-r-md border border-gray-300 px-2 text-gray-600 hover:bg-gray-100"
                       @click="updateQuantity(item.id, item.quantity + 1)"
                     >
-                      <PlusIcon class="size-4" />
+                      <PlusIcon class="size-5" />
                     </button>
                   </div>
                 </div>
@@ -198,7 +196,7 @@ const cartItems = computed(() => cartStore.cartItems);
                     v-model="promoCode"
                   />
                   <button
-                    class="bg-accent hover:bg-accent/90 rounded-r-md px-4 py-2 text-sm font-medium text-white transition-colors"
+                    class="bg-accent hover:bg-accent/90 border-accent rounded-r-md border border-l-0 px-4 py-2 text-sm font-medium text-white transition-colors"
                   >
                     Применить
                   </button>
@@ -278,9 +276,9 @@ const cartItems = computed(() => cartStore.cartItems);
             <button
               v-if="cartItems.length > 0"
               @click="handleCheckout"
-              class="bg-accent hover:bg-accent/70 flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium text-white transition-colors"
+              class="btn btn-accent btn-lg"
             >
-              <CreditCardIcon class="mr-2 size-4" /> Оформить заказ
+              <CreditCardIcon class="size-5" /> Оформить заказ
             </button>
 
             <div class="mt-4 text-xs text-gray-500">

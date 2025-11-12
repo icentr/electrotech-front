@@ -18,6 +18,8 @@ useHead({
   title: "Каталог",
 });
 
+const isLoading = ref(true);
+
 const cart = useCartStore();
 
 const products = ref([]);
@@ -92,6 +94,7 @@ const fetchFilters = async () => {
 
 const fetchProducts = async () => {
   try {
+    isLoading.value = true;
     const filtersPayload = [];
 
     filters.value.forEach((f) => {
@@ -125,6 +128,7 @@ const fetchProducts = async () => {
 
     products.value = response.data.products || [];
     totalPages.value = response.data.totalPages || 1;
+    isLoading.value = false;
   } catch (error) {
     console.error("Ошибка при фильтрации товаров:", error);
   }
@@ -333,7 +337,7 @@ onMounted(async () => {
               <button
                 v-if="activeFiltersCount() > 0"
                 @click="clearAllFilters"
-                class="rounded-lg px-3 py-1 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                class="text-accent rounded-lg px-3 py-1 text-sm font-medium transition-colors hover:bg-blue-50 hover:text-blue-700"
               >
                 Сбросить все
               </button>
@@ -346,7 +350,7 @@ onMounted(async () => {
                   >Активные фильтры:</span
                 >
                 <span
-                  class="rounded-full bg-blue-600 px-2 py-1 text-xs font-medium text-white"
+                  class="bg-accent flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold font-medium text-white"
                 >
                   {{ activeFiltersCount() }}
                 </span>
@@ -357,10 +361,10 @@ onMounted(async () => {
                 <div
                   v-for="(activeFilter, index) in activeFiltersList"
                   :key="index"
-                  class="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50 px-3 py-2"
+                  class="border-accent/30 bg-accent/10 flex items-center justify-between rounded-lg border px-3 py-2"
                 >
                   <div class="flex min-w-0 flex-1 items-center gap-2">
-                    <span class="truncate text-sm text-blue-800">
+                    <span class="text-accent truncate text-sm">
                       <template v-if="activeFilter.type === 'list'">
                         {{ activeFilter.filterName }}:
                         {{ activeFilter.optionName }}
@@ -378,7 +382,7 @@ onMounted(async () => {
                   </div>
                   <button
                     @click="removeFilter(activeFilter)"
-                    class="ml-2 flex-shrink-0 rounded p-1 text-blue-600 transition-colors hover:bg-blue-100 hover:text-blue-800"
+                    class="btn btn-destructive btn-sm ml-2"
                   >
                     <XMarkIcon class="size-4" />
                   </button>

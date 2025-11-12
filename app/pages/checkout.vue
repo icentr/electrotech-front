@@ -230,7 +230,7 @@
 
             <button
               type="submit"
-              class="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+              class="btn btn-accent btn-lg"
               @click="submitOrder"
               :disabled="isSubmitting"
             >
