@@ -79,9 +79,11 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 Выход
             </span>
           </button>
-          <NuxtLink v-else to="/login" class="auth-button">
-            <span class="text-md">Вход</span>
-            <ArrowRightEndOnRectangleIcon class="size-5 ms-2" />
+          <NuxtLink v-else to="/login" class="btn">
+            <div class="flex text-accent items-center">
+              <span class="text-md">Вход</span>
+              <ArrowRightEndOnRectangleIcon class="size-5 ms-2" />
+            </div>
           </NuxtLink>
         </div>
       </div>
