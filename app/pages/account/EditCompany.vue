@@ -1,78 +1,111 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-semibold mb-6">Редактирование информации о компании</h1>
+    <h1 class="mb-6 text-2xl font-semibold">
+      Редактирование информации о компании
+    </h1>
 
-    <form @submit.prevent="submitForm" class="space-y-4 max-w-xl">
+    <form @submit.prevent="submitForm" class="max-w-xl space-y-4">
       <!-- Название компании -->
       <div>
-        <label class="block mb-1 text-sm font-medium">Название компании</label>
+        <label class="mb-1 block text-sm font-medium">Название компании</label>
         <input
           v-model="form.companyName"
-          @input="form.companyName = form.companyName.replace(/[^а-яА-Яa-zA-Z0-9\s]/g, '')"
+          @input="
+            form.companyName = form.companyName.replace(
+              /[^а-яА-Яa-zA-Z0-9\s]/g,
+              '',
+            )
+          "
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
-        <p v-if="errors.companyName" class="text-red-600 text-sm">{{ errors.companyName }}</p>
+        <p v-if="errors.companyName" class="text-sm text-red-600">
+          {{ errors.companyName }}
+        </p>
       </div>
 
       <!-- Адрес компании -->
       <div>
-        <label class="block mb-1 text-sm font-medium">Адрес компании</label>
+        <label class="mb-1 block text-sm font-medium">Адрес компании</label>
         <input
           v-model="form.companyAddress"
-          @input="form.companyAddress = form.companyAddress.replace(/[^а-яА-Яa-zA-Z0-9\s.,-]/g, '')"
+          @input="
+            form.companyAddress = form.companyAddress.replace(
+              /[^а-яА-Яa-zA-Z0-9\s.,-]/g,
+              '',
+            )
+          "
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
-        <p v-if="errors.companyAddress" class="text-red-600 text-sm">{{ errors.companyAddress }}</p>
+        <p v-if="errors.companyAddress" class="text-sm text-red-600">
+          {{ errors.companyAddress }}
+        </p>
       </div>
 
       <!-- Должность -->
       <div>
-        <label class="block mb-1 text-sm font-medium">Должность в компании</label>
+        <label class="mb-1 block text-sm font-medium"
+          >Должность в компании</label
+        >
         <input
           v-model="form.positionInCompany"
-          @input="form.positionInCompany = form.positionInCompany.replace(/[^а-яА-Яa-zA-Z\s]/g, '')"
+          @input="
+            form.positionInCompany = form.positionInCompany.replace(
+              /[^а-яА-Яa-zA-Z\s]/g,
+              '',
+            )
+          "
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
-        <p v-if="errors.positionInCompany" class="text-red-600 text-sm">{{ errors.positionInCompany }}</p>
+        <p v-if="errors.positionInCompany" class="text-sm text-red-600">
+          {{ errors.positionInCompany }}
+        </p>
       </div>
 
       <!-- ИНН -->
       <div>
-        <label class="block mb-1 text-sm font-medium">ИНН компании</label>
+        <label class="mb-1 block text-sm font-medium">ИНН компании</label>
         <input
           v-model="form.companyINN"
           @input="form.companyINN = form.companyINN.replace(/\D/g, '')"
           maxlength="12"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
-        <p v-if="errors.companyINN" class="text-red-600 text-sm">{{ errors.companyINN }}</p>
+        <p v-if="errors.companyINN" class="text-sm text-red-600">
+          {{ errors.companyINN }}
+        </p>
       </div>
 
       <!-- ОКПО -->
       <div>
-        <label class="block mb-1 text-sm font-medium">ОКПО</label>
+        <label class="mb-1 block text-sm font-medium">ОКПО</label>
         <input
           v-model="form.companyOKPO"
           @input="form.companyOKPO = form.companyOKPO.replace(/\D/g, '')"
           maxlength="10"
           type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
         />
-        <p v-if="errors.companyOKPO" class="text-red-600 text-sm">{{ errors.companyOKPO }}</p>
+        <p v-if="errors.companyOKPO" class="text-sm text-red-600">
+          {{ errors.companyOKPO }}
+        </p>
       </div>
 
       <!-- Общие ошибки -->
-      <div v-if="errorMessage" class="text-red-600 text-sm">{{ errorMessage }}</div>
-      <div v-if="successMessage" class="text-green-600 text-sm">{{ successMessage }}</div>
+      <div v-if="errorMessage" class="text-sm text-red-600">
+        {{ errorMessage }}
+      </div>
+      <div v-if="successMessage" class="text-sm text-green-600">
+        {{ successMessage }}
+      </div>
 
       <!-- Кнопка -->
       <button
         type="submit"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm"
+        class="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
         :disabled="loading"
       >
         {{ loading ? "Сохранение..." : "Сохранить" }}
@@ -123,7 +156,13 @@ onMounted(async () => {
 
 const validateForm = () => {
   let valid = true;
-  errors.value = { companyName: "", companyAddress: "", positionInCompany: "", companyINN: "", companyOKPO: "" };
+  errors.value = {
+    companyName: "",
+    companyAddress: "",
+    positionInCompany: "",
+    companyINN: "",
+    companyOKPO: "",
+  };
 
   if (!form.value.companyName.trim()) {
     errors.value.companyName = "Введите название компании";
@@ -168,13 +207,12 @@ const submitForm = async () => {
     successMessage.value = "Данные успешно обновлены";
     setTimeout(() => router.push("/account"), 1500);
   } catch (err) {
-    errorMessage.value = err.response?.data?.error || "Ошибка при обновлении данных";
+    errorMessage.value =
+      err.response?.data?.error || "Ошибка при обновлении данных";
   } finally {
     loading.value = false;
   }
 };
-
-
 
 useHead({
   title: "Редактирование информации о компании",

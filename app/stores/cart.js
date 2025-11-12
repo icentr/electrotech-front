@@ -10,7 +10,10 @@ export const useCartStore = defineStore("cart", {
 
   getters: {
     subtotal: (state) => {
-      return state.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      return state.cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0,
+      );
     },
     discount: (state) => {
       return (state.subtotal * state.discountPercent) / 100;
@@ -28,7 +31,9 @@ export const useCartStore = defineStore("cart", {
 
   actions: {
     addToCart(product) {
-      const existingItem = this.cartItems.find((item) => item.id === product.id);
+      const existingItem = this.cartItems.find(
+        (item) => item.id === product.id,
+      );
       if (existingItem) {
         existingItem.quantity += 1;
       } else {

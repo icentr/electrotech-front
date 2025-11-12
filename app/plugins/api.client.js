@@ -2,6 +2,6 @@
 import { createApi } from "@/api";
 
 export default defineNuxtPlugin((nuxtApp) => {
-    const config = useRuntimeConfig();
-    createApi(config.public.apiBase);
+  const config = useRuntimeConfig();
+  createApi(config.public.apiBase);
 });
