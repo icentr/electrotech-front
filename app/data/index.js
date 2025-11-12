@@ -7,4 +7,5 @@ export const COMPANY_INN = "9701038746";
 export const COMPANY_KPP = "772301001";
 
 import { ADVANTAGES } from "./advantages";
-export const ADVANTAGES = ADVANTAGES;
+export default ADVANTAGES;
+// export const ADVANTAGES = ADVANTAGES;
