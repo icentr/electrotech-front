@@ -10,7 +10,6 @@ const handleLogout = () => {
   router.push("/login");
 };
 
-const navLinkClasses = "text-[#4b5563] px-3 py-2 border-b-2 border-transparent transition-all duration-200 hover:text-accent hover:border-accent"
 
 const navLinks = [
   { text: "Главная", to: "/" },
@@ -41,7 +40,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink to="/cart" :class="navLinkClasses"
+              <NuxtLink to="/cart"
                 class="text-[#4b5563] px-3 py-2 border-b-2 border-transparent transition-all duration-200 hover:text-accent hover:border-accent relative">
                 Корзина
                 <Transition enter-to-class="scale-250 -y-offset-5" leave-to-class="scale-0">
@@ -85,9 +84,10 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
   </header>
 </template>
 <style >
-@import "tailwindcss";
+/* @import "tailwindcss"; */
 .router-link-active {
-  @apply text-[#111827] font-semibold;
+  /* @apply text-[#111827] font-semibold; */
+  font-weight: 500;
   border-color: #0081b6;
 }
 

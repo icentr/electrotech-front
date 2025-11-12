@@ -3,17 +3,17 @@ useHead({
   title: "ЭлектроТех",
 });
 import {
-  ArchiveBoxIcon,
   ArrowRightIcon,
+  BoltIcon,
   CheckCircleIcon,
   ChevronRightIcon,
   CpuChipIcon,
-  CurrencyDollarIcon,
   DocumentTextIcon,
   EnvelopeIcon,
+  LinkIcon,
   ListBulletIcon,
   PhoneIcon,
-  TruckIcon,
+  PowerIcon,
 } from "@heroicons/vue/16/solid";
 import {
   PHONE_NUMBER,
@@ -21,7 +21,31 @@ import {
   EMAIL,
   COMPANY_INN,
   COMPANY_KPP,
+  ADVANTAGES,
 } from "~/data";
+
+const PREVIEW_CATEGORIES = [
+  {
+    title: "Выключатели",
+    description: "Защита электроцепей от перегрузок и КЗ",
+    icon: PowerIcon,
+  },
+  {
+    title: "Блоки питания",
+    description: "Стабилизированные источники питания",
+    icon: BoltIcon,
+  },
+  {
+    title: "Клеммы и соединители",
+    description: "Надёжные решения для монтажа",
+    icon: LinkIcon,
+  },
+  {
+    title: "Промышленные контроллеры",
+    description: "Широкий выбор для автоматизации",
+    icon: CpuChipIcon,
+  },
+];
 </script>
 <template>
   <div class="bg-gray-50">
@@ -50,14 +74,14 @@ import {
             >
               <a
                 href="#contact-form"
-                class="flex items-center justify-center rounded-lg bg-white px-8 py-4 font-bold text-[#0081b6] shadow-md transition duration-300 hover:bg-gray-100 hover:shadow-lg"
+                class="text-accent flex items-center justify-center rounded-lg bg-white px-8 py-4 font-bold shadow-md transition duration-300 hover:bg-gray-100 hover:shadow-lg"
               >
                 <PhoneIcon class="me-3 size-6" />
                 ЗАКАЗАТЬ ЗВОНОК
               </a>
               <RouterLink
                 to="catalog"
-                class="flex items-center justify-center rounded-lg border-2 border-white bg-transparent px-8 py-4 font-bold text-white transition duration-300 hover:bg-white hover:text-[#0081b6] hover:shadow-lg"
+                class="hover:text-accent flex items-center justify-center rounded-lg border-2 border-white bg-transparent px-8 py-4 font-bold text-white transition duration-300 hover:bg-white hover:shadow-lg"
               >
                 <ListBulletIcon class="mr-3 size-6" />
                 СМОТРЕТЬ КАТАЛОГ
@@ -68,22 +92,20 @@ import {
               <div
                 class="bg-opacity-20 flex items-center gap-2 rounded-full bg-white px-4 py-2 backdrop-blur-sm"
               >
-                <CheckCircleIcon class="size-6 text-[#0081b6]" />
-                <span class="text-sm text-[#0081b6]">Собственный склад</span>
+                <CheckCircleIcon class="text-accent size-6" />
+                <span class="text-accent text-sm">Собственный склад</span>
               </div>
               <div
                 class="bg-opacity-20 flex items-center gap-2 rounded-full bg-white px-4 py-2 backdrop-blur-sm"
               >
-                <CheckCircleIcon class="size-6 text-[#0081b6]" />
-                <span class="text-sm text-[#0081b6]"
-                  >Оригинальные компоненты</span
-                >
+                <CheckCircleIcon class="text-accent size-6" />
+                <span class="text-accent text-sm">Оригинальные компоненты</span>
               </div>
               <div
                 class="bg-opacity-20 flex items-center gap-2 rounded-full bg-white px-4 py-2 backdrop-blur-sm"
               >
-                <CheckCircleIcon class="size-6 text-[#0081b6]" />
-                <span class="text-sm text-[#0081b6]"
+                <CheckCircleIcon class="text-accent size-6" />
+                <span class="text-accent text-sm"
                   >Техническая консультация</span
                 >
               </div>
@@ -108,14 +130,14 @@ import {
               class="m-x-4 shadow-hard floating-phone absolute w-max rounded-xl border border-gray-100 bg-white p-4 text-gray-900 md:-right-6 md:-bottom-6 md:min-w-48 md:p-6"
             >
               <div class="mb-2 flex items-center">
-                <div class="pulse-animation mr-3 rounded-full bg-[#0081b6] p-2">
+                <div class="pulse-animation bg-accent mr-3 rounded-full p-2">
                   <PhoneIcon class="size-6 text-white" />
                 </div>
                 <span class="text-sm font-bold">Отдел продаж</span>
               </div>
               <a
                 :href="'tel:' + PHONE_NUMBER_NORMALIZED"
-                class="text-lg font-bold hover:text-[#0081b6]"
+                class="hover:text-accent text-lg font-bold"
                 >{{ PHONE_NUMBER }}</a
               >
               <div class="mt-1 text-xs text-gray-500">Пн-Пт: 9:00-18:00</div>
@@ -137,49 +159,20 @@ import {
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div
+            v-for="adv in ADVANTAGES"
             class="feature-card rounded-xl border border-gray-100 bg-gray-50 p-8 transition-all duration-300 hover:border-blue-200"
           >
             <div
-              class="bg-opacity-10 mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0081b6]"
+              class="bg-opacity-10 bg-accent mb-6 flex h-14 w-14 items-center justify-center rounded-full"
             >
-              <TruckIcon class="size-9 text-white" />
-            </div>
-            <h3 class="mb-3 text-xl font-bold text-gray-900">Доставка до ТК</h3>
-            <p class="text-gray-600">
-              Бесплатная доставка до транспортной компании. Бесплатная доставка
-              по Москве в пределах МКАД при заказе от 50 000 ₽
-            </p>
-          </div>
-
-          <div
-            class="feature-card rounded-xl border border-gray-100 bg-gray-50 p-8 transition-all duration-300 hover:border-blue-200"
-          >
-            <div
-              class="bg-opacity-10 mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0081b6]"
-            >
-              <ArchiveBoxIcon class="size-9 text-white" />
+              <component :is="adv.icon" class="size-8 text-white" />
+              <!-- <TruckIcon class="size-9 text-white" /> -->
             </div>
             <h3 class="mb-3 text-xl font-bold text-gray-900">
-              Широкий ассортимент
+              {{ adv.title }}
             </h3>
             <p class="text-gray-600">
-              Автоматы, блоки питания, клеммы, контроллеры и другие
-              электротехнические компоненты
-            </p>
-          </div>
-
-          <div
-            class="feature-card rounded-xl border border-gray-100 bg-gray-50 p-8 transition-all duration-300 hover:border-blue-200"
-          >
-            <div
-              class="bg-opacity-10 mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0081b6]"
-            >
-              <CurrencyDollarIcon class="size-9 text-white" />
-            </div>
-            <h3 class="mb-3 text-xl font-bold text-gray-900">Гибкие условия</h3>
-            <p class="text-gray-600">
-              Работаем по безналичному расчету с НДС. Индивидуальные условия для
-              постоянных клиентов
+              {{ adv.description }}
             </p>
           </div>
         </div>
@@ -202,10 +195,10 @@ import {
           </div>
           <a
             href="catalog"
-            class="group mt-4 flex items-center font-medium text-[#0081b6] hover:text-blue-800 md:mt-0"
+            class="group text-accent hover:text-accent/80 mt-4 flex items-center font-medium md:mt-0"
           >
             <span
-              class="border-b border-transparent transition-colors group-hover:border-blue-600"
+              class="group-hover:border-accent/80 border-b border-transparent transition-colors"
               >Весь каталог</span
             >
             <ArrowRightIcon
@@ -216,103 +209,26 @@ import {
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <a
+            v-for="category in PREVIEW_CATEGORIES"
             href="catalog"
             class="group rounded-xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:border-blue-600 hover:shadow-md"
           >
             <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white"
+              class="text-accent group-hover:bg-accent bg-accent/20 mb-4 flex h-12 w-12 items-center justify-center rounded-lg transition-colors group-hover:text-white"
             >
-              В
+              <component :is="category.icon" class="size-6" />
+              <!-- <PowerIcon class="size-6" /> -->
             </div>
             <h3
-              class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-[#0081b6]"
+              class="group-hover:text-accent mb-2 text-lg font-bold text-gray-900 transition-colors"
             >
-              Автоматические выключатели
+              {{ category.title }}
             </h3>
             <p class="text-sm text-gray-600">
-              Защита электроцепей от перегрузок и КЗ
+              {{ category.description }}
             </p>
             <div
-              class="mt-4 flex items-center text-sm font-medium text-[#0081b6] transition-colors group-hover:text-blue-800"
-            >
-              Смотреть товары
-              <ChevronRightIcon
-                class="ml-2 size-5 transition-transform group-hover:translate-x-1"
-              />
-            </div>
-          </a>
-
-          <a
-            href="catalog"
-            class="group rounded-xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:border-blue-600 hover:shadow-md"
-          >
-            <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-[#0081b6] transition-colors group-hover:bg-blue-600 group-hover:text-white"
-            >
-              БП
-            </div>
-            <h3
-              class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-[#0081b6]"
-            >
-              Блоки питания
-            </h3>
-            <p class="text-sm text-gray-600">
-              Стабилизированные источники питания
-            </p>
-            <div
-              class="mt-4 flex items-center text-sm font-medium text-[#0081b6] transition-colors group-hover:text-blue-800"
-            >
-              Смотреть товары
-              <ChevronRightIcon
-                class="ml-2 size-5 transition-transform group-hover:translate-x-1"
-              />
-            </div>
-          </a>
-
-          <a
-            href="catalog"
-            class="group rounded-xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:border-blue-600 hover:shadow-md"
-          >
-            <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-[#0081b6] transition-colors group-hover:bg-blue-600 group-hover:text-white"
-            >
-              К
-            </div>
-            <h3
-              class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-[#0081b6]"
-            >
-              Клеммы и соединители
-            </h3>
-            <p class="text-sm text-gray-600">Надежные решения для монтажа</p>
-            <div
-              class="mt-4 flex items-center text-sm font-medium text-[#0081b6] transition-colors group-hover:text-blue-800"
-            >
-              Смотреть товары
-              <ChevronRightIcon
-                class="ml-2 size-5 transition-transform group-hover:translate-x-1"
-              />
-            </div>
-          </a>
-
-          <a
-            href="catalog"
-            class="group rounded-xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:border-blue-600 hover:shadow-md"
-          >
-            <div
-              class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-[#0081b6] transition-colors group-hover:bg-blue-600 group-hover:text-white"
-            >
-              <CpuChipIcon class="size-7" />
-            </div>
-            <h3
-              class="mb-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-[#0081b6]"
-            >
-              Промышленные контроллеры
-            </h3>
-            <p class="text-sm text-gray-600">
-              Широкий выбор моделей для автоматизации
-            </p>
-            <div
-              class="mt-4 flex items-center text-sm font-medium text-[#0081b6] transition-colors group-hover:text-blue-800"
+              class="text-accent mt-4 flex items-center text-sm font-medium transition-colors"
             >
               Смотреть товары
               <ChevronRightIcon
@@ -471,7 +387,7 @@ import {
                 </div>
                 <button
                   type="submit"
-                  class="bg-accent w-full rounded-lg px-8 py-4 font-bold text-white shadow-md transition duration-300 hover:bg-blue-700 hover:shadow-lg"
+                  class="bg-accent hover:bg-accent/90 w-full rounded-lg px-8 py-4 font-bold text-white shadow-md transition duration-300 hover:shadow-lg"
                 >
                   Получить коммерческое предложение
                 </button>
