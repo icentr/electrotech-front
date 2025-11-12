@@ -84,7 +84,7 @@
                 <div class="flex flex-col gap-3 sm:flex-row">
                   <button
                     :disabled="product.count === 0"
-                    class="relative z-20 flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700 disabled:bg-blue-200 disabled:text-blue-50"
+                    class="bg-accent hover:bg-accent/80 relative z-20 flex w-full items-center justify-center rounded-md px-4 py-3 font-medium text-white transition-colors disabled:bg-blue-200 disabled:text-blue-50"
                     @click="addToCart"
                   >
                     <ShoppingCartIcon class="mr-2 size-5" />

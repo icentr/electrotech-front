@@ -1,116 +1,116 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="mb-6 text-2xl font-semibold">
-      Редактирование информации о компании
-    </h1>
+  <div class="flex justify-center px-4">
+    <div class="rounded-xl bg-white p-6 shadow">
+      <h1 class="mb-6 text-2xl font-semibold">
+        Редактирование информации о компании
+      </h1>
 
-    <form @submit.prevent="submitForm" class="max-w-xl space-y-4">
-      <!-- Название компании -->
-      <div>
-        <label class="mb-1 block text-sm font-medium">Название компании</label>
-        <input
-          v-model="form.companyName"
-          @input="
-            form.companyName = form.companyName.replace(
-              /[^а-яА-Яa-zA-Z0-9\s]/g,
-              '',
-            )
-          "
-          type="text"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
-        <p v-if="errors.companyName" class="text-sm text-red-600">
-          {{ errors.companyName }}
-        </p>
-      </div>
+      <form @submit.prevent="submitForm" class="max-w-xl space-y-4">
+        <!-- Название компании -->
+        <div>
+          <label class="mb-1 block text-sm font-medium"
+            >Название компании</label
+          >
+          <input
+            v-model="form.companyName"
+            @input="
+              form.companyName = form.companyName.replace(
+                /[^а-яА-Яa-zA-Z0-9\s]/g,
+                '',
+              )
+            "
+            type="text"
+            class="entry"
+          />
+          <p v-if="errors.companyName" class="text-sm text-red-600">
+            {{ errors.companyName }}
+          </p>
+        </div>
 
-      <!-- Адрес компании -->
-      <div>
-        <label class="mb-1 block text-sm font-medium">Адрес компании</label>
-        <input
-          v-model="form.companyAddress"
-          @input="
-            form.companyAddress = form.companyAddress.replace(
-              /[^а-яА-Яa-zA-Z0-9\s.,-]/g,
-              '',
-            )
-          "
-          type="text"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
-        <p v-if="errors.companyAddress" class="text-sm text-red-600">
-          {{ errors.companyAddress }}
-        </p>
-      </div>
+        <!-- Адрес компании -->
+        <div>
+          <label class="mb-1 block text-sm font-medium">Адрес компании</label>
+          <input
+            v-model="form.companyAddress"
+            @input="
+              form.companyAddress = form.companyAddress.replace(
+                /[^а-яА-Яa-zA-Z0-9\s.,-]/g,
+                '',
+              )
+            "
+            type="text"
+            class="entry"
+          />
+          <p v-if="errors.companyAddress" class="text-sm text-red-600">
+            {{ errors.companyAddress }}
+          </p>
+        </div>
 
-      <!-- Должность -->
-      <div>
-        <label class="mb-1 block text-sm font-medium"
-          >Должность в компании</label
-        >
-        <input
-          v-model="form.positionInCompany"
-          @input="
-            form.positionInCompany = form.positionInCompany.replace(
-              /[^а-яА-Яa-zA-Z\s]/g,
-              '',
-            )
-          "
-          type="text"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
-        <p v-if="errors.positionInCompany" class="text-sm text-red-600">
-          {{ errors.positionInCompany }}
-        </p>
-      </div>
+        <!-- Должность -->
+        <div>
+          <label class="mb-1 block text-sm font-medium"
+            >Должность в компании</label
+          >
+          <input
+            v-model="form.positionInCompany"
+            @input="
+              form.positionInCompany = form.positionInCompany.replace(
+                /[^а-яА-Яa-zA-Z\s]/g,
+                '',
+              )
+            "
+            type="text"
+            class="entry"
+          />
+          <p v-if="errors.positionInCompany" class="text-sm text-red-600">
+            {{ errors.positionInCompany }}
+          </p>
+        </div>
 
-      <!-- ИНН -->
-      <div>
-        <label class="mb-1 block text-sm font-medium">ИНН компании</label>
-        <input
-          v-model="form.companyINN"
-          @input="form.companyINN = form.companyINN.replace(/\D/g, '')"
-          maxlength="12"
-          type="text"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
-        <p v-if="errors.companyINN" class="text-sm text-red-600">
-          {{ errors.companyINN }}
-        </p>
-      </div>
+        <!-- ИНН -->
+        <div>
+          <label class="mb-1 block text-sm font-medium">ИНН компании</label>
+          <input
+            v-model="form.companyINN"
+            @input="form.companyINN = form.companyINN.replace(/\D/g, '')"
+            maxlength="12"
+            type="text"
+            class="entry"
+          />
+          <p v-if="errors.companyINN" class="text-sm text-red-600">
+            {{ errors.companyINN }}
+          </p>
+        </div>
 
-      <!-- ОКПО -->
-      <div>
-        <label class="mb-1 block text-sm font-medium">ОКПО</label>
-        <input
-          v-model="form.companyOKPO"
-          @input="form.companyOKPO = form.companyOKPO.replace(/\D/g, '')"
-          maxlength="10"
-          type="text"
-          class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-        />
-        <p v-if="errors.companyOKPO" class="text-sm text-red-600">
-          {{ errors.companyOKPO }}
-        </p>
-      </div>
+        <!-- ОКПО -->
+        <div>
+          <label class="mb-1 block text-sm font-medium">ОКПО</label>
+          <input
+            v-model="form.companyOKPO"
+            @input="form.companyOKPO = form.companyOKPO.replace(/\D/g, '')"
+            maxlength="10"
+            type="text"
+            class="entry"
+          />
+          <p v-if="errors.companyOKPO" class="text-sm text-red-600">
+            {{ errors.companyOKPO }}
+          </p>
+        </div>
 
-      <!-- Общие ошибки -->
-      <div v-if="errorMessage" class="text-sm text-red-600">
-        {{ errorMessage }}
-      </div>
-      <div v-if="successMessage" class="text-sm text-green-600">
-        {{ successMessage }}
-      </div>
+        <!-- Общие ошибки -->
+        <div v-if="errorMessage" class="text-sm text-red-600">
+          {{ errorMessage }}
+        </div>
+        <div v-if="successMessage" class="text-sm text-green-600">
+          {{ successMessage }}
+        </div>
 
-      <!-- Кнопка -->
-      <button
-        type="submit"
-        class="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
-        :disabled="loading"
-      >
-        {{ loading ? "Сохранение..." : "Сохранить" }}
-      </button>
-    </form>
+        <!-- Кнопка -->
+        <button type="submit" class="btn btn-accent" :disabled="loading">
+          {{ loading ? "Сохранение..." : "Сохранить" }}
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 

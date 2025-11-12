@@ -5,6 +5,7 @@ import { getApi } from "@/api";
 const api = getApi();
 
 import {
+  ArrowRightIcon,
   BuildingOfficeIcon,
   CheckIcon,
   EnvelopeIcon,
@@ -151,7 +152,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
           <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
             <div class="mb-6 flex flex-col items-center">
               <div
-                class="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100"
+                class="bg-accent/10 mb-4 flex h-20 w-20 items-center justify-center rounded-full"
               >
                 <img
                   v-if="user.avatarUrl"
@@ -168,7 +169,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
             <div class="space-y-4">
               <div class="flex items-start">
                 <div
-                  class="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600"
+                  class="bg-accent/10 text-accent mr-4 flex h-10 w-10 items-center justify-center rounded-lg"
                 >
                   <EnvelopeIcon class="size-6" />
                 </div>
@@ -180,7 +181,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 
               <div class="flex items-start">
                 <div
-                  class="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600"
+                  class="bg-accent/10 text-accent mr-4 flex h-10 w-10 items-center justify-center rounded-lg"
                 >
                   <PhoneIcon v-if="user.phone" class="size-6" />
                   <PhoneXMarkIcon v-else class="size-6" />
@@ -190,11 +191,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                   <p class="font-medium">{{ user.phone || "Не указан" }}</p>
                 </div>
               </div>
-
-              <RouterLink
-                to="/account/edit"
-                class="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-gray-100 px-4 py-2 font-medium text-gray-800 transition-colors hover:bg-gray-200"
-              >
+              <RouterLink to="/account/edit" class="btn mt-6">
                 <PencilIcon class="size-5" />
                 Редактировать профиль
               </RouterLink>
@@ -213,7 +210,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
           <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
             <div class="mb-6 flex items-center">
               <div
-                class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600"
+                class="text-accent bg-accent/10 mr-4 flex h-12 w-12 items-center justify-center rounded-lg"
               >
                 <BuildingOfficeIcon class="size-6" />
               </div>
@@ -275,10 +272,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 </p>
               </div>
 
-              <RouterLink
-                to="/account/EditCompany"
-                class="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-gray-100 px-4 py-2 font-medium text-gray-800 transition-colors hover:bg-gray-200"
-              >
+              <RouterLink to="/account/EditCompany" class="btn mt-6 flex">
                 <PencilIcon class="size-5" />
                 Редактировать компанию
               </RouterLink>
@@ -293,38 +287,8 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
               <h2 class="text-xl font-bold text-gray-900">История заказов</h2>
             </div>
 
-            <!-- Фильтры -->
-            <!-- <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0 md:space-x-4">
-                            <div class="relative flex-1">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                </div>
-                                <input
-                                    type="text"
-                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Поиск по заказам..." />
-                            </div>
-
-                            <div class="flex space-x-4">
-                                <select class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <option>Все статусы</option>
-                                    <option>Новый</option>
-                                    <option>В обработке</option>
-                                    <option>Доставка</option>
-                                    <option>Завершен</option>
-                                    <option>Отменен</option>
-                                </select>
-
-                                <select class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <option>За последние 3 месяца</option>
-                                    <option>За последние 6 месяцев</option>
-                                    <option>За последний год</option>
-                                    <option>За все время</option>
-                                </select>
-                            </div>
-                        </div> -->
-
             <!-- Таблица заказов -->
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
@@ -349,9 +313,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-                    >
-                      Статус
-                    </th>
+                    ></th>
                     <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th> -->
                   </tr>
                 </thead>
@@ -361,14 +323,8 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     :key="order.id"
                     class="hover:bg-gray-50"
                   >
-                    <td
-                      class="px-6 py-4 text-sm font-medium whitespace-nowrap text-blue-600"
-                    >
-                      <RouterLink
-                        :to="`/orders/${order.id}`"
-                        class="hover:underline"
-                        >#{{ order.id }}</RouterLink
-                      >
+                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                      #{{ order.id }}
                     </td>
                     <td
                       class="px-6 py-4 text-sm whitespace-nowrap text-gray-500"
@@ -381,11 +337,10 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                       {{ formatCurrency(order.amount) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <span
-                        :class="`inline-flex rounded-full px-2 text-xs leading-5 font-semibold ${getStatusClass(order.status)}`"
-                      >
-                        {{ order.status }}
-                      </span>
+                      <RouterLink :to="`/orders/${order.id}`" class="btn"
+                        >Подробнее
+                        <ArrowRightIcon class="size-4" />
+                      </RouterLink>
                     </td>
                   </tr>
                 </tbody>

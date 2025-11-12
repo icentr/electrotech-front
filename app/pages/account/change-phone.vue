@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="mx-auto mt-10 h-fit max-w-md space-y-6 rounded-xl bg-white p-6 shadow"
-  >
+  <div class="flex h-fit flex-col rounded-xl bg-white p-6 shadow">
     <h2 class="text-xl font-semibold text-gray-800">Изменить номер телефона</h2>
 
     <form @submit.prevent="submitPhone">
@@ -14,17 +12,13 @@
             v-model="phone"
             type="tel"
             placeholder="+7..."
-            class="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            class="entry"
             required
           />
         </div>
 
         <div class="flex justify-end">
-          <button
-            type="submit"
-            class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-            :disabled="loading"
-          >
+          <button type="submit" class="btn btn-accent" :disabled="loading">
             Сохранить
           </button>
         </div>

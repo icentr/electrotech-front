@@ -1,58 +1,46 @@
 <template>
-  <div class="bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-md rounded-xl bg-white p-8 shadow">
-      <h2 class="mb-6 text-2xl font-semibold text-gray-900">Сменить пароль</h2>
+  <div class="flex flex-col rounded-xl bg-white p-6 shadow">
+    <h2 class="mb-6 text-2xl font-semibold text-gray-900">Сменить пароль</h2>
 
-      <form @submit.prevent="handleSubmit" class="space-y-4">
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700"
-            >Текущий пароль</label
-          >
-          <input
-            v-model="currentPassword"
-            type="password"
-            required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm"
-          />
-        </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700"
-            >Новый пароль</label
-          >
-          <input
-            v-model="newPassword"
-            type="password"
-            required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm"
-          />
-        </div>
-
-        <div>
-          <label class="mb-1 block text-sm font-medium text-gray-700"
-            >Повторите новый пароль</label
-          >
-          <input
-            v-model="confirmPassword"
-            type="password"
-            required
-            class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm"
-          />
-        </div>
-
-        <div v-if="error" class="text-sm text-red-600">{{ error }}</div>
-        <div v-if="success" class="text-sm text-green-600">
-          Пароль успешно изменён!
-        </div>
-
-        <button
-          type="submit"
-          class="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+    <form @submit.prevent="handleSubmit" class="space-y-4">
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700"
+          >Текущий пароль</label
         >
-          Сменить пароль
-        </button>
-      </form>
-    </div>
+        <input
+          v-model="currentPassword"
+          type="password"
+          required
+          class="entry"
+        />
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700"
+          >Новый пароль</label
+        >
+        <input v-model="newPassword" type="password" required class="entry" />
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-gray-700"
+          >Повторите новый пароль</label
+        >
+        <input
+          v-model="confirmPassword"
+          type="password"
+          required
+          class="entry"
+        />
+      </div>
+
+      <div v-if="error" class="text-sm text-red-600">{{ error }}</div>
+      <div v-if="success" class="text-sm text-green-600">
+        Пароль успешно изменён!
+      </div>
+
+      <button type="submit" class="btn btn-accent">Сменить пароль</button>
+    </form>
   </div>
 </template>
 

@@ -13,7 +13,7 @@
         <div
           v-for="(product, index) in order.products"
           :key="index"
-          class="group relative flex h-full flex-col rounded-xl border border-transparent bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:border-blue-600 hover:shadow-md"
+          class="group hover:border-accent relative flex h-full flex-col rounded-xl border border-transparent bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border hover:shadow-md"
         >
           <!-- Изображение -->
           <div
@@ -37,7 +37,7 @@
           <div class="flex-grow">
             <NuxtLink
               :to="`/product/${product.productId}`"
-              class="mb-1 line-clamp-2 block text-lg font-bold text-gray-900 transition-colors hover:text-blue-600"
+              class="hover:text-accent mb-1 line-clamp-2 block text-lg font-bold text-gray-900 transition-colors"
             >
               {{ product.productName }}
             </NuxtLink>

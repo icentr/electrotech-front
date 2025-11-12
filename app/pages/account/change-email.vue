@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-10 h-fit max-w-md rounded-lg bg-white p-6 shadow">
+  <div class="flex h-fit flex-col rounded-lg bg-white p-6 shadow">
     <h2 class="mb-4 text-xl font-semibold">Изменить Email</h2>
 
     <form @submit.prevent="submitEmail">
@@ -10,7 +10,7 @@
         <input
           v-model="email"
           type="email"
-          class="w-full rounded-md border border-gray-300 px-3 py-2"
+          class="entry"
           placeholder="example@mail.com"
           required
         />
@@ -18,7 +18,7 @@
 
       <button
         type="submit"
-        class="w-full rounded bg-blue-600 py-2 text-white hover:bg-blue-700"
+        class="btn btn-accent"
         :disabled="loading || !email"
       >
         {{ loading ? "Сохранение..." : "Сохранить" }}
