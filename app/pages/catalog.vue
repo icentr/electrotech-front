@@ -95,36 +95,8 @@ const fetchFilters = async () => {
 const fetchProducts = async () => {
   try {
     isLoading.value = true;
-    const filtersPayload = [];
 
-    filters.value.forEach((f) => {
-      if (f.type === "list") {
-        const selectedOptions = f.options.filter((o) => o.selected);
-
-        if (selectedOptions.length == 0) return;
-
-        filtersPayload.push({
-          parameter: f.name,
-          type: f.type,
-          values: f.options.filter((o) => o.selected).map((o) => o.name),
-        });
-      } else if (f.type === "number") {
-        if (f.inputMax == f.max && f.inputMin == f.min) {
-          return;
-        }
-        filtersPayload.push({
-          parameter: f.name,
-          type: f.type,
-          min: f.inputMin,
-          max: f.inputMax,
-        });
-      }
-    });
-
-    const response = await api.post("/products/filter", {
-      page: page.value - 1,
-      filters: filtersPayload,
-    });
+    const response = await api.get("/products/all/0");
 
     products.value = response.data.products || [];
     totalPages.value = response.data.totalPages || 1;
