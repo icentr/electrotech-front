@@ -194,17 +194,17 @@ const cartItems = computed(() => cartStore.cartItems);
                   <input
                     type="text"
                     placeholder="Введите промокод"
-                    class="w-full rounded-l-md border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    class="focus:border-accent focus:ring-accent w-full rounded-l-md border border-gray-300 px-4 py-2 text-sm focus:ring-2 focus:outline-none"
                     v-model="promoCode"
                   />
                   <button
-                    class="rounded-r-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                    class="bg-accent hover:bg-accent/90 rounded-r-md px-4 py-2 text-sm font-medium text-white transition-colors"
                   >
                     Применить
                   </button>
                 </form>
                 <button
-                  class="flex items-center text-sm font-medium text-gray-600 hover:text-gray-800"
+                  class="flex items-center text-sm font-medium text-red-600 hover:text-red-800"
                   @click="clearCart"
                 >
                   <TrashIcon class="mr-2 size-4" />
@@ -278,14 +278,14 @@ const cartItems = computed(() => cartStore.cartItems);
             <button
               v-if="cartItems.length > 0"
               @click="handleCheckout"
-              class="flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+              class="bg-accent hover:bg-accent/70 flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium text-white transition-colors"
             >
               <CreditCardIcon class="mr-2 size-4" /> Оформить заказ
             </button>
 
             <div class="mt-4 text-xs text-gray-500">
               Нажимая на кнопку, вы соглашаетесь с
-              <a href="#" class="text-blue-600 hover:underline"
+              <a href="#" class="text-accent/80 hover:underline"
                 >условиями обработки персональных данных</a
               >
             </div>

@@ -8,7 +8,7 @@
     >
       <div class="text-center">
         <div class="flex justify-center">
-          <div class="rounded-lg bg-blue-600 p-3 shadow-sm">
+          <div class="bg-accent rounded-lg p-3 shadow-sm">
             <BoltIcon class="size-6 text-white" />
           </div>
         </div>
@@ -44,7 +44,7 @@
                 type="email"
                 autocomplete="email"
                 required
-                class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:ring-2 focus:outline-none"
                 placeholder="your@email.com"
               />
             </div>
@@ -69,7 +69,7 @@
                 type="password"
                 autocomplete="current-password"
                 required
-                class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:ring-2 focus:outline-none"
                 placeholder="••••••••"
               />
             </div>
@@ -85,7 +85,7 @@
           <div class="text-sm">
             <RouterLink
               to="/ForgotPassword"
-              class="font-medium text-blue-600 hover:text-blue-500"
+              class="hover:text-accent/80 text-accent font-medium"
             >
               Забыли пароль?
             </RouterLink>
@@ -95,7 +95,7 @@
         <div>
           <button
             type="submit"
-            class="group relative flex w-full items-center justify-center gap-2 rounded-lg border border-transparent bg-blue-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+            class="group bg-accent focus:ring-accent hover:bg-accent/70 relative flex w-full items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-3 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
           >
             Войти
             <ArrowRightEndOnRectangleIcon
@@ -110,7 +110,7 @@
           Еще нет аккаунта?
           <RouterLink
             to="/Register"
-            class="font-medium text-blue-600 hover:text-blue-500"
+            class="text-accent hover:text-accent/80 font-medium"
           >
             Зарегистрироваться
           </RouterLink>

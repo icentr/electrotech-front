@@ -8,7 +8,7 @@
     >
       <div class="text-center">
         <div class="flex justify-center">
-          <div class="rounded-lg bg-blue-600 p-3 shadow-sm">
+          <div class="bg-accent rounded-lg p-3 shadow-sm">
             <BoltIcon class="size-6 text-2xl text-white" />
           </div>
         </div>
@@ -30,7 +30,7 @@
               v-model="form.surname"
               type="text"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:border-accent focus:ring-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -41,7 +41,7 @@
               v-model="form.first_name"
               type="text"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -51,7 +51,7 @@
             <input
               v-model="form.last_name"
               type="text"
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -62,7 +62,7 @@
               v-model="form.email"
               type="email"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -73,7 +73,7 @@
               v-model="form.phone_number"
               type="tel"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -84,7 +84,7 @@
               v-model="form.password"
               type="password"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
           <div>
@@ -95,14 +95,14 @@
               v-model="form.confirmPassword"
               type="password"
               required
-              class="block w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
             />
           </div>
         </div>
 
         <button
           type="submit"
-          class="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+          class="focus:ring-accent hover:bg-accent/80 bg-accent w-full rounded-lg px-4 py-3 font-medium text-white transition focus:ring-2 focus:ring-offset-2 focus:outline-none"
         >
           Зарегистрироваться
         </button>
@@ -111,7 +111,7 @@
       <div class="text-center">
         <p class="text-sm text-gray-600">
           Уже есть аккаунт?
-          <RouterLink to="/login" class="text-blue-600 hover:text-blue-500">
+          <RouterLink to="/login" class="text-accent hover:text-accent/80">
             Войти
           </RouterLink>
         </p>
