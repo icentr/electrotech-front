@@ -12,6 +12,7 @@
         <img
           :src="getImageUrl(product.imagePath)"
           :alt="product.name"
+          loading="lazy"
           class="absolute top-0 left-0 h-full w-full object-contain p-4"
         />
         <div

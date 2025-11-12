@@ -1,4 +1,8 @@
 <template>
+  <Breadcrumbs
+    :breadcrumbs="[{ name: 'Личный кабинет', url: '/account' }]"
+    page="Редактирование информации о компании"
+  />
   <div class="flex justify-center px-4">
     <div class="rounded-xl bg-white p-6 shadow">
       <h1 class="mb-6 text-2xl font-semibold">

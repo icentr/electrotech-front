@@ -65,15 +65,20 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
           <span>Пн-Пт: 9:00–18:00</span>
         </div>
         <div class="hidden md:flex gap-3">
-          <NuxtLink v-if="auth.isAuthenticated" to="/account" class="icon-button">
-            <UserIcon class="size-5 me-1" />
-            <span class="ml-2">Аккаунт</span>
+          <NuxtLink v-if="auth.isAuthenticated" to="/account" class="btn text-accent" title="Личный кабинет">
+            <div class="text-accent/80 flex justify-center items-center gap-2">
+              <UserIcon class="size-5" />
+              <span class="w-max">Личный кабинет</span>
+            </div>
           </NuxtLink>
-          <NuxtLink v-if="auth.isAuthenticated" title="Выход из аккаунта"
-            class="flex items-center rounded-md px-2 py-1 cursor-pointer bg-red-200 text-red-500 hover:bg-red-200/80 active:bg-red-300 active:text-red-600 transition-all duration-200"
+          <button v-if="auth.isAuthenticated" title="Выход из аккаунта"
+          class="btn btn-destructive"
             @click="handleLogout">
             <ArrowLeftStartOnRectangleIcon class="size-6" />
-          </NuxtLink>
+            <span>
+Выход
+            </span>
+          </button>
           <NuxtLink v-else to="/login" class="auth-button">
             <span class="text-md">Вход</span>
             <ArrowRightEndOnRectangleIcon class="size-5 ms-2" />
@@ -84,9 +89,8 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
   </header>
 </template>
 <style >
-/* @import "tailwindcss"; */
+@import "tailwindcss";
 .router-link-active {
-  /* @apply text-[#111827] font-semibold; */
   font-weight: 500;
   border-color: #0081b6;
 }
@@ -107,12 +111,12 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
 }
 
 .icon-button {
+  @apply py-2 px-3 shadow;
   display: flex;
   align-items: center;
   color: #4b5563;
   background-color: #f3f4f6;
   border-radius: 0.5rem;
-  padding: 0.5rem;
   transition: color 0.2s, background-color 0.2s;
 }
 

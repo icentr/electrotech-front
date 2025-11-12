@@ -721,13 +721,13 @@ onMounted(async () => {
               <div class="border-t border-gray-200 bg-white p-6 pb-8">
                 <button
                   @click="applyFilters"
-                  class="flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:from-blue-700 hover:to-blue-800"
+                  class="btn btn-accent btn-lg bg-accent hover:bg-accent/80 mb-12 flex w-full items-center justify-center gap-3 rounded-xl px-6 py-4 text-base font-semibold text-white shadow-sm transition-all duration-200"
                 >
                   <AdjustmentsHorizontalIcon class="size-5 text-white" />
                   <span>Показать результаты</span>
                   <span
                     v-if="activeFiltersCount() > 0"
-                    class="min-w-6 rounded-full bg-white px-2 py-1 text-xs font-bold text-blue-600"
+                    class="text-accent min-w-6 rounded-full bg-white px-2 py-1 text-xs font-bold"
                   >
                     {{ activeFiltersCount() }}
                   </span>
@@ -791,7 +791,7 @@ onMounted(async () => {
                 class="border-r border-gray-200 px-5 py-3 transition-colors last:border-r-0"
                 :class="{
                   'bg-white text-gray-500 hover:bg-gray-50': n !== page,
-                  'border-blue-200 bg-blue-50 font-semibold text-blue-600':
+                  'text-accent border-blue-200 bg-blue-50 font-semibold':
                     n === page,
                 }"
               >

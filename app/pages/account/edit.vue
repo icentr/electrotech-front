@@ -1,4 +1,8 @@
 <template>
+  <Breadcrumbs
+    :breadcrumbs="[{ name: 'Личный кабинет', url: '/account' }]"
+    page="Редактирование профиля"
+  />
   <div class="container mx-auto px-4 py-8">
     <h1 class="mb-8 text-3xl font-semibold text-gray-800">
       Редактирование профиля

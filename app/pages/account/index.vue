@@ -198,10 +198,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
             </div>
           </div>
           <div class="flex">
-            <button
-              @click="handleLogout"
-              class="flex grow cursor-pointer items-center justify-center gap-3 rounded-lg bg-red-200 px-2 py-3 text-red-500 transition-all duration-200 hover:bg-red-200/80 active:bg-red-300 active:text-red-600"
-            >
+            <button @click="handleLogout" class="btn btn-destructive btn-lg">
               <ArrowLeftStartOnRectangleIcon class="size-6" />
               Выйти из аккаунта
             </button>
@@ -323,20 +320,22 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     :key="order.id"
                     class="hover:bg-gray-50"
                   >
-                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                    <td
+                      class="px-1 py-4 text-sm font-medium whitespace-nowrap md:px-6"
+                    >
                       #{{ order.id }}
                     </td>
                     <td
-                      class="px-6 py-4 text-sm whitespace-nowrap text-gray-500"
+                      class="px-1 py-4 text-sm whitespace-nowrap text-gray-500 md:px-6"
                     >
                       {{ formatDate(order.date) }}
                     </td>
                     <td
-                      class="px-6 py-4 text-sm whitespace-nowrap text-gray-900"
+                      class="px-1 py-4 text-sm whitespace-nowrap text-gray-900 md:px-6"
                     >
                       {{ formatCurrency(order.amount) }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-1 py-4 whitespace-nowrap md:px-6">
                       <RouterLink :to="`/orders/${order.id}`" class="btn"
                         >Подробнее
                         <ArrowRightIcon class="size-4" />

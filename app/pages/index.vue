@@ -21,8 +21,9 @@ import {
   EMAIL,
   COMPANY_INN,
   COMPANY_KPP,
-  ADVANTAGES,
 } from "~/data";
+
+import { ADVANTAGES } from "~/data/advantages";
 
 const PREVIEW_CATEGORIES = [
   {
