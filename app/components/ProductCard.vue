@@ -6,14 +6,12 @@
     <!-- Содержимое карточки -->
     <div class="relative z-10 flex h-full flex-col">
       <!-- Изображение -->
-      <div
-        class="relative mb-4 overflow-hidden rounded-lg bg-gray-100 pt-[70%]"
-      >
+      <div class="relative mb-4 overflow-hidden rounded-lg bg-gray-100">
         <img
           :src="getImageUrl(product.imagePath)"
           :alt="product.name"
           loading="lazy"
-          class="absolute top-0 left-0 h-full w-full object-contain p-4"
+          class="top-0 left-0 aspect-square w-full object-contain"
         />
         <div
           v-if="product.badge"
