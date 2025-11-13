@@ -16,7 +16,7 @@ const props = defineProps<{
         <li class="inline-flex items-center">
           <NuxtLink
             to="/"
-            class="inline-flex items-center font-medium text-gray-700 hover:text-blue-600 active:text-blue-600 md:text-sm"
+            class="hover:text-accent active:text-accent inline-flex items-center font-medium text-gray-700 md:text-sm"
           >
             <ChevronRightIcon class="size-7 md:size-5" />
             Главная
@@ -25,7 +25,7 @@ const props = defineProps<{
         <li v-for="page in props.breadcrumbs" class="inline-flex items-center">
           <NuxtLink
             :to="page.url"
-            class="inline-flex items-center font-medium text-gray-700 hover:text-blue-600 active:text-blue-600 md:text-sm"
+            class="hover:text-accent active:text-accent inline-flex items-center font-medium text-gray-700 md:text-sm"
           >
             <ChevronRightIcon class="size-7 md:size-5" />
             {{ page.name }}
