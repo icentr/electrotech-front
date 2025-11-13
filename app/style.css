@@ -9,6 +9,7 @@ input.no-spinner::-webkit-outer-spin-button {
 
 /* Убирает стрелочки в Firefox */
 input.no-spinner {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
