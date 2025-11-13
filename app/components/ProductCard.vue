@@ -24,7 +24,7 @@
       </div>
 
       <!-- Информация -->
-      <div class="flex-grow">
+      <div class="grow">
         <NuxtLink
           :to="`/product/${product.id}`"
           class="hover:text-accent mb-2 line-clamp-2 block text-lg font-bold text-gray-900 transition-colors"
@@ -32,13 +32,7 @@
           {{ product.name }}
         </NuxtLink>
 
-        <div class="mb-4 flex items-center">
-          <span class="text-sm font-semibold text-gray-700">{{
-            product.manufacturer
-          }}</span>
-        </div>
-
-        <div class="mb-4 line-clamp-2 text-sm text-gray-600">
+        <div class="mb-4 line-clamp-3 text-sm text-gray-600">
           {{ product.description }}
         </div>
       </div>
