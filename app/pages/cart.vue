@@ -223,25 +223,24 @@ const cartItems = computed(() => cartStore.cartItems);
             </div>
 
             <!-- Пустая корзина -->
-            <div v-else class="py-12 text-center">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100"
-              >
-                <ShoppingCartIcon class="size-6 text-gray-400" />
+            <div v-else class="flex justify-center py-12 text-center">
+              <div class="w-64">
+                <div
+                  class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100"
+                >
+                  <ShoppingCartIcon class="size-6 text-gray-400" />
+                </div>
+                <h3 class="mb-2 text-lg font-medium text-gray-900">
+                  Ваша корзина пуста
+                </h3>
+                <p class="mb-6 text-gray-500">
+                  Добавьте товары из каталога, чтобы продолжить
+                </p>
+                <RouterLink to="/catalog" class="btn btn-accent">
+                  <ArrowLeftIcon class="mr-2 size-4" />
+                  Перейти в каталог
+                </RouterLink>
               </div>
-              <h3 class="mb-2 text-lg font-medium text-gray-900">
-                Ваша корзина пуста
-              </h3>
-              <p class="mb-6 text-gray-500">
-                Добавьте товары из каталога, чтобы продолжить
-              </p>
-              <RouterLink
-                to="/catalog"
-                class="bg-accent inline-flex items-center rounded-md px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-              >
-                <ArrowLeftIcon class="mr-2 size-4" />
-                Перейти в каталог
-              </RouterLink>
             </div>
           </div>
         </div>

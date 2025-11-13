@@ -6,14 +6,12 @@
     <!-- Содержимое карточки -->
     <div class="relative z-10 flex h-full flex-col">
       <!-- Изображение -->
-      <div
-        class="relative mb-4 overflow-hidden rounded-lg bg-gray-100 pt-[70%]"
-      >
+      <div class="relative mb-4 overflow-hidden rounded-lg bg-gray-100">
         <img
           :src="getImageUrl(product.imagePath)"
           :alt="product.name"
           loading="lazy"
-          class="absolute top-0 left-0 h-full w-full object-contain p-4"
+          class="top-0 left-0 aspect-square w-full object-contain"
         />
         <div
           v-if="product.badge"
@@ -24,7 +22,7 @@
       </div>
 
       <!-- Информация -->
-      <div class="flex-grow">
+      <div class="grow">
         <NuxtLink
           :to="`/product/${product.id}`"
           class="hover:text-accent mb-2 line-clamp-2 block text-lg font-bold text-gray-900 transition-colors"
@@ -32,13 +30,7 @@
           {{ product.name }}
         </NuxtLink>
 
-        <div class="mb-4 flex items-center">
-          <span class="text-sm font-semibold text-gray-700">{{
-            product.manufacturer
-          }}</span>
-        </div>
-
-        <div class="mb-4 line-clamp-2 text-sm text-gray-600">
+        <div class="mb-4 line-clamp-3 text-sm text-gray-600">
           {{ product.description }}
         </div>
       </div>

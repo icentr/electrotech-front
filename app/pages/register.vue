@@ -26,12 +26,7 @@
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Фамилия</label
             >
-            <input
-              v-model="form.surname"
-              type="text"
-              required
-              class="focus:border-accent focus:ring-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
-            />
+            <input v-model="form.surname" type="text" required class="entry" />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
@@ -41,29 +36,20 @@
               v-model="form.first_name"
               type="text"
               required
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
+              class="entry"
             />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Отчество</label
             >
-            <input
-              v-model="form.last_name"
-              type="text"
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
-            />
+            <input v-model="form.last_name" type="text" class="entry" />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Email</label
             >
-            <input
-              v-model="form.email"
-              type="email"
-              required
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
-            />
+            <input v-model="form.email" type="email" required class="entry" />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
@@ -73,7 +59,7 @@
               v-model="form.phone_number"
               type="tel"
               required
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
+              class="entry"
             />
           </div>
           <div>
@@ -84,7 +70,7 @@
               v-model="form.password"
               type="password"
               required
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
+              class="entry"
             />
           </div>
           <div>
@@ -95,17 +81,12 @@
               v-model="form.confirmPassword"
               type="password"
               required
-              class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 px-4 py-3 focus:ring-2"
+              class="entry"
             />
           </div>
         </div>
 
-        <button
-          type="submit"
-          class="focus:ring-accent hover:bg-accent/80 bg-accent w-full rounded-lg px-4 py-3 font-medium text-white transition focus:ring-2 focus:ring-offset-2 focus:outline-none"
-        >
-          Зарегистрироваться
-        </button>
+        <button type="submit" class="btn btn-accent">Зарегистрироваться</button>
       </form>
 
       <div class="text-center">

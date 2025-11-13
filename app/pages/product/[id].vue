@@ -16,12 +16,12 @@
               <!-- Изображение товара -->
               <div class="md:w-1/3">
                 <div
-                  class="flex h-64 items-center justify-center rounded-lg bg-gray-100 p-4"
+                  class="flex items-center justify-center rounded-lg bg-gray-100"
                 >
                   <img
                     :src="getImageUrl(product.imagePath)"
                     :alt="product.name"
-                    class="max-h-full w-full object-contain"
+                    class="max-h-full w-full rounded-lg object-contain"
                   />
                 </div>
               </div>
@@ -100,29 +100,10 @@
             <h2 class="mb-4 text-xl font-bold text-gray-900">
               Описание товара
             </h2>
-            <p class="mb-6 text-gray-700">{{ product.description }}</p>
-
-            <h2 class="mb-4 text-xl font-bold text-gray-900">
-              Технические характеристики
-            </h2>
-            <div
-              class="flex justify-between border-b border-gray-100 py-2"
-              v-for="(param, index) in product.parameters"
-              :key="index"
-            >
-              <span class="text-gray-600">{{ param.name }}</span>
-              <span class="font-medium text-gray-900">
-                {{
-                  param.stringValue ||
-                  param.numberValue ||
-                  (param.sliceValue ? param.sliceValue.join(", ") : "")
-                }}
-              </span>
-            </div>
-            <div class="flex justify-between border-b border-gray-100 py-2">
-              <p class="text-gray-600">Производитель</p>
-              <p class="text-gray-900">{{ product.manufacturer }}</p>
-            </div>
+            <p v-if="product.description" class="mb-6 text-gray-700">
+              {{ product.description }}
+            </p>
+            <p v-else class="text-gray-500">Описание отсутствует</p>
           </div>
         </div>
       </div>
@@ -138,7 +119,6 @@ const api = getApi();
 import { getImageUrl } from "@/api";
 import { useCartStore } from "@/stores/cart";
 import { ShoppingCartIcon, StarIcon } from "@heroicons/vue/16/solid";
-// import { useToast } from "vue-toastification"; // если используешь уведомления
 
 const route = useRoute();
 const product = ref();
@@ -146,7 +126,6 @@ const loading = ref(true);
 const error = ref(null);
 
 const cartStore = useCartStore();
-// const toast = useToast(); // если используешь уведомления
 
 const fetchProduct = async (id) => {
   try {

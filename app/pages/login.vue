@@ -31,23 +31,16 @@
               class="mb-1 block text-sm font-medium text-gray-700"
               >Email</label
             >
-            <div class="relative">
-              <div
-                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-              >
-                <EnvelopeIcon class="size-5 text-gray-400" />
-              </div>
-              <input
-                id="email"
-                v-model="form.email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-                class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:ring-2 focus:outline-none"
-                placeholder="your@email.com"
-              />
-            </div>
+            <input
+              id="email"
+              v-model="form.email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              class="entry pl-10"
+              placeholder="your@email.com"
+            />
           </div>
 
           <div>
@@ -56,23 +49,16 @@
               class="mb-1 block text-sm font-medium text-gray-700"
               >Пароль</label
             >
-            <div class="relative">
-              <div
-                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-              >
-                <LockClosedIcon class="size-6 text-gray-400" />
-              </div>
-              <input
-                id="password"
-                v-model="form.password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="focus:ring-accent focus:border-accent block w-full rounded-lg border border-gray-300 bg-white px-4 py-3 ps-10 shadow-sm focus:ring-2 focus:outline-none"
-                placeholder="••••••••"
-              />
-            </div>
+            <input
+              id="password"
+              v-model="form.password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              class="entry"
+              placeholder="••••••••"
+            />
           </div>
         </div>
 
@@ -93,10 +79,7 @@
         </div>
 
         <div>
-          <button
-            type="submit"
-            class="group bg-accent focus:ring-accent hover:bg-accent/70 relative flex w-full items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-3 text-sm font-medium text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
-          >
+          <button type="submit" class="group btn btn-accent">
             Войти
             <ArrowRightEndOnRectangleIcon
               class="size-5 text-blue-300 group-hover:text-blue-200"
