@@ -61,10 +61,10 @@ onMounted(async () => {
     const { data } = await api.post("/user/get-company-data");
 
     company.value.name = data.companyName;
-    company.value.inn = data.companyINN;
+    company.value.inn = data.companyInn;
     company.value.address = data.companyAddress;
     company.value.position = data.positionInCompany;
-    company.value.okpo = data.companyOKPO;
+    company.value.okpo = data.companyOkpo;
     company.value.allRequiredFields = data.allRequiredFields;
   } catch (error) {
     console.error("Ошибка при получении данных компании: " + error);
@@ -72,22 +72,21 @@ onMounted(async () => {
   try {
     const { data } = await api.get("/orders/get");
 
+    console.log(data);
     orders.value = data.orders.map((order) => {
-      const rawDate = order.createdAt;
-      const isoDate = rawDate.split(" ")[0] + "T" + rawDate.split(" ")[1]; // Преобразуем в ISO формат
-
       const amount = order.products.reduce(
-        (sum, p) => sum + p.quantity * p.price,
+        (sum, p) => sum + p.quantity * p.productPrice,
         0,
       );
 
       return {
         id: order.id,
-        date: isoDate,
+        // date: isoDate,
+        creationDate: order.creationDate,
         amount,
-        status: "Завершен", // Заглушка пока
       };
     });
+    // orders.value = data.orders;
   } catch (error) {
     console.error("Ошибка при загрузке заказов:", error);
   }
@@ -111,28 +110,6 @@ const formatCurrency = (amount) => {
 };
 
 // Классы для статусов заказов
-const getStatusClass = (status) => {
-  switch (status) {
-    case "Новый":
-      return "bg-blue-100 text-blue-800";
-    case "В обработке":
-      return "bg-yellow-100 text-yellow-800";
-    case "Доставка":
-      return "bg-purple-100 text-purple-800";
-    case "Завершен":
-      return "bg-green-100 text-green-800";
-    case "Отменен":
-      return "bg-red-100 text-red-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-};
-
-// Повторить заказ
-const repeatOrder = (orderId) => {
-  console.log(`Повтор заказа #${orderId}`);
-  // Здесь будет логика повторения заказа
-};
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 </script>
 <!-- src/views/Account.vue -->
@@ -328,7 +305,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                     <td
                       class="px-1 py-4 text-sm whitespace-nowrap text-gray-500 md:px-6"
                     >
-                      {{ formatDate(order.date) }}
+                      {{ formatDate(order.creationDate) }}
                     </td>
                     <td
                       class="px-1 py-4 text-sm whitespace-nowrap text-gray-900 md:px-6"

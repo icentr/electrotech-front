@@ -6,7 +6,9 @@
   <div class="container mx-auto px-4 py-8">
     <div v-if="order">
       <h1 class="mb-4 text-2xl font-bold">Заказ №{{ order.id }}</h1>
-      <p class="mb-2"><strong>Дата:</strong> {{ formatDate(order.date) }}</p>
+      <p class="mb-2">
+        <strong>Дата:</strong> {{ formatDate(order.creationDate) }}
+      </p>
 
       <h2 class="mt-6 mb-4 text-xl font-semibold">Товары</h2>
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +64,7 @@
             <div class="mb-4 flex items-center justify-between">
               <div>
                 <div class="text-xl font-bold text-gray-900">
-                  {{ formatCurrency(product.price) }}
+                  {{ formatCurrency(product.productPrice) }}
                 </div>
                 <div
                   v-if="product.oldPrice"
@@ -124,7 +126,7 @@ onMounted(async () => {
 
     const found = orders.find((o) => o.id === id);
     if (found) {
-      const rawDate = found.createdAt;
+      const rawDate = found.creationDate;
       const isoDate = rawDate.split(" ")[0] + "T" + rawDate.split(" ")[1];
 
       // Просто присваиваем без преобразований

@@ -2,13 +2,7 @@
 import { ref, onMounted, computed } from "vue";
 import ProductCard from "../components/ProductCard.vue";
 import { useCartStore } from "../stores/cart";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  XMarkIcon,
-  ChevronDownIcon,
-  AdjustmentsHorizontalIcon,
-} from "@heroicons/vue/16/solid";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/16/solid";
 import { getApi } from "@/api";
 
 const api = getApi();
@@ -24,11 +18,6 @@ const cart = useCartStore();
 const products = ref([]);
 const page = ref(1);
 const totalPages = ref(1);
-
-// Реактивные переменные для управления фильтрами
-const isFiltersOpen = ref(false);
-const activeFilterSection = ref(null);
-const desktopExpandedFilters = ref(new Set());
 
 const fetchProducts = async () => {
   try {
