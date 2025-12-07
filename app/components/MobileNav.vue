@@ -32,7 +32,7 @@ const cart = useCartStore();
 </script>
 <template>
   <nav
-    class="sticky bottom-0 z-50 bg-white px-3 py-1 shadow-md shadow-black md:hidden"
+    class="sticky bottom-0 z-50 bg-white px-3 py-1 shadow-md shadow-black lg:hidden"
   >
     <div class="flex justify-around">
       <NuxtLink v-slot="{ isExactActive }" :to="link.to" v-for="link in links">

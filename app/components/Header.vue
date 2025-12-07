@@ -54,13 +54,13 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
           </ul>
         </nav>
         <!-- Контакты -->
-        <div class="hidden md:flex items-center ml-4">
+        <div class="hidden xl:flex items-center ml-4">
           <PhoneIcon class="size-5 mr-2" />
           <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="font-medium hover:text-accent">
             {{ PHONE_NUMBER }}
           </a>
         </div>
-        <div class="hidden md:flex space-x-6 ml-4">
+        <div class="hidden xl:flex space-x-6 ml-4">
           <ClockIcon class="size-5 mr-2" />
           <span>Пн-Пт: 9:00–18:00</span>
         </div>

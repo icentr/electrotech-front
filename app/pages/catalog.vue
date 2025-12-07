@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from "vue";
 import ProductCard from "../components/ProductCard.vue";
 import { useCartStore } from "../stores/cart";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/16/solid";
-import { getApi } from "@/api";
+import { getApi } from "~/api";
 
 const api = getApi();
 
