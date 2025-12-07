@@ -25,6 +25,6 @@ jobs:
           echo "$SSH_PASSWORD" > password
           chmod 600 password
           sshpass -f password ssh -o StrictHostKeyChecking=no root@${SERVER_IP} << 'EOF'
-            cd /root/electrotech-front
+            cd /root/electrotech-compose
             make restart
           EOF
