@@ -1,13 +1,23 @@
 // api.js
-import axios from "axios";
+import axios, {
+  Axios,
+  AxiosError,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { useAuthStore } from "@/stores/auth";
 
-// НЕ определяем BASE_URL здесь!
-
-let api; // будет инициализирован в плагине
+/** Будет инициализирован в плагине */
+let api: Axios;
 export const getApi = () => api;
+interface RetryConfig extends AxiosRequestConfig {
+  _retry?: boolean;
+}
 
-export const createApi = (baseURL) => {
+const UNAUTHORIZED = 401;
+
+export const createApi = (baseURL: string) => {
   api = axios.create({
     baseURL,
     headers: {
@@ -17,12 +27,12 @@ export const createApi = (baseURL) => {
 
   // Перехватчики
   api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
+    (response: AxiosResponse) => response,
+    async (error: AxiosError) => {
       const auth = useAuthStore();
-      const originalRequest = error.config;
+      const originalRequest = error.request as RetryConfig;
 
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (error.response?.status === UNAUTHORIZED && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
@@ -33,8 +43,14 @@ export const createApi = (baseURL) => {
           });
 
           auth.token = data.token;
-          originalRequest.headers["Authorization"] = data.token;
-          return api(originalRequest);
+          if (originalRequest.headers) {
+            originalRequest.headers["Authorization"] = data.token;
+          } else {
+            originalRequest.headers = {
+              Authorization: data.token,
+            };
+          }
+          return api.request(originalRequest);
         } catch (refreshErr) {
           auth.logout();
           window.location.href = "/login";
@@ -46,7 +62,7 @@ export const createApi = (baseURL) => {
     },
   );
 
-  api.interceptors.request.use((config) => {
+  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     const auth = useAuthStore();
     if (auth.token) {
       config.headers["Authorization"] = auth.token;
@@ -55,7 +71,7 @@ export const createApi = (baseURL) => {
   });
 };
 
-export const getImageUrl = (filename) => {
+export const getImageUrl = (filename: string) => {
   if (!filename) {
     console.warn("No filename provided");
     return "";
