@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ChevronRightIcon } from "@heroicons/vue/16/solid";
 type Breadcrumb = {
-  name: string;
-  url: string;
+  name: string | null;
+  url: string | null;
 };
 const props = defineProps<{
   page: String;
-  breadcrumbs: Breadcrumb[];
+  breadcrumbs: Breadcrumb[] | null;
 }>();
 </script>
 <template>
@@ -24,6 +24,7 @@ const props = defineProps<{
         </li>
         <li v-for="page in props.breadcrumbs" class="inline-flex items-center">
           <NuxtLink
+            v-if="page.url"
             :to="page.url"
             class="hover:text-accent active:text-accent inline-flex items-center font-medium text-gray-700 md:text-sm"
           >

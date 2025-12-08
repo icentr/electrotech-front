@@ -50,6 +50,9 @@ input.no-spinner {
 .btn.btn-destructive {
   @apply bg-red-200 text-red-500 shadow-sm hover:bg-red-400 hover:text-white focus:ring-red-600/50 active:bg-red-400 active:text-white active:ring-red-600/70;
 }
+.btn.btn-destructive-outline {
+  @apply bg-transparent text-red-500 shadow-none hover:bg-red-400 hover:text-white focus:ring-red-600/50 active:bg-red-400 active:text-white active:ring-red-600/70;
+}
 
 .btn:disabled {
   @apply cursor-not-allowed opacity-50 ring-transparent focus:ring-transparent active:ring-transparent;

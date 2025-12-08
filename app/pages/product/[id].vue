@@ -48,15 +48,16 @@
 
                 <div class="mb-6">
                   <div class="mb-2 flex items-baseline">
-                    <span class="mr-3 text-3xl font-bold text-gray-900"
-                      >{{ product.price }} ₽</span
-                    >
+                    <span class="mr-3 text-3xl font-bold text-gray-900">
+                      {{ formatCurrency(product.price, product.currency) }}
+                    </span>
 
                     <span
                       v-if="product.oldPrice"
                       class="text-lg text-gray-500 line-through"
-                      >{{ product.oldPrice }} ₽</span
                     >
+                      {{ formatCurrency(product.oldPrice, product.currency) }}
+                    </span>
                     <span
                       v-if="product.oldPrice"
                       class="ml-2 rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800"

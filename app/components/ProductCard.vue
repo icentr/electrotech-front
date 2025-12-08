@@ -6,12 +6,14 @@
     <!-- Содержимое карточки -->
     <div class="relative z-10 flex h-full flex-col">
       <!-- Изображение -->
-      <div class="relative mb-4 overflow-hidden rounded-lg bg-gray-100">
+      <div
+        class="relative mb-4 overflow-hidden rounded-lg bg-gray-200 text-right"
+      >
         <img
           :src="getImageUrl(product.imagePath)"
           :alt="product.name"
           loading="lazy"
-          class="top-0 left-0 aspect-square w-full object-contain"
+          class="top-0 right-0 aspect-square w-full object-cover"
         />
         <div
           v-if="product.badge"
@@ -40,13 +42,13 @@
         <div class="mb-4 flex items-center justify-between">
           <div>
             <div class="text-xl font-bold text-gray-900">
-              {{ product.price }} ₽
+              {{ formatCurrency(product.price, product.currency) }}
             </div>
             <div
               v-if="product.oldPrice"
               class="text-sm text-gray-400 line-through"
             >
-              {{ product.oldPrice }} ₽
+              {{ formatCurrency(product.oldPrice, product.currency) }}
             </div>
           </div>
           <div
@@ -81,8 +83,8 @@ import {
   ClockIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/16/solid";
-import { RouterLink } from "vue-router";
 import { getImageUrl } from "~/api";
+import { formatCurrency } from "@/utils";
 
 defineProps({
   product: {

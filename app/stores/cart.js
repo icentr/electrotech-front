@@ -37,6 +37,7 @@ export const useCartStore = defineStore("cart", {
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
+        console.log(product);
         this.cartItems.push({
           id: product.id,
           name: product.name,
@@ -44,6 +45,7 @@ export const useCartStore = defineStore("cart", {
           price: parseFloat(product.price.toString().replace(/\s/g, "")),
           quantity: 1,
           imagePath: getImageUrl(product.imagePath),
+          currency: product.currency,
         });
       }
     },
