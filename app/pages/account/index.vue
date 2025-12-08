@@ -7,6 +7,7 @@ const api = getApi();
 import {
   ArrowRightIcon,
   BuildingOfficeIcon,
+  CheckCircleIcon,
   CheckIcon,
   EnvelopeIcon,
   ExclamationTriangleIcon,
@@ -14,7 +15,7 @@ import {
   PhoneXMarkIcon,
 } from "@heroicons/vue/16/solid";
 import { PencilIcon } from "@heroicons/vue/24/outline";
-
+import { formatCurrency } from "@/utils";
 useHead({
   title: "Аккаунт",
 });
@@ -81,7 +82,6 @@ onMounted(async () => {
 
       return {
         id: order.id,
-        // date: isoDate,
         creationDate: order.creationDate,
         amount,
       };
@@ -101,13 +101,6 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString("ru-RU", options);
 };
 
-// Форматирование валюты
-const formatCurrency = (amount) => {
-  return new Intl.NumberFormat("ru-RU", {
-    style: "currency",
-    currency: "RUB",
-  }).format(amount);
-};
 
 // Классы для статусов заказов
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
@@ -189,8 +182,8 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 <BuildingOfficeIcon class="size-6" />
               </div>
               <div>
-                <h2 class="text-xl font-bold text-gray-900">
-                  Информация о компании
+                <h2 class="text-xl font-bold text-gray-900 ">
+                  Информация о компании 
                 </h2>
                 <p
                   class="flex gap-1 p-0 ps-0 text-sm font-normal text-red-400"
@@ -293,7 +286,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                   <tr
-                    v-for="order in orders"
+                    v-for="order in orders.sort((a,b)=> b.id - a.id)"
                     :key="order.id"
                     class="hover:bg-gray-50"
                   >
