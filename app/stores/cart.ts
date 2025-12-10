@@ -1,36 +1,45 @@
 import { defineStore } from "pinia";
 import { getImageUrl } from "@/utils";
+import type { Product } from "~/models";
+import type { get } from "http";
+
+interface CartItem extends Product {
+  quantity: number;
+}
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    cartItems: [],
+    cartItems: [] as CartItem[],
     promoCode: "",
     discountPercent: 0,
   }),
 
   getters: {
-    subtotal: (state) => {
-      return state.cartItems.reduce(
+    subtotal(): number {
+      return this.cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0,
       );
     },
-    discount: (state) => {
-      return (state.subtotal * state.discountPercent) / 100;
+    discount(): number {
+      return (this.subtotal * this.discountPercent) / 100;
     },
-    total: (state) => {
-      return state.subtotal - state.discount;
+    total(): number {
+      return this.subtotal - this.discount;
     },
-    totalItems: (state) => {
-      return state.cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    totalItems(): number {
+      return this.cartItems.reduce((sum, item) => sum + item.quantity, 0);
     },
-    cartItemsCount: (state) => {
-      return state.cartItems.length;
+    cartItemsCount(): number {
+      return this.cartItems.length;
     },
   },
 
   actions: {
-    addToCart(product) {
+    isInCart(product: Product) {
+      return this.cartItems.some((item) => item.id === product.id);
+    },
+    addToCart(product: Product) {
       const existingItem = this.cartItems.find(
         (item) => item.id === product.id,
       );
@@ -39,18 +48,21 @@ export const useCartStore = defineStore("cart", {
       } else {
         console.log(product);
         this.cartItems.push({
+          description: product.description,
+          count: product.count,
           id: product.id,
           name: product.name,
-          code: product.code || `PRD-${product.id}`,
-          price: parseFloat(product.price.toString().replace(/\s/g, "")),
-          quantity: 1,
+          articleNumber: product.articleNumber,
+          price: product.price,
           imagePath: getImageUrl(product.imagePath),
           currency: product.currency,
+
+          quantity: 1,
         });
       }
     },
 
-    removeFromCart(id) {
+    removeFromCart(id: string) {
       this.cartItems = this.cartItems.filter((item) => item.id !== id);
       if (this.cartItems.length === 0) {
         this.promoCode = "";
@@ -58,13 +70,13 @@ export const useCartStore = defineStore("cart", {
       }
     },
 
-    updateQuantity(id, newQuantity) {
+    updateQuantity(id: string, newQuantity: number) {
       if (newQuantity < 1) newQuantity = 1;
       const item = this.cartItems.find((item) => item.id === id);
       if (item) item.quantity = newQuantity;
     },
 
-    applyPromoCode(code) {
+    applyPromoCode(code: string) {
       if (code.toUpperCase() === "SALE10") {
         this.discountPercent = 10;
         this.promoCode = code;

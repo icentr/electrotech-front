@@ -52,10 +52,21 @@
           </div>
         </div>
 
+        <div v-if="cart.isInCart(product)" class="flex gap-2">
+          <input type="number" v-model="quantity" class="entry" />
+          <button class="btn btn-sm px-3" @click="quantity--">
+            <MinusIcon class="size-6" />
+          </button>
+          <button class="btn btn-accent btn-sm" @click="quantity++">
+            <PlusIcon class="size-6" />
+          </button>
+        </div>
+
         <button
+          v-else
           :disabled="product.count == 0"
           class="btn btn-accent"
-          @click.stop="$emit('add-to-cart', product)"
+          @click="addToCart"
         >
           <ShoppingCartIcon class="mr-2 size-5" />
           В корзину
@@ -69,12 +80,33 @@
 import {
   CheckCircleIcon,
   ClockIcon,
+  MinusIcon,
+  PlusIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/16/solid";
-import { getImageUrl,formatCurrency } from "@/utils";
+import { getImageUrl, formatCurrency } from "@/utils";
 import type { Product } from "~/models";
 
-defineProps<{ product: Product }>();
+import { useCartStore } from "@/stores/cart";
 
-defineEmits(["add-to-cart"]);
+const props = defineProps<{ product: Product }>();
+const cart = useCartStore();
+
+const cartItem = cart.cartItems.find((item) => item.id === props.product.id);
+
+const quantity = ref(cartItem?.quantity || 1);
+watch(quantity, (newValue) => {
+  cart.updateQuantity(props.product.id, newValue);
+  if (newValue <= 0) {
+    cart.removeFromCart(props.product.id);
+    quantity.value = 1;
+    return;
+  }
+
+  quantity.value = newValue;
+});
+
+const addToCart = () => {
+  cart.addToCart(props.product);
+};
 </script>

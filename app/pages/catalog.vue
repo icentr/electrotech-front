@@ -69,22 +69,23 @@ catalog.$subscribe((_, state) => {
                 <form
                   @submit.prevent="onSearch"
                   @reset="onResetSearch"
-                  class="flex rounded-md border border-gray-300 shadow-sm"
+                  class="flex gap-1"
                 >
                   <input
                     v-model="search"
-                    class="focus:ring-accent/30 w-full rounded-md border-none px-3 py-2 shadow-sm focus:ring-4 focus:outline-none"
+                    class="entry"
                     placeholder="Поиск товаров..."
                   />
                   <button
+                  title="Очистить поисковый запрос"
                     type="reset"
-                    class="base-btn btn-destructive-outline m-1 rounded-sm px-2 py-1"
+                    class="base-btn btn-destructive rounded-sm px-2 py-2"
                     v-if="search"
                   >
                     <XMarkIcon class="size-8" />
                   </button>
                   <button
-                    class="base-btn btn-accent m-1 rounded-sm rounded-r-md px-2 py-1"
+                    class="base-btn btn-accent rounded-sm rounded-r-md px-2 py-2"
                     type="submit"
                   >
                     <MagnifyingGlassIcon class="size-8" />
@@ -111,7 +112,6 @@ catalog.$subscribe((_, state) => {
                 v-for="product in catalog.products"
                 :key="product.id"
                 :product="product"
-                @add-to-cart="addToCart"
               />
             </TransitionGroup>
           </div>

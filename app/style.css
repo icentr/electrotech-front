@@ -43,7 +43,7 @@ input.no-spinner {
   @apply py-3 text-lg;
 }
 .btn.btn-sm {
-  @apply w-min p-1;
+  @apply w-min p-1 px-3;
 }
 .btn-accent {
   @apply bg-accent hover:bg-accent/90 active:bg-accent/90 focus:ring-accent/30 active:ring-accent/60 text-white shadow-sm;

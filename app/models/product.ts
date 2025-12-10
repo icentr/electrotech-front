@@ -9,6 +9,7 @@ export interface Product{
   currency: Currency;
   count: number;
   imagePath: string;
+  articleNumber: string;
 };
 
 
