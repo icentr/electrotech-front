@@ -105,7 +105,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
-import { getImageUrl } from "~/api";
+import { getImageUrl } from "@/utils";
 import { getApi } from "@/api";
 import { ArrowPathIcon, CheckCircleIcon } from "@heroicons/vue/16/solid";
 

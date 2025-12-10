@@ -1,16 +1,17 @@
 // api.js
 import axios, {
-  Axios,
   AxiosError,
+  type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from "axios";
 import { useAuthStore } from "@/stores/auth";
 
-/** Будет инициализирован в плагине */
-let api: Axios;
-export const getApi = () => api;
+import { getApiBaseUrl } from "@/utils";
+
+export const getApi = () => createApi(getApiBaseUrl());
+
 interface RetryConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
@@ -18,7 +19,7 @@ interface RetryConfig extends AxiosRequestConfig {
 const UNAUTHORIZED = 401;
 
 export const createApi = (baseURL: string) => {
-  api = axios.create({
+  const api = axios.create({
     baseURL,
     headers: {
       "Content-Type": "application/json",
@@ -69,12 +70,6 @@ export const createApi = (baseURL: string) => {
     }
     return config;
   });
-};
 
-export const getImageUrl = (filename: string) => {
-  if (!filename) {
-    console.warn("No filename provided");
-    return "";
-  }
-  return `${api?.defaults.baseURL}files/${filename}`;
+  return api
 };

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getImageUrl } from "../api";
+import { getImageUrl } from "@/utils";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({

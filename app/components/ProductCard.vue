@@ -15,12 +15,6 @@
           loading="lazy"
           class="top-0 right-0 aspect-square w-full object-cover"
         />
-        <div
-          v-if="product.badge"
-          class="absolute top-3 left-3 rounded bg-yellow-400 px-2 py-1 text-xs font-bold text-yellow-800"
-        >
-          {{ product.badge }}
-        </div>
       </div>
 
       <!-- Информация -->
@@ -43,12 +37,6 @@
           <div>
             <div class="text-xl font-bold text-gray-900">
               {{ formatCurrency(product.price, product.currency) }}
-            </div>
-            <div
-              v-if="product.oldPrice"
-              class="text-sm text-gray-400 line-through"
-            >
-              {{ formatCurrency(product.oldPrice, product.currency) }}
             </div>
           </div>
           <div
@@ -77,21 +65,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   CheckCircleIcon,
   ClockIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/16/solid";
-import { getImageUrl } from "~/api";
-import { formatCurrency } from "@/utils";
+import { getImageUrl,formatCurrency } from "@/utils";
+import type { Product } from "~/models";
 
-defineProps({
-  product: {
-    type: Object,
-    required: true,
-  },
-});
+defineProps<{ product: Product }>();
 
 defineEmits(["add-to-cart"]);
 </script>
