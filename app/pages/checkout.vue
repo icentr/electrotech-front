@@ -19,76 +19,16 @@
 
             <form @submit.prevent="submitOrder">
               <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
+                <div v-for="field in userFields">
                   <label
                     for="surname"
                     class="mb-1 block text-sm font-medium text-gray-700"
-                    >Фамилия *</label
+                    >{{ field.title }} *</label
                   >
                   <input
                     type="text"
                     id="surname"
-                    v-model="orderForm.surname"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="firstName"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >Имя *</label
-                  >
-                  <input
-                    type="text"
-                    id="firstName"
-                    v-model="orderForm.firstName"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="email"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >Email *</label
-                  >
-                  <input
-                    type="email"
-                    id="email"
-                    v-model="orderForm.email"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="phone"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >Телефон *</label
-                  >
-                  <input
-                    type="tel"
-                    id="phone"
-                    v-model="orderForm.phone_number"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="position_in_company"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >Должность в компании *</label
-                  >
-                  <input
-                    type="text"
-                    id="position_in_company"
-                    v-model="orderForm.position_in_company"
+                    v-model="field.value"
                     class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                     disabled
@@ -110,7 +50,7 @@
                   <input
                     type="text"
                     id="company_name"
-                    v-model="orderForm.company_name"
+                    v-model="orderForm.companyName"
                     class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                     disabled
@@ -125,7 +65,7 @@
                   <input
                     type="text"
                     id="inn"
-                    v-model="orderForm.company_inn"
+                    v-model="orderForm.companyInn"
                     class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                     disabled
@@ -140,7 +80,7 @@
                   <input
                     type="text"
                     id="legalAddress"
-                    v-model="orderForm.company_address"
+                    v-model="orderForm.companyAddress"
                     class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                     disabled
@@ -155,7 +95,7 @@
                   <input
                     type="text"
                     id="legalAddress"
-                    v-model="orderForm.company_okpo"
+                    v-model="orderForm.companyOkpo"
                     class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                     required
                     disabled
@@ -177,26 +117,6 @@
                   placeholder="Укажите дополнительные пожелания по заказу..."
                 ></textarea>
               </div>
-
-              <div class="flex items-start">
-                <input
-                  type="checkbox"
-                  id="agreeTerms"
-                  v-model="orderForm.agreeTerms"
-                  class="mt-1 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                  required
-                />
-                <label for="agreeTerms" class="text-sm text-gray-700">
-                  Я согласен с
-                  <a href="#" class="text-blue-600 hover:underline"
-                    >условиями обработки персональных данных</a
-                  >
-                  и
-                  <a href="#" class="text-blue-600 hover:underline"
-                    >договором оферты</a
-                  >
-                </label>
-              </div>
             </form>
           </div>
         </div>
@@ -204,11 +124,11 @@
         <!-- Боковая панель - итоги заказа -->
         <div class="lg:col-span-1">
           <div
-            class="sticky top-4 rounded-lg border border-gray-100 bg-white p-6 shadow-sm"
+            class="sticky top-28 rounded-lg border border-gray-100 bg-white p-6 shadow-sm flex flex-col gap-3"
           >
             <h2 class="mb-4 text-lg font-bold text-gray-900">Ваш заказ</h2>
 
-            <div class="mb-6 space-y-3">
+            <div class="mb-6 space-y-3 ">
               <div class="flex justify-between">
                 <span class="text-gray-600">Товары ({{ totalItems }})</span>
                 <span class="font-medium">{{ formatCurrency(subtotal) }}</span>
@@ -228,6 +148,25 @@
               </div>
             </div>
 
+            <div class="flex items-start">
+              <input
+                type="checkbox"
+                id="agreeTerms"
+                v-model="orderForm.agreeTerms"
+                class="mt-1 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                required
+              />
+              <label for="agreeTerms" class="text-sm text-gray-700">
+                Я согласен с
+                <a href="#" class="text-blue-600 hover:underline"
+                  >условиями обработки персональных данных</a
+                >
+                и
+                <a href="#" class="text-blue-600 hover:underline"
+                  >договором оферты</a
+                >
+              </label>
+            </div>
             <button
               type="submit"
               class="btn btn-accent btn-lg"
@@ -270,11 +209,7 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "../stores/cart";
 import { getApi } from "@/api";
-import {
-  ArrowPathIcon,
-  ChevronRightIcon,
-  CreditCardIcon,
-} from "@heroicons/vue/16/solid";
+import { ArrowPathIcon, CreditCardIcon } from "@heroicons/vue/16/solid";
 
 const api = getApi();
 
@@ -286,14 +221,15 @@ const cartStore = useCartStore();
 
 const orderForm = ref({
   email: "",
-  phone_number: "",
+  phoneNumber: "",
   firstName: "",
   surname: "",
-  position_in_company: "",
-  company_name: "",
-  company_inn: "",
-  company_address: "",
-  company_okpo: "",
+  lastName: "",
+  positionInCompany: "",
+  companyName: "",
+  companyInn: "",
+  companyAddress: "",
+  companyOkpo: "",
   paymentMethod: "invoice",
   comments: "",
   agreeTerms: false,
@@ -325,20 +261,21 @@ onMounted(async () => {
     const userResponse = await api.post("/user/get-data");
     if (userResponse.data) {
       orderForm.value.email = userResponse.data.email || "";
-      orderForm.value.phone_number = userResponse.data.phone_number || "";
+      orderForm.value.phoneNumber = userResponse.data.phone_number || "";
       orderForm.value.firstName = userResponse.data.first_name || "";
       orderForm.value.surname = userResponse.data.surname || "";
+      orderForm.value.lastName = userResponse.data.last_name || "";
     }
 
     const companyResponse = await api.post("/user/get-company-data");
     if (companyResponse.data) {
-      orderForm.value.position_in_company =
+      orderForm.value.positionInCompany =
         companyResponse.data.positionInCompany || "";
-      orderForm.value.company_name = companyResponse.data.companyName || "";
-      orderForm.value.company_inn = companyResponse.data.companyINN || "";
-      orderForm.value.company_address =
+      orderForm.value.companyName = companyResponse.data.companyName || "";
+      orderForm.value.companyInn = companyResponse.data.companyInn || "";
+      orderForm.value.companyAddress =
         companyResponse.data.companyAddress || "";
-      orderForm.value.company_okpo = companyResponse.data.companyOKPO || "";
+      orderForm.value.companyOkpo = companyResponse.data.companyOkpo || "";
     }
   } catch (error) {
     console.warn("Ошибка при автозаполнении данных", error);
@@ -397,6 +334,15 @@ const submitOrder = async () => {
     isSubmitting.value = false;
   }
 };
+
+const userFields = computed(() => [
+  { title: "Фамилия", value: orderForm.value.surname },
+  { title: "Имя", value: orderForm.value.firstName },
+  { title: "Отчество", value: orderForm.value.lastName },
+  { title: "Email", value: orderForm.value.email },
+  { title: "Телефон", value: orderForm.value.phoneNumber },
+  { title: "Должность", value: orderForm.value.positionInCompany },
+]);
 
 useHead({
   title: "Оформление заказа",
