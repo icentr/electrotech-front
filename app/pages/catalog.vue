@@ -36,9 +36,6 @@ const onResetSearch = async () => {
   await catalog.fetch();
 };
 
-const addToCart = (product) => {
-  // cart.addToCart(product);
-};
 catalog.$subscribe((_, state) => {
   urlParams.page = state.currentPage;
   if (state.searchString) {
@@ -47,6 +44,17 @@ catalog.$subscribe((_, state) => {
   } else {
     urlParams.search = "";
   }
+});
+
+const pagesToShow = computed(() => {
+  let pages = [];
+
+  for (let i = 1; i <= catalog.totalPages; i++) {
+    if (Math.abs(catalog.currentPage - i) <= 2) {
+      pages.push(i);
+    }
+  }
+  return pages;
 });
 </script>
 
@@ -77,7 +85,7 @@ catalog.$subscribe((_, state) => {
                     placeholder="Поиск товаров..."
                   />
                   <button
-                  title="Очистить поисковый запрос"
+                    title="Очистить поисковый запрос"
                     type="reset"
                     class="base-btn btn-destructive rounded-sm px-2 py-2"
                     v-if="search"
@@ -130,15 +138,15 @@ catalog.$subscribe((_, state) => {
               </button>
               <div class="max-h-fit grow overflow-x-auto">
                 <button
-                  v-for="n in catalog.totalPages"
+                  v-for="n in pagesToShow"
                   :key="n"
-                  @click="goToPage(n - 1)"
+                  @click="goToPage(n)"
                   class="border-r border-gray-200 px-5 py-3 transition-colors last:border-r-0"
                   :class="{
                     'bg-white text-gray-500 hover:bg-gray-50':
-                      n - 1 !== catalog.currentPage,
+                      n !== catalog.currentPage,
                     'text-accent border-blue-200 bg-blue-50 font-semibold':
-                      n - 1 === catalog.currentPage,
+                      n === catalog.currentPage,
                   }"
                 >
                   {{ n }}
