@@ -1,7 +1,12 @@
 <script setup>
 import { useCatalogStore } from "@/stores/catalog";
 import { useUrlSearchParams } from "@vueuse/core";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/16/solid";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  MagnifyingGlassIcon,
+  XMarkIcon,
+} from "@heroicons/vue/16/solid";
 
 useHead({
   title: "Каталог",
@@ -11,16 +16,37 @@ const urlParams = useUrlSearchParams();
 
 const catalog = useCatalogStore();
 catalog.setPage(urlParams.page || 0);
+catalog.setSearchString(urlParams.search || "");
+
+catalog.fetch();
 
 const goToPage = async (newPage) => {
-  await catalog.setPage(newPage);
+  catalog.setPage(newPage);
+  await catalog.fetch();
+};
+const search = ref(catalog.searchString);
+
+const onSearch = async () => {
+  catalog.setSearchString(search.value);
+  await catalog.fetch();
+};
+const onResetSearch = async () => {
+  search.value = "";
+  catalog.setSearchString("");
+  await catalog.fetch();
 };
 
 const addToCart = (product) => {
-  cart.addToCart(product);
+  // cart.addToCart(product);
 };
 catalog.$subscribe((_, state) => {
   urlParams.page = state.currentPage;
+  if (state.searchString) {
+    console.log("Search string: %s", state.searchString);
+    urlParams.search = state.searchString;
+  } else {
+    urlParams.search = "";
+  }
 });
 </script>
 
@@ -40,14 +66,37 @@ catalog.$subscribe((_, state) => {
                 <h1 class="mb-2 text-2xl font-bold text-gray-900">
                   Каталог товаров
                 </h1>
-                <p class="text-gray-500">Подборка товаров по вашим критериям</p>
+                <form
+                  @submit.prevent="onSearch"
+                  @reset="onResetSearch"
+                  class="flex rounded-md border border-gray-300 shadow-sm"
+                >
+                  <input
+                    v-model="search"
+                    class="focus:ring-accent/30 w-full rounded-md border-none px-3 py-2 shadow-sm focus:ring-4 focus:outline-none"
+                    placeholder="Поиск товаров..."
+                  />
+                  <button
+                    type="reset"
+                    class="base-btn btn-destructive-outline m-1 rounded-sm px-2 py-1"
+                    v-if="search"
+                  >
+                    <XMarkIcon class="size-8" />
+                  </button>
+                  <button
+                    class="base-btn btn-accent m-1 rounded-sm rounded-r-md px-2 py-1"
+                    type="submit"
+                  >
+                    <MagnifyingGlassIcon class="size-8" />
+                  </button>
+                </form>
               </div>
               <div
-                class="mt-4 rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-500 md:mt-0"
+                class="mt-4 rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-500 shadow-sm md:mt-0"
               >
                 Найдено товаров:
                 <span class="font-semibold text-gray-900">{{
-                  catalog.products.length
+                  catalog.totalProducts
                 }}</span>
               </div>
             </div>

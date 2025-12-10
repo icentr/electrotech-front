@@ -26,13 +26,14 @@ export const useCatalogStore = defineStore("catalog", {
     getProducts: (state) => state.products,
   },
   actions: {
-    async setSearchString() {
-      this.searchString = "";
-      await this.fetch();
+    setSearchString(newSearchString: string) {
+      if (newSearchString === this.searchString) return;
+
+      this.searchString = newSearchString;
+      this.currentPage = 0;
     },
-    async setPage(page: number) {
+    setPage(page: number) {
       this.currentPage = page;
-      await this.fetch();
     },
 
     async fetch() {
@@ -45,7 +46,7 @@ export const useCatalogStore = defineStore("catalog", {
 
       const { then } = useAxios<CatalogResponse>(
         "/v2/products",
-        { params: { page: this.currentPage, search: this.searchString } },
+        { params: { page: this.currentPage, query: this.searchString } },
         api,
       );
 
@@ -56,5 +57,6 @@ export const useCatalogStore = defineStore("catalog", {
         this.totalProducts = data.value.total;
       });
     },
-  },persist: true
+  },
+  persist: true,
 });
