@@ -117,7 +117,7 @@ import { useRoute } from "vue-router";
 import { getApi } from "@/api";
 
 const api = getApi();
-import { getImageUrl } from "@/api";
+import { getImageUrl } from "@/utils";
 import { useCartStore } from "@/stores/cart";
 import { ShoppingCartIcon, StarIcon } from "@heroicons/vue/16/solid";
 
