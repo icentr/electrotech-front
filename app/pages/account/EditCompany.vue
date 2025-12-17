@@ -75,14 +75,14 @@
         <div>
           <label class="mb-1 block text-sm font-medium">ИНН компании</label>
           <input
-            v-model="form.companyINN"
-            @input="form.companyINN = form.companyINN.replace(/\D/g, '')"
+            v-model="form.companyInn"
+            @input="form.companyInn = form.companyInn.replace(/\D/g, '')"
             maxlength="12"
             type="text"
             class="entry"
           />
-          <p v-if="errors.companyINN" class="text-sm text-red-600">
-            {{ errors.companyINN }}
+          <p v-if="errors.companyInn" class="text-sm text-red-600">
+            {{ errors.companyInn }}
           </p>
         </div>
 
@@ -90,14 +90,14 @@
         <div>
           <label class="mb-1 block text-sm font-medium">ОКПО</label>
           <input
-            v-model="form.companyOKPO"
-            @input="form.companyOKPO = form.companyOKPO.replace(/\D/g, '')"
+            v-model="form.companyOkpo"
+            @input="form.companyOkpo = form.companyOkpo.replace(/\D/g, '')"
             maxlength="10"
             type="text"
             class="entry"
           />
-          <p v-if="errors.companyOKPO" class="text-sm text-red-600">
-            {{ errors.companyOKPO }}
+          <p v-if="errors.companyOkpo" class="text-sm text-red-600">
+            {{ errors.companyOkpo }}
           </p>
         </div>
 
@@ -134,16 +134,16 @@ const form = ref({
   companyName: "",
   companyAddress: "",
   positionInCompany: "",
-  companyINN: "",
-  companyOKPO: "",
+  companyInn: "",
+  companyOkpo: "",
 });
 
 const errors = ref({
   companyName: "",
   companyAddress: "",
   positionInCompany: "",
-  companyINN: "",
-  companyOKPO: "",
+  companyInn: "",
+  companyOkpo: "",
 });
 onMounted(async () => {
   try {
@@ -151,8 +151,8 @@ onMounted(async () => {
     form.value.companyName = data.companyName || "";
     form.value.companyAddress = data.companyAddress || "";
     form.value.positionInCompany = data.positionInCompany || "";
-    form.value.companyINN = data.companyINN || "";
-    form.value.companyOKPO = data.companyOKPO || "";
+    form.value.companyInn = data.companyInn || "";
+    form.value.companyOkpo = data.companyOkpo || "";
   } catch (err) {
     console.error("Ошибка при получении данных компании", err);
   }
@@ -164,8 +164,8 @@ const validateForm = () => {
     companyName: "",
     companyAddress: "",
     positionInCompany: "",
-    companyINN: "",
-    companyOKPO: "",
+    companyInn: "",
+    companyOkpo: "",
   };
 
   if (!form.value.companyName.trim()) {
@@ -180,12 +180,12 @@ const validateForm = () => {
     errors.value.positionInCompany = "Введите должность";
     valid = false;
   }
-  if (!/^\d{10}(\d{2})?$/.test(form.value.companyINN)) {
-    errors.value.companyINN = "ИНН должен содержать 10 или 12 цифр";
+  if (!/^\d{10}(\d{2})?$/.test(form.value.companyInn)) {
+    errors.value.companyInn = "ИНН должен содержать 10 или 12 цифр";
     valid = false;
   }
-  if (!/^\d{8}(\d{2})?$/.test(form.value.companyOKPO)) {
-    errors.value.companyOKPO = "ОКПО должен содержать 8 или 10 цифр";
+  if (!/^\d{8}(\d{2})?$/.test(form.value.companyOkpo)) {
+    errors.value.companyOkpo = "ОКПО должен содержать 8 или 10 цифр";
     valid = false;
   }
 
@@ -204,8 +204,8 @@ const submitForm = async () => {
       company_name: form.value.companyName,
       company_address: form.value.companyAddress,
       position_in_company: form.value.positionInCompany,
-      company_inn: form.value.companyINN,
-      company_okpo: form.value.companyOKPO,
+      company_inn: form.value.companyInn,
+      company_okpo: form.value.companyOkpo,
     });
 
     successMessage.value = "Данные успешно обновлены";
