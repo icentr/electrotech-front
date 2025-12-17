@@ -213,7 +213,10 @@ const PREVIEW_CATEGORIES = [
             <div
               class="text-accent group-hover:bg-accent bg-accent/20 grouОригинальныеp-hover:text-white mb-4 flex h-12 w-12 items-center justify-center rounded-lg transition-colors"
             >
-              <component :is="category.icon" class="size-6" />
+              <component
+                :is="category.icon"
+                class="size-6 transition-all duration-300 group-hover:text-white"
+              />
               <!-- <PowerIcon class="size-6" /> -->
             </div>
             <h3
@@ -238,9 +241,7 @@ const PREVIEW_CATEGORIES = [
     </section>
 
     <!-- Баннер с призывом -->
-    <section
-      class="bg-gradient-to-r from-[#006699] to-[#0081b6] py-16 text-white"
-    >
+    <section class="hero-gradient py-16 text-white">
       <div class="container mx-auto px-4 text-center">
         <div class="mx-auto max-w-4xl">
           <h2 class="mb-6 text-3xl font-bold">
