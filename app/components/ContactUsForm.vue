@@ -139,7 +139,7 @@ const onSubmit = () => {
               </div>
               <div>
                 <h3 class="text-sm font-bold text-blue-200">Адрес</h3>
-                <p class="text-sm font-medium">
+                <p class="font-medium">
                   {{ ADDRESS }}
                 </p>
               </div>
