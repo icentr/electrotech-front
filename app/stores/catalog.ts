@@ -21,6 +21,9 @@ export const useCatalogStore = defineStore("catalog", {
     currentPage: 0,
     totalPages: 0,
     totalProducts: 0,
+    filters: {
+      onlyAvailable: false,
+    },
   }),
   getters: {
     getProducts: (state) => state.products,
@@ -35,6 +38,9 @@ export const useCatalogStore = defineStore("catalog", {
     setPage(page: number) {
       this.currentPage = page;
     },
+    setOnlyAvailable(available: boolean) {
+      this.filters.onlyAvailable = available;
+    },
 
     async fetch() {
       console.log(
@@ -46,7 +52,13 @@ export const useCatalogStore = defineStore("catalog", {
 
       const { then } = useAxios<CatalogResponse>(
         "/v2/products",
-        { params: { page: this.currentPage, query: this.searchString } },
+        {
+          params: {
+            page: this.currentPage,
+            query: this.searchString,
+            oa: this.filters.onlyAvailable,
+          },
+        },
         api,
       );
 
