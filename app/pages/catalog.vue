@@ -14,6 +14,9 @@ useHead({
 
 const urlParams = useUrlSearchParams();
 
+/* Cool feature, maybe we should implement it somehow */
+const IS_FOR_DEVS = false;
+
 const catalog = useCatalogStore();
 catalog.setPage(urlParams.page || 0);
 catalog.setSearchString(urlParams.search || "");
@@ -49,7 +52,7 @@ catalog.$subscribe((_, state) => {
 const pagesToShow = computed(() => {
   let pages = [];
 
-  for (let i = 1; i <= catalog.totalPages; i++) {
+  for (let i = 0; i <= catalog.totalPages; i++) {
     if (Math.abs(catalog.currentPage - i) <= 2) {
       pages.push(i);
     }
@@ -77,7 +80,7 @@ const pagesToShow = computed(() => {
                 <form
                   @submit.prevent="onSearch"
                   @reset="onResetSearch"
-                  class="flex gap-1"
+                  class="flex gap-2"
                 >
                   <input
                     v-model="search"
@@ -101,7 +104,7 @@ const pagesToShow = computed(() => {
                 </form>
               </div>
               <div
-                class="mt-4 rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-500 shadow-sm md:mt-0"
+                class="mt-4 rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-500 shadow-sm transition-all duration-700 hover:shadow-lg md:mt-0"
               >
                 Найдено товаров:
                 <span class="font-semibold text-gray-900">{{
@@ -132,7 +135,7 @@ const pagesToShow = computed(() => {
               <button
                 @click="goToPage(catalog.currentPage - 1)"
                 :disabled="catalog.currentPage === 1"
-                class="border-r border-gray-200 bg-white px-4 py-3 text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                class="base-btn border-r border-gray-200 bg-white px-4 py-3 text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ArrowLeftIcon class="size-5" />
               </button>
@@ -145,11 +148,16 @@ const pagesToShow = computed(() => {
                   :class="{
                     'bg-white text-gray-500 hover:bg-gray-50':
                       n !== catalog.currentPage,
-                    'text-accent border-blue-200 bg-blue-50 font-semibold':
+                    'text-accent border-accent bg-accent/10 font-semibold':
                       n === catalog.currentPage,
                   }"
                 >
-                  {{ n }}
+                  <span v-if="IS_FOR_DEVS" class="font-mono">
+                    {{ n }}
+                  </span>
+                  <span v-else>
+                    {{ n + 1 }}
+                  </span>
                 </button>
               </div>
               <button

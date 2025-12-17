@@ -26,8 +26,7 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
         <!-- Логотип -->
         <div class="flex items-center">
           <div>
-            <NuxtLink to="/" > <img src="assets/Logo_Header.png"
-                alt="Электротехника" class="max-w-50"></img> </NuxtLink>
+            <NuxtLink to="/"> <img src="assets/Logo_Header.png" alt="Электротехника" class="max-w-50"></img> </NuxtLink>
           </div>
         </div>
         <!-- Навигация -->
@@ -60,27 +59,26 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
             {{ PHONE_NUMBER }}
           </a>
         </div>
-        <div class="hidden xl:flex space-x-6 ml-4">
+        <div class="hidden 2xl:flex space-x-6 ml-4">
           <ClockIcon class="size-5 mr-2" />
           <span>Пн-Пт: 9:00–18:00</span>
         </div>
         <div class="hidden md:flex gap-3">
-          <NuxtLink v-if="auth.isAuthenticated" to="/account" class="btn text-accent" title="Личный кабинет">
-            <div class="text-accent/80 flex justify-center items-center gap-2">
+          <NuxtLink v-if="auth.isAuthenticated" to="/account" class="btn btn-accent-outline" title="Личный кабинет">
+            <div class=" flex justify-center items-center gap-2">
               <UserIcon class="size-5" />
               <span class="w-max">Личный кабинет</span>
             </div>
           </NuxtLink>
-          <button v-if="auth.isAuthenticated" title="Выход из аккаунта"
-          class="btn btn-destructive"
+          <button v-if="auth.isAuthenticated" title="Выход из аккаунта" class="btn btn-destructive"
             @click="handleLogout">
             <ArrowLeftStartOnRectangleIcon class="size-6" />
             <span>
-Выход
+              Выход
             </span>
           </button>
-          <NuxtLink v-else to="/login" class="btn">
-            <div class="flex text-accent items-center">
+          <NuxtLink v-else to="/login" class="btn btn-accent-outline">
+            <div class="flex items-center">
               <span class="text-md">Вход</span>
               <ArrowRightEndOnRectangleIcon class="size-5 ms-2" />
             </div>
@@ -90,40 +88,3 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
     </div>
   </header>
 </template>
-<style >
-@import "tailwindcss";
-.router-link-active {
-  font-weight: 500;
-  border-color: #0081b6;
-}
-
-.auth-button {
-  display: flex;
-  align-items: center;
-  color: #4b5563;
-  /* background-color: #f3f4f6; */
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  transition: color 0.2s, background-color 0.2s;
-}
-
-.auth-button:hover {
-  color: #0081b6;
-  background-color: #e5e7eb;
-}
-
-.icon-button {
-  @apply py-2 px-3 shadow;
-  display: flex;
-  align-items: center;
-  color: #4b5563;
-  background-color: #f3f4f6;
-  border-radius: 0.5rem;
-  transition: color 0.2s, background-color 0.2s;
-}
-
-.icon-button:hover {
-  color: #0081b6;
-  background-color: #e5e7eb;
-}
-</style>

@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/auth";
 import { getApiBaseUrl } from "@/utils";
 
 export const getApi = () => createApi(getApiBaseUrl());
+import { useAxios } from "@vueuse/integrations/useAxios";
 
 interface RetryConfig extends AxiosRequestConfig {
   _retry?: boolean;
@@ -71,5 +72,13 @@ export const createApi = (baseURL: string) => {
     return config;
   });
 
-  return api
+  return api;
+};
+
+export const useApi = (
+  url: string,
+  config: AxiosRequestConfig | null = null,
+  options: {} | null = null,
+) => {
+  return useAxios(url, config ?? {}, getApi(), options ?? {});
 };

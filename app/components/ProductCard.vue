@@ -54,7 +54,10 @@
 
         <div v-if="cart.isInCart(product)" class="flex gap-2">
           <input type="number" v-model="quantity" class="entry" />
-          <button class="btn btn-sm px-3" @click="quantity--">
+          <button
+            class="btn btn-accent-outline btn-sm px-3"
+            @click="quantity--"
+          >
             <MinusIcon class="size-6" />
           </button>
           <button class="btn btn-accent btn-sm" @click="quantity++">

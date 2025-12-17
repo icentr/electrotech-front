@@ -23,13 +23,14 @@
                   <label
                     for="surname"
                     class="mb-1 block text-sm font-medium text-gray-700"
-                    >{{ field.title }} *</label
-                  >
+                    >{{ field.title }}
+                    <span class="text-red-400"> * </span>
+                  </label>
                   <input
                     type="text"
                     id="surname"
                     v-model="field.value"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    class="entry"
                     required
                     disabled
                   />
@@ -41,81 +42,22 @@
               </h2>
 
               <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
+                <div v-for="field in companyFields">
                   <label
-                    for="company_name"
+                    for="surname"
                     class="mb-1 block text-sm font-medium text-gray-700"
-                    >Название компании *</label
+                    >{{ field.title }}
+                    <span class="text-red-400"> * </span></label
                   >
                   <input
                     type="text"
-                    id="company_name"
-                    v-model="orderForm.companyName"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    id="surname"
+                    v-model="field.value"
+                    class="entry"
                     required
                     disabled
                   />
                 </div>
-                <div>
-                  <label
-                    for="inn"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >ИНН *</label
-                  >
-                  <input
-                    type="text"
-                    id="inn"
-                    v-model="orderForm.companyInn"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="legalAddress"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >Юридический адрес *</label
-                  >
-                  <input
-                    type="text"
-                    id="legalAddress"
-                    v-model="orderForm.companyAddress"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label
-                    for="legalAddress"
-                    class="mb-1 block text-sm font-medium text-gray-700"
-                    >ОКПО *</label
-                  >
-                  <input
-                    type="text"
-                    id="legalAddress"
-                    v-model="orderForm.companyOkpo"
-                    class="w-full rounded-md border border-gray-300 bg-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    required
-                    disabled
-                  />
-                </div>
-              </div>
-
-              <div class="mb-6">
-                <label
-                  for="comments"
-                  class="mb-1 block text-sm font-medium text-gray-700"
-                  >Комментарий к заказу</label
-                >
-                <textarea
-                  id="comments"
-                  v-model="orderForm.comments"
-                  class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  rows="3"
-                  placeholder="Укажите дополнительные пожелания по заказу..."
-                ></textarea>
               </div>
             </form>
           </div>
@@ -124,11 +66,11 @@
         <!-- Боковая панель - итоги заказа -->
         <div class="lg:col-span-1">
           <div
-            class="sticky top-28 rounded-lg border border-gray-100 bg-white p-6 shadow-sm flex flex-col gap-3"
+            class="sticky top-28 flex flex-col gap-3 rounded-lg border border-gray-100 bg-white p-6 shadow-sm"
           >
             <h2 class="mb-4 text-lg font-bold text-gray-900">Ваш заказ</h2>
 
-            <div class="mb-6 space-y-3 ">
+            <div class="mb-6 space-y-3">
               <div class="flex justify-between">
                 <span class="text-gray-600">Товары ({{ totalItems }})</span>
                 <span class="font-medium">{{ formatCurrency(subtotal) }}</span>
@@ -153,23 +95,32 @@
                 type="checkbox"
                 id="agreeTerms"
                 v-model="orderForm.agreeTerms"
-                class="mt-1 mr-3 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                class="accent-accent focus:ring-accent mt-1 mr-3 rounded border-gray-300"
                 required
               />
               <label for="agreeTerms" class="text-sm text-gray-700">
                 Я согласен с
-                <a href="#" class="text-blue-600 hover:underline"
+                <a href="#" class="link-accent"
                   >условиями обработки персональных данных</a
                 >
                 и
-                <a href="#" class="text-blue-600 hover:underline"
-                  >договором оферты</a
+                <a href="#" class="link-accent">договором оферты</a>
+                <span
+                  class="text-lg text-red-500"
+                  title="Обязательно для заполнения"
                 >
+                  *
+                </span>
               </label>
             </div>
             <button
               type="submit"
-              class="btn btn-accent btn-lg"
+              class="btn btn-lg"
+              :class="
+                orderForm.agreeTerms && orderForm.allRequiredFields
+                  ? 'btn-accent'
+                  : 'btn-accent-outline'
+              "
               @click="submitOrder"
               :disabled="isSubmitting"
             >
@@ -185,7 +136,7 @@
             <p
               v-if="orderMessage"
               :class="[
-                'mt-4 text-sm',
+                'mt-4',
                 orderMessageType === 'success'
                   ? 'text-green-600'
                   : 'text-red-600',
@@ -194,8 +145,9 @@
               {{ orderMessage }}
             </p>
 
-            <div class="mt-4 text-xs text-gray-500">
-              После оформления заказа вам будет выставлен счет на оплату
+            <div class="mt-4 text-sm text-gray-500">
+              После оформления заказа с вами свяжутся наши сотрудники для
+              уточнения оплаты и доставки.
             </div>
           </div>
         </div>
@@ -276,6 +228,9 @@ onMounted(async () => {
       orderForm.value.companyAddress =
         companyResponse.data.companyAddress || "";
       orderForm.value.companyOkpo = companyResponse.data.companyOkpo || "";
+
+      orderForm.value.allRequiredFields =
+        companyResponse.data.allRequiredFields;
     }
   } catch (error) {
     console.warn("Ошибка при автозаполнении данных", error);
@@ -342,6 +297,12 @@ const userFields = computed(() => [
   { title: "Email", value: orderForm.value.email },
   { title: "Телефон", value: orderForm.value.phoneNumber },
   { title: "Должность", value: orderForm.value.positionInCompany },
+]);
+const companyFields = computed(() => [
+  { title: "Название компании", value: orderForm.value.companyName },
+  { title: "ИНН", value: orderForm.value.companyInn },
+  { title: "Юридический адрес", value: orderForm.value.companyAddress },
+  { title: "ОКПО", value: orderForm.value.companyOkpo },
 ]);
 
 useHead({

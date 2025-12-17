@@ -89,12 +89,7 @@
         Итого: {{ formatCurrency(orderTotal) }}
       </div>
     </div>
-    <div v-else-if="loading" class="py-12 text-center text-gray-500">
-      Загрузка
-      <div class="flex items-center justify-center">
-        <ArrowPathIcon class="mr-2 size-10 animate-spin" />
-      </div>
-    </div>
+    <Loading v-else-if="loading" />
     <div v-else class="py-12 text-center text-gray-500">
       <div class="font-mono text-3xl text-orange-500">404</div>
       Нет такого заказа
@@ -107,7 +102,7 @@ import { useRoute } from "vue-router";
 
 import { getImageUrl } from "@/utils";
 import { getApi } from "@/api";
-import { ArrowPathIcon, CheckCircleIcon } from "@heroicons/vue/16/solid";
+import { CheckCircleIcon } from "@heroicons/vue/16/solid";
 
 const loading = ref(true);
 
