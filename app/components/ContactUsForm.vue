@@ -63,12 +63,9 @@ const onSubmit = () => {
     return;
   }
   isLoading.value = true;
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
-  // executeRequest({
-  //   data: form.value,
-  // });
+  executeRequest({
+    data: form.value,
+  });
 };
 </script>
 
