@@ -41,11 +41,11 @@ const cart = useCartStore();
             'flex flex-col items-center gap-1 rounded-xl p-1 px-2 transition-all duration-200',
             isExactActive
               ? 'text-accent'
-              : 'hover:bg-gray-200 active:bg-gray-300',
+              : 'hover:text-accent/60 active:text-accent/80 focus:text-accent/80',
           ]"
         >
           <template v-if="link.isCart">
-            <div class="relative">
+            <div class="absolute">
               <Transition
                 enter-to-class="scale-250 -y-offset-5"
                 leave-to-class="scale-0"

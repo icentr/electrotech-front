@@ -249,11 +249,10 @@ import {
             </div>
           </div>
 
-          <div class="h-96 overflow-hidden rounded-xl shadow-lg">
+          <div class="h-96 w-full overflow-hidden rounded-xl shadow-lg">
             <iframe
+              class="h-full w-full"
               src="https://yandex.ru/map-widget/v1/?um=constructor%3A2f57d74ae9e3bebc9d78f87bc8cfb77f24c313897c3ab5eaf13562d430075cfe&amp;source=constructor"
-              width="653"
-              height="506"
               frameborder="0"
             ></iframe>
           </div>
