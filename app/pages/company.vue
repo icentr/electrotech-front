@@ -270,7 +270,7 @@ import {
     <div class="fixed right-8 bottom-24 z-50 md:bottom-8">
       <a
         :href="'tel:' + PHONE_NUMBER_NORMALIZED"
-        class="btn btn-accent btn-circular h-16 w-16 animate-pulse border border-blue-400"
+        class="btn btn-accent btn-circular h-16 w-16 border border-blue-400"
       >
         <PhoneIcon class="size-8" />
       </a>

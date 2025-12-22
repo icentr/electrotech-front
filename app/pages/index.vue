@@ -69,19 +69,13 @@ const PREVIEW_CATEGORIES = [
             <div
               class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
             >
-              <a
-                href="#contact-form"
-                class="text-accent flex items-center justify-center rounded-lg bg-white px-8 py-4 font-bold shadow-md transition duration-300 hover:bg-gray-100 hover:shadow-lg"
-              >
+              <a href="#contact-form" class="btn-white">
                 <PhoneIcon class="me-3 size-6" />
-                ЗАКАЗАТЬ ЗВОНОК
+                Заказать звонок
               </a>
-              <RouterLink
-                to="catalog"
-                class="hover:text-accent flex items-center justify-center rounded-lg border-2 border-white bg-transparent px-8 py-4 font-bold text-white transition duration-300 hover:bg-white hover:shadow-lg"
-              >
+              <RouterLink to="catalog" class="btn-white-outline">
                 <ListBulletIcon class="mr-3 size-6" />
-                СМОТРЕТЬ КАТАЛОГ
+                Смотреть каталог
               </RouterLink>
             </div>
 
@@ -257,7 +251,7 @@ const PREVIEW_CATEGORIES = [
           >
             <a
               :href="'tel:' + PHONE_NUMBER_NORMALIZED"
-              class="text-accent flex items-center justify-center rounded-lg bg-white px-8 py-4 font-bold shadow-md transition duration-300 hover:bg-gray-100 hover:shadow-lg"
+              class="btn-white uppercase"
             >
               <PhoneIcon class="mr-3 size-6" />
               Позвонить сейчас
