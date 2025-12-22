@@ -5,8 +5,8 @@ type Breadcrumb = {
   url: string | null;
 };
 const props = defineProps<{
-  page: String;
-  breadcrumbs: Breadcrumb[] | null;
+  page: string;
+  breadcrumbs?: Breadcrumb[];
 }>();
 </script>
 <template>

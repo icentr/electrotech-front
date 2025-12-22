@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {
   PlusIcon,
   MinusIcon,
@@ -33,12 +33,23 @@ const handleCheckout = () => {
   }
 };
 
+const REMOVE_ON_DRAIN = true;
+
 // Методы корзины
-const updateQuantity = (id, newQuantity) => {
-  cartStore.updateQuantity(id, newQuantity);
+const updateQuantity = (item: CartItem, newQuantity: number) => {
+  if (newQuantity > item.count) {
+    cartStore.updateQuantity(item.id, item.count);
+    return;
+  }
+  if (newQuantity < 1) {
+    if (REMOVE_ON_DRAIN) cartStore.removeFromCart(item.id);
+    else cartStore.updateQuantity(item.id, 1);
+    return;
+  }
+  cartStore.updateQuantity(item.id, newQuantity);
 };
 
-const removeFromCart = (id) => {
+const removeFromCart = (id: string) => {
   cartStore.removeFromCart(id);
 };
 
@@ -116,8 +127,8 @@ const cartItems = computed(() => cartStore.cartItems);
                   >
                     <div class="text-l flex h-10 max-w-35 items-stretch">
                       <button
-                        class="base-btn w-10 rounded-l-md border border-gray-300 px-2 text-gray-600 hover:bg-gray-100"
-                        @click="updateQuantity(item.id, item.quantity - 1)"
+                        class="base-btn btn-accent-outline w-10 rounded-l-md border border-gray-300 px-2"
+                        @click="updateQuantity(item, item.quantity - 1)"
                         :disabled="item.quantity <= 1"
                       >
                         <MinusIcon class="size-5" />
@@ -125,13 +136,14 @@ const cartItems = computed(() => cartStore.cartItems);
                       <input
                         type="number"
                         min="1"
+                        :max="item.count"
                         class="entry-base w-15 border-y border-gray-300 py-1 ps-3 text-center text-sm"
                         v-model.number="item.quantity"
-                        @change="updateQuantity(item.id, item.quantity)"
+                        @change="updateQuantity(item, item.quantity)"
                       />
                       <button
-                        class="base-btn w-10 rounded-r-md border border-gray-300 px-2 text-gray-600 hover:bg-gray-100"
-                        @click="updateQuantity(item.id, item.quantity + 1)"
+                        class="base-btn btn-accent-outline w-10 rounded-r-md border border-gray-300 px-2 text-gray-600 hover:bg-gray-100"
+                        @click="updateQuantity(item, item.quantity + 1)"
                       >
                         <PlusIcon class="size-5" />
                       </button>

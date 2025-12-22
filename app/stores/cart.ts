@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 import { getImageUrl } from "@/utils";
 import type { Product } from "~/models";
-import type { get } from "http";
 
-interface CartItem extends Product {
+export interface CartItem extends Product {
   quantity: number;
 }
 
