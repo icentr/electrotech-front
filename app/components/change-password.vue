@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col rounded-xl bg-white p-6 shadow">
-    <h2 class="mb-6 text-2xl font-semibold text-gray-900">Сменить пароль</h2>
+    <h2 class="title-2">Сменить пароль</h2>
 
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <div>
@@ -9,6 +9,7 @@
         >
         <input
           v-model="currentPassword"
+          autocomplete="current-password"
           type="password"
           required
           class="entry"
@@ -19,7 +20,13 @@
         <label class="mb-1 block text-sm font-medium text-gray-700"
           >Новый пароль</label
         >
-        <input v-model="newPassword" type="password" required class="entry" />
+        <input
+          v-model="newPassword"
+          type="password"
+          required
+          class="entry"
+          autocomplete="new-password"
+        />
       </div>
 
       <div>
@@ -30,6 +37,7 @@
           v-model="confirmPassword"
           type="password"
           required
+          autocomplete="new-password"
           class="entry"
         />
       </div>

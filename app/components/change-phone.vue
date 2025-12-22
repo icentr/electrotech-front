@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-fit flex-col rounded-xl bg-white p-6 shadow">
-    <h2 class="text-xl font-semibold text-gray-800">Изменить номер телефона</h2>
+    <h2 class="title-2">Изменить номер телефона</h2>
 
     <form @submit.prevent="submitPhone">
       <div class="space-y-4">

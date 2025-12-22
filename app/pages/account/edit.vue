@@ -1,9 +1,9 @@
 <template>
-  <Breadcrumbs
+  <BreadcrumbsBlock
     :breadcrumbs="[{ name: 'Личный кабинет', url: '/account' }]"
     page="Редактирование профиля"
   />
-  <div class="container mx-auto px-4 py-8">
+  <div>
     <h1 class="mb-8 text-3xl font-semibold text-gray-800">
       Редактирование профиля
     </h1>
@@ -20,13 +20,15 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script setup lang="ts">
 import { getApi } from "@/api";
 
 const api = getApi();
 
-const user = ref({});
+const user = ref<{ email: string; phone_number: string }>({
+  email: "",
+  phone_number: "",
+});
 
 onMounted(async () => {
   try {

@@ -1,5 +1,5 @@
 <template>
-  <Breadcrumbs
+  <BreadcrumbsBlock
     :page="order ? 'Заказ №' + order.id : 'Неизвестный заказ'"
     :breadcrumbs="[{ url: '/account/', name: 'Профиль' }]"
   />
@@ -36,7 +36,7 @@
           </div>
 
           <!-- Информация -->
-          <div class="flex-grow">
+          <div class="grow">
             <NuxtLink
               :to="`/product/${product.productId}`"
               class="hover:text-accent mb-1 line-clamp-2 block text-lg font-bold text-gray-900 transition-colors"

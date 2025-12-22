@@ -1,6 +1,6 @@
 <!-- src/pages/product/[id].vue -->
 <template>
-  <Breadcrumbs
+  <BreadcrumbsBlock
     :breadcrumbs="[{ name: 'Каталог', url: '/catalog' }]"
     :page="product?.name || 'Загрузка...'"
   />

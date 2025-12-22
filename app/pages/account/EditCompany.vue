@@ -1,13 +1,11 @@
 <template>
-  <Breadcrumbs
+  <BreadcrumbsBlock
     :breadcrumbs="[{ name: 'Личный кабинет', url: '/account' }]"
     page="Редактирование информации о компании"
   />
-  <div class="flex justify-center px-4">
+  <div class="flex justify-center">
     <div class="rounded-xl bg-white p-6 shadow">
-      <h1 class="mb-6 text-2xl font-semibold">
-        Редактирование информации о компании
-      </h1>
+      <h1 class="title-2">Редактирование информации о компании</h1>
 
       <form @submit.prevent="submitForm" class="max-w-xl space-y-4">
         <!-- Название компании -->

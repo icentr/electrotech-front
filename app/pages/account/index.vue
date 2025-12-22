@@ -7,8 +7,6 @@ const api = getApi();
 import {
   ArrowRightIcon,
   BuildingOfficeIcon,
-  CheckCircleIcon,
-  CheckIcon,
   EnvelopeIcon,
   ExclamationTriangleIcon,
   PhoneIcon,
@@ -101,16 +99,12 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString("ru-RU", options);
 };
 
-
 // Классы для статусов заказов
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 </script>
-<!-- src/views/Account.vue -->
 <template>
-  <div class="min-h-screen bg-gray-50 pb-12">
-    <!-- Хлебные крошки -->
-    <Breadcrumbs :page="'Личный кабинет'" />
-
+  <BreadcrumbsBlock page="Личный кабинет" />
+  <div class="min-h-screen bg-gray-50">
     <!-- Основной контент -->
     <div class="container mx-auto px-4">
       <h1 class="mb-8 text-3xl font-bold text-gray-900">Личный кабинет</h1>
@@ -182,8 +176,8 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 <BuildingOfficeIcon class="size-6" />
               </div>
               <div>
-                <h2 class="text-xl font-bold text-gray-900 ">
-                  Информация о компании 
+                <h2 class="text-xl font-bold text-gray-900">
+                  Информация о компании
                 </h2>
                 <p
                   class="flex gap-1 p-0 ps-0 text-sm font-normal text-red-400"
@@ -286,7 +280,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
                   <tr
-                    v-for="order in orders.sort((a,b)=> b.id - a.id)"
+                    v-for="order in orders.sort((a, b) => b.id - a.id)"
                     :key="order.id"
                     class="hover:bg-gray-50"
                   >
@@ -335,7 +329,3 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Дополнительные стили, если нужно */
-</style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-fit flex-col rounded-lg bg-white p-6 shadow">
-    <h2 class="mb-4 text-xl font-semibold">Изменить Email</h2>
+  <div class="flex h-fit flex-col rounded-xl bg-white p-6 shadow">
+    <h2 class="title-2">Изменить Email</h2>
 
     <form @submit.prevent="submitEmail">
       <div class="mb-4">
@@ -12,6 +12,7 @@
           type="email"
           class="entry"
           placeholder="example@mail.com"
+          autocomplete="email"
           required
         />
       </div>
@@ -40,6 +41,8 @@ const loading = ref(false);
 const error = ref("");
 const success = ref("");
 const router = useRouter();
+
+const api = getApi();
 
 const submitEmail = async () => {
   error.value = "";

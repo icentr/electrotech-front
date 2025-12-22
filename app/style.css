@@ -27,6 +27,10 @@ input.no-spinner {
   @apply focus:ring-accent/60 shadow-sm focus:ring-4 focus:outline-none;
 }
 
+@utility title-2 {
+  @apply mb-6 text-2xl font-semibold text-gray-900;
+}
+
 .entry {
   @apply entry-base;
 
@@ -80,7 +84,6 @@ input.no-spinner {
 .btn.btn-circular {
   @apply rounded-full;
 }
-
 
 .hero-gradient {
   @apply from-accent bg-linear-to-r to-[#006699];
