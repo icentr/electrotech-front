@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { DOCS } from "~/data";
 import {
   PlusIcon,
   MinusIcon,
@@ -13,9 +14,7 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { formatCurrency } from "@/utils";
 
-useHead({
-  title: "Корзина",
-});
+usePageTitle("Корзина");
 
 const router = useRouter();
 const auth = useAuthStore();
@@ -276,13 +275,6 @@ const cartItems = computed(() => cartStore.cartItems);
             >
               <CreditCardIcon class="size-5" /> Оформить заказ
             </button>
-
-            <div class="mt-4 text-xs text-gray-500">
-              Нажимая на кнопку, вы соглашаетесь с
-              <a href="#" class="text-accent/80 hover:underline"
-                >условиями обработки персональных данных</a
-              >
-            </div>
           </div>
         </div>
       </div>

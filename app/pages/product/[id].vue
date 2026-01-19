@@ -111,7 +111,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { getApi } from "@/api";
@@ -124,35 +124,37 @@ import { ShoppingCartIcon, StarIcon } from "@heroicons/vue/16/solid";
 const route = useRoute();
 const product = ref();
 const loading = ref(true);
-const error = ref(null);
+const error = ref<null | string>();
 
 const cartStore = useCartStore();
+usePageTitle("Товар " + route.params.id);
 
-const fetchProduct = async (id) => {
+const fetchProduct = async (id: string) => {
   try {
     const response = await api.get(`/products/${id}`);
     product.value = response.data.product;
+    usePageTitle(product.value.name);
   } catch (err) {
     console.error("Ошибка при загрузке товара:", err);
     error.value = "Не удалось загрузить данные товара.";
+    usePageTitle("Ошибка");
   } finally {
     loading.value = false;
   }
 };
 
 onMounted(() => {
-  fetchProduct(route.params.id);
+  if (typeof route.params.id === "string") {
+    fetchProduct(route.params.id);
+  } else {
+    error.value = "Неверный идентификатор товара.";
+    console.error("Неверный идентификатор товара:", route.params.id);
+  }
 });
 
 const addToCart = () => {
   if (product.value) {
     cartStore.addToCart(product.value);
-    // toast.success(`«${product.value.name}» добавлен в корзину`);
   }
 };
-const pageTitle = computed(() => product.value?.name || "Загрузка...");
-
-useHead({
-  title: pageTitle,
-});
 </script>

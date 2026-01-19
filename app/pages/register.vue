@@ -63,9 +63,7 @@
             />
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700"
-              >Пароль</label
-            >
+            <label class="mb-1 block text-sm text-gray-700">Пароль</label>
             <input
               v-model="form.password"
               type="password"
@@ -74,7 +72,7 @@
             />
           </div>
           <div>
-            <label class="mb-1 block text-sm font-medium text-gray-700"
+            <label class="mb-1 block text-sm text-gray-700"
               >Подтвердите пароль</label
             >
             <input
@@ -84,6 +82,20 @@
               class="entry"
             />
           </div>
+        </div>
+        <div>
+          <label class="text-sm text-gray-700">
+            Нажимая <q>Зарегистрироваться</q> вы соглашаетесь с
+            <span v-if="DOCS.userAgreement.enabled">
+              <RouterLink :to="DOCS.userAgreement.link" class="link-accent">
+                пользовательским соглашением
+              </RouterLink>
+              и
+            </span>
+            <RouterLink :to="DOCS.privacyPolicy.link" class="link-accent">
+              политикой конфиденциальности
+            </RouterLink>
+          </label>
         </div>
 
         <button type="submit" class="btn btn-accent">Зарегистрироваться</button>
@@ -101,6 +113,7 @@
   </div>
 </template>
 <script setup>
+import { DOCS } from "~/data";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
@@ -190,7 +203,5 @@ const handleRegister = async () => {
     }
   }
 };
-useHead({
-  title: "Регистрация",
-});
+usePageTitle("Регистрация");
 </script>

@@ -146,13 +146,6 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleString("ru-RU", options);
 };
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat("ru-RU", {
-    style: "currency",
-    currency: "RUB",
-  }).format(value);
-};
-
 const orderTotal = computed(() => {
   if (!order.value) return 0;
   return order.value.products.reduce((sum, p) => sum + p.price * p.quantity, 0);
@@ -160,9 +153,7 @@ const orderTotal = computed(() => {
 
 watch(order, (val) => {
   if (val) {
-    useHead({
-      title: `Заказ №${val.id}`,
-    });
+    usePageTitle(`Заказ №${val.id}`);
   }
 });
 </script>

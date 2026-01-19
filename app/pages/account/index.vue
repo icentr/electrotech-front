@@ -1,22 +1,23 @@
 <script setup>
-import { ref, onMounted } from "vue";
 import { getApi } from "@/api";
+import { onMounted, ref } from "vue";
+import { DOCS } from "~/data";
 
 const api = getApi();
 
+import { formatCurrency } from "@/utils";
 import {
+  ArrowLeftStartOnRectangleIcon,
   ArrowRightIcon,
+  ArrowUpRightIcon,
   BuildingOfficeIcon,
   EnvelopeIcon,
   ExclamationTriangleIcon,
   PhoneIcon,
   PhoneXMarkIcon,
 } from "@heroicons/vue/16/solid";
-import { PencilIcon } from "@heroicons/vue/24/outline";
-import { formatCurrency } from "@/utils";
-useHead({
-  title: "Аккаунт",
-});
+import { DocumentIcon, PencilIcon } from "@heroicons/vue/24/outline";
+usePageTitle("Аккаунт");
 // Данные пользователя
 const user = ref({
   name: "",
@@ -100,7 +101,6 @@ const formatDate = (dateString) => {
 };
 
 // Классы для статусов заказов
-import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
 </script>
 <template>
   <BreadcrumbsBlock page="Личный кабинет" />
@@ -238,6 +238,29 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/16/solid";
                 Редактировать компанию
               </RouterLink>
             </div>
+          </div>
+          <div
+            class="flex flex-col gap-3 rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
+          >
+            <div class="mb-5 flex items-center justify-between">
+              <h2 class="text-xl font-bold text-gray-900">Документы</h2>
+            </div>
+            <RouterLink class="btn" :to="DOCS.privacyPolicy.link">
+              Политика конфиденциальности
+              <ArrowUpRightIcon class="size-5" />
+            </RouterLink>
+            <RouterLink
+              class="btn"
+              :to="DOCS.userAgreement.link"
+              v-if="DOCS.userAgreement.enabled"
+            >
+              Пользовательское соглашение
+              <ArrowUpRightIcon class="size-5" />
+            </RouterLink>
+
+            <RouterLink class="btn btn-accent-outline mt-5" to="/docs"
+              >Все документы <DocumentIcon class="size-5" />
+            </RouterLink>
           </div>
         </div>
 

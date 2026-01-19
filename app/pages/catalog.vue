@@ -8,9 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/16/solid";
 
-useHead({
-  title: "Каталог",
-});
+usePageTitle("Каталог");
 
 const urlParams = useUrlSearchParams();
 

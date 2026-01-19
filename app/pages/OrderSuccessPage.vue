@@ -183,13 +183,12 @@ import {
   ArrowDownTrayIcon,
   ArrowLeftIcon,
   ArrowPathIcon,
-  ArrowRightIcon,
   CheckIcon,
   DocumentTextIcon,
   EnvelopeIcon,
   ListBulletIcon,
 } from "@heroicons/vue/16/solid";
-
+usePageTitle("Заказ создан");
 const api = getApi();
 
 const orderData = ref(null);

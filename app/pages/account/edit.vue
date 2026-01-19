@@ -38,7 +38,5 @@ onMounted(async () => {
     console.error("Ошибка загрузки данных пользователя", err);
   }
 });
-useHead({
-  title: "Редактирование профиля",
-});
+usePageTitle("Редактирование профиля");
 </script>

@@ -24,3 +24,12 @@ export const getImageUrl = (filename: string) => {
 };
 
 export { formatCurrency };
+
+import { SHORT_NAME } from "~/data";
+import type { ComputedRef } from "vue";
+
+export const usePageTitle = (title: string | ComputedRef<string>) => {
+  useHead({
+    title: computed(() => title + " | " + SHORT_NAME),
+  });
+};

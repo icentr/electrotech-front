@@ -90,29 +90,6 @@
               </div>
             </div>
 
-            <div class="flex items-start">
-              <input
-                type="checkbox"
-                id="agreeTerms"
-                v-model="orderForm.agreeTerms"
-                class="accent-accent focus:ring-accent mt-1 mr-3 rounded border-gray-300"
-                required
-              />
-              <label for="agreeTerms" class="text-sm text-gray-700">
-                Я согласен с
-                <a href="#" class="link-accent"
-                  >условиями обработки персональных данных</a
-                >
-                и
-                <a href="#" class="link-accent">договором оферты</a>
-                <span
-                  class="text-lg text-red-500"
-                  title="Обязательно для заполнения"
-                >
-                  *
-                </span>
-              </label>
-            </div>
             <button
               type="submit"
               class="btn btn-lg"
@@ -184,7 +161,6 @@ const orderForm = ref({
   companyOkpo: "",
   paymentMethod: "invoice",
   comments: "",
-  agreeTerms: false,
 });
 
 const isSubmitting = ref(false);
@@ -238,12 +214,6 @@ onMounted(async () => {
 });
 
 const submitOrder = async () => {
-  if (!orderForm.value.agreeTerms) {
-    orderMessage.value = "Пожалуйста, согласитесь с условиями обработки данных";
-    orderMessageType.value = "error";
-    return;
-  }
-
   if (totalItems.value === 0) {
     orderMessage.value = "Ваша корзина пуста";
     orderMessageType.value = "error";
@@ -305,7 +275,5 @@ const companyFields = computed(() => [
   { title: "ОКПО", value: orderForm.value.companyOkpo },
 ]);
 
-useHead({
-  title: "Оформление заказа",
-});
+usePageTitle("Оформление заказа");
 </script>

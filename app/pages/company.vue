@@ -1,7 +1,5 @@
 <script setup>
-useHead({
-  title: "О Компании",
-});
+usePageTitle("О Компании");
 
 import {
   ArchiveBoxIcon,
@@ -15,13 +13,7 @@ import {
   TruckIcon,
   UserGroupIcon,
 } from "@heroicons/vue/16/solid";
-import {
-  PHONE_NUMBER,
-  PHONE_NUMBER_NORMALIZED,
-  EMAIL,
-  COMPANY_NAME,
-  ADDRESS,
-} from "~/data";
+import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED, COMPANY_NAME } from "~/data";
 </script>
 <template>
   <div class="bg-gray-50 antialiased">
@@ -200,7 +192,7 @@ import {
                 <div>
                   <h4 class="mb-1 font-bold text-gray-900">Адрес</h4>
                   <p class="text-gray-600">
-                    {{ ADDRESS }}
+                    {{ COMPANY_ADDRESS }}
                   </p>
                 </div>
               </div>
@@ -214,9 +206,9 @@ import {
                 <div>
                   <h4 class="mb-1 font-bold text-gray-900">Телефон</h4>
                   <a
-                    :href="'tel:' + PHONE_NUMBER_NORMALIZED"
+                    :href="'tel:' + COMPANY_PHONE_NORMALIZED"
                     class="text-gray-600"
-                    >{{ PHONE_NUMBER }}</a
+                    >{{ COMPANY_PHONE }}</a
                   >
                 </div>
               </div>
@@ -229,7 +221,7 @@ import {
                 </div>
                 <div>
                   <h4 class="mb-1 font-bold text-gray-900">Email</h4>
-                  <p class="text-gray-600">{{ EMAIL }}</p>
+                  <p class="text-gray-600">{{ COMPANY_EMAIL }}</p>
                 </div>
               </div>
 
@@ -268,7 +260,7 @@ import {
     <!-- Плавающая кнопка "Позвонить" -->
     <div class="fixed right-8 bottom-24 z-50 md:bottom-8">
       <a
-        :href="'tel:' + PHONE_NUMBER_NORMALIZED"
+        :href="'tel:' + COMPANY_PHONE_NORMALIZED"
         class="btn btn-accent btn-circular h-16 w-16 border border-blue-400"
       >
         <PhoneIcon class="size-8" />

@@ -26,74 +26,61 @@ input.no-spinner {
 @utility entry-base {
   @apply focus:ring-accent/60 shadow-sm focus:ring-4 focus:outline-none;
 }
-
+@utility title-1 {
+  @apply mb-6 text-3xl font-semibold text-gray-900;
+}
 @utility title-2 {
   @apply mb-6 text-2xl font-semibold text-gray-900;
 }
-
 .entry {
   @apply entry-base;
 
   @apply focus:ring-accent/30 w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-transparent focus:ring-4 focus:outline-none;
 }
-
 .entry:disabled {
   @apply cursor-not-allowed bg-gray-300 shadow-none;
 }
-
 .btn {
   @apply base-btn;
   @apply flex w-full items-center justify-center gap-2 rounded-md px-4 py-2 shadow-sm;
   @apply bg-gray-100 text-gray-800 ring-gray-300 hover:bg-gray-200 active:bg-gray-200 active:ring-gray-300;
   @apply transition-all duration-200;
 }
-
 .btn.btn-lg {
   @apply py-3 text-lg;
 }
-
 .btn.btn-sm {
   @apply w-min p-1 px-3;
 }
-
 .btn-accent {
   @apply bg-accent hover:bg-accent/90 active:bg-accent/90 focus:ring-accent/30 active:ring-accent/60 text-white shadow-sm;
 }
-
 .btn-accent-outline {
   @apply bg-gray-100 hover:bg-gray-200 active:bg-gray-200;
   @apply text-accent focus:ring-accent/30 active:ring-accent/60 shadow-sm;
 }
-
 .btn-destructive {
   @apply bg-red-200 text-red-500 shadow-sm hover:bg-red-400 hover:text-white focus:ring-red-600/50 active:bg-red-400 active:text-white active:ring-red-600/70;
 }
-
 .btn-destructive-outline {
   @apply bg-transparent text-red-500 shadow-none hover:bg-red-400 hover:text-white focus:ring-red-600/50 active:bg-red-400 active:text-white active:ring-red-600/70;
 }
-
 .btn:disabled {
   @apply cursor-not-allowed opacity-50 ring-transparent focus:ring-transparent active:ring-transparent;
 }
-
 .link-accent {
   @apply text-accent active:text-accent/80 hover:underline active:underline;
 }
-
 .btn.btn-circular {
   @apply rounded-full;
 }
-
 .hero-gradient {
   @apply from-accent bg-linear-to-r to-[#006699];
 }
-
 .btn-white {
   @apply base-btn text-accent flex items-center justify-center rounded-lg bg-white px-8 py-4 font-bold uppercase shadow-md transition duration-300 hover:bg-gray-100 hover:shadow-lg;
   @apply focus:ring-white/70 active:ring-white/90;
 }
-
 .btn-white-outline {
   @apply base-btn hover:text-accent flex items-center justify-center rounded-lg border-2 border-white bg-transparent px-8 py-4 font-bold text-white transition duration-300 hover:bg-white hover:shadow-lg;
   @apply focus:ring-white/70 active:ring-white/90;

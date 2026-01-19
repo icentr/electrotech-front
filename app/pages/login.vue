@@ -109,8 +109,6 @@ import { getApi } from "@/api";
 import {
   ArrowRightEndOnRectangleIcon,
   BoltIcon,
-  EnvelopeIcon,
-  LockClosedIcon,
 } from "@heroicons/vue/16/solid";
 
 const api = getApi();
@@ -165,7 +163,5 @@ const handleLogin = async () => {
       error.response?.data?.message || "Неверный email или пароль";
   }
 };
-useHead({
-  title: "Авторизация",
-});
+usePageTitle("Авторизация");
 </script>

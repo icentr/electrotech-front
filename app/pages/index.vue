@@ -1,22 +1,17 @@
 <script setup>
-useHead({
-  title: SHORT_NAME,
-});
+usePageTitle("Главная");
 import {
   ArrowRightIcon,
   BoltIcon,
   CheckCircleIcon,
   ChevronRightIcon,
   CpuChipIcon,
-  DocumentTextIcon,
-  EnvelopeIcon,
   LinkIcon,
   ListBulletIcon,
   PhoneIcon,
   PowerIcon,
-  MapPinIcon,
 } from "@heroicons/vue/16/solid";
-import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED, SHORT_NAME } from "~/data";
+import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED, SHORT_NAME } from "~/data";
 import ContactUsForm from "~/components/ContactUsForm.vue";
 
 import { ADVANTAGES } from "~/data/advantages";
@@ -127,9 +122,9 @@ const PREVIEW_CATEGORIES = [
                 <span class="text-sm font-bold">Отдел продаж</span>
               </div>
               <a
-                :href="'tel:' + PHONE_NUMBER_NORMALIZED"
+                :href="'tel:' + COMPANY_PHONE_NORMALIZED"
                 class="hover:text-accent text-lg font-bold"
-                >{{ PHONE_NUMBER }}</a
+                >{{ COMPANY_PHONE }}</a
               >
               <div class="mt-1 text-xs text-gray-500">Пн-Пт: 9:00-18:00</div>
             </div>
@@ -250,7 +245,7 @@ const PREVIEW_CATEGORIES = [
             class="flex flex-col justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4"
           >
             <a
-              :href="'tel:' + PHONE_NUMBER_NORMALIZED"
+              :href="'tel:' + COMPANY_PHONE_NORMALIZED"
               class="btn-white uppercase"
             >
               <PhoneIcon class="mr-3 size-6" />

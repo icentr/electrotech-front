@@ -216,7 +216,5 @@ const submitForm = async () => {
   }
 };
 
-useHead({
-  title: "Редактирование информации о компании",
-});
+usePageTitle("Редактирование информации о компании");
 </script>
