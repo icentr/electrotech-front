@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DOCS } from "~/data";
 import {
   PlusIcon,
   MinusIcon,

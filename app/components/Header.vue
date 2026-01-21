@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { UserIcon, ArrowLeftStartOnRectangleIcon, ArrowRightEndOnRectangleIcon, PhoneIcon, ClockIcon } from "@heroicons/vue/16/solid";
 const router = useRouter();
 const auth = useAuthStore();
 const cart = useCartStore();
 
 const handleLogout = () => {
-  auth.logout();
+  auth.clear();
   cart.clearCart();
   router.push("/login");
 };
@@ -17,7 +17,7 @@ const navLinks = [
   { text: "О компании", to: "/company" },
 ]
 
-import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
+import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED } from "~/data";
 </script>
 <template>
   <header class="bg-white shadow-lg sticky top-0 z-50">
@@ -55,8 +55,8 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
         <!-- Контакты -->
         <div class="hidden xl:flex items-center ml-4">
           <PhoneIcon class="size-5 mr-2" />
-          <a :href="'tel:' + PHONE_NUMBER_NORMALIZED" class="font-medium hover:text-accent">
-            {{ PHONE_NUMBER }}
+          <a :href="'tel:' + COMPANY_PHONE_NORMALIZED" class="font-medium hover:text-accent">
+            {{ COMPANY_PHONE }}
           </a>
         </div>
         <div class="hidden 2xl:flex space-x-6 ml-4">
@@ -64,13 +64,13 @@ import { PHONE_NUMBER, PHONE_NUMBER_NORMALIZED } from "~/data";
           <span>Пн-Пт: 9:00–18:00</span>
         </div>
         <div class="hidden md:flex gap-3">
-          <NuxtLink v-if="auth.isAuthenticated" to="/account" class="btn btn-accent-outline" title="Личный кабинет">
+          <NuxtLink v-if="auth.status == 'authenticated'" to="/account" class="btn btn-accent-outline" title="Личный кабинет">
             <div class=" flex justify-center items-center gap-2">
               <UserIcon class="size-5" />
               <span class="w-max">Личный кабинет</span>
             </div>
           </NuxtLink>
-          <button v-if="auth.isAuthenticated" title="Выход из аккаунта" class="btn btn-destructive"
+          <button v-if="auth.status == 'authenticated'" title="Выход из аккаунта" class="btn btn-destructive"
             @click="handleLogout">
             <ArrowLeftStartOnRectangleIcon class="size-6" />
             <span>

@@ -14,10 +14,21 @@ export const getApi = () => createApi(getApiBaseUrl());
 import { useAxios } from "@vueuse/integrations/useAxios";
 
 interface RetryConfig extends AxiosRequestConfig {
-  _retry?: boolean;
+  _is_retry_request?: boolean;
 }
 
-const UNAUTHORIZED = 401;
+const STATUS_UNAUTHORIZED = 401;
+
+const refreshAuthentication = async (
+  refreshToken: string,
+): Promise<{ token: string; refreshToken: string }> => {
+  const api = getApi();
+  const { data } = await api.post("auth/refresh", {
+    refresh_token: refreshToken,
+  });
+
+  return { token: data.token, refreshToken: data.refresh_token };
+};
 
 export const createApi = (baseURL: string) => {
   const api = axios.create({
@@ -31,36 +42,33 @@ export const createApi = (baseURL: string) => {
   api.interceptors.response.use(
     (response: AxiosResponse) => response,
     async (error: AxiosError) => {
-      const auth = useAuthStore();
-      const originalRequest = error.request as RetryConfig;
-
-      if (error.response?.status === UNAUTHORIZED && !originalRequest._retry) {
-        originalRequest._retry = true;
-
-        try {
-          if (!auth.refreshToken) throw new Error("No refresh token");
-
-          const { data } = await axios.post(`${baseURL}auth/refresh`, {
-            refresh_token: auth.refreshToken,
-          });
-
-          auth.token = data.token;
-          if (originalRequest.headers) {
-            originalRequest.headers["Authorization"] = data.token;
-          } else {
-            originalRequest.headers = {
-              Authorization: data.token,
-            };
-          }
-          return api.request(originalRequest);
-        } catch (refreshErr) {
-          auth.logout();
-          window.location.href = "/login";
-          return Promise.reject(refreshErr);
-        }
+      if (error.response?.status !== STATUS_UNAUTHORIZED) {
+        return error;
       }
+      const auth = useAuthStore();
 
-      return Promise.reject(error);
+      switch (auth.status) {
+        case "authenticated":
+          console.error(
+            "Something wrong with authentication, clearing auth data",
+          );
+          auth.clear();
+          return Promise.reject(error);
+        case "unauthenticated":
+          const router = useRouter();
+          router.push("/login");
+          return Promise.reject(error);
+        case "expired":
+          try {
+            const { token, refreshToken } = await refreshAuthentication(
+              auth.refreshToken,
+            );
+            auth.login(token, refreshToken);
+            return api.request(error.request);
+          } catch (refreshErr) {
+            return refreshErr;
+          }
+      }
     },
   );
 

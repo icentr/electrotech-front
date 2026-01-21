@@ -6,12 +6,12 @@ import {
   MapPinIcon,
 } from "@heroicons/vue/16/solid";
 import {
-  PHONE_NUMBER_NORMALIZED,
-  PHONE_NUMBER,
+  COMPANY_PHONE,
+  COMPANY_PHONE_NORMALIZED,
+  COMPANY_EMAIL,
+  COMPANY_ADDRESS,
   COMPANY_INN,
   COMPANY_KPP,
-  EMAIL,
-  ADDRESS,
 } from "~/data";
 const form = ref({
   name: "",
@@ -94,9 +94,9 @@ const onSubmit = () => {
                   Телефон отдела продаж
                 </h3>
                 <a
-                  :href="'tel:' + PHONE_NUMBER_NORMALIZED"
+                  :href="'tel:' + COMPANY_PHONE_NORMALIZED"
                   class="text-lg font-medium hover:underline"
-                  >{{ PHONE_NUMBER }}</a
+                  >{{ COMPANY_PHONE }}</a
                 >
               </div>
             </div>
@@ -110,9 +110,11 @@ const onSubmit = () => {
                 <h3 class="text-sm font-bold text-blue-200">
                   Email для заявок
                 </h3>
-                <a :href="'mailto:' + EMAIL" class="text-lg hover:underline">{{
-                  EMAIL
-                }}</a>
+                <a
+                  :href="'mailto:' + COMPANY_EMAIL"
+                  class="text-lg hover:underline"
+                  >{{ COMPANY_EMAIL }}</a
+                >
               </div>
             </div>
             <div class="flex items-start">
@@ -137,7 +139,7 @@ const onSubmit = () => {
               <div>
                 <h3 class="text-sm font-bold text-blue-200">Адрес</h3>
                 <p class="font-medium">
-                  {{ ADDRESS }}
+                  {{ COMPANY_ADDRESS }}
                 </p>
               </div>
             </div>
