@@ -22,11 +22,6 @@ const links = [
     icon: ShoppingCartIcon,
     isCart: true,
   },
-  {
-    to: "/account/",
-    text: "Профиль",
-    icon: UserCircleIcon,
-  },
 ];
 const cart = useCartStore();
 </script>
