@@ -23,7 +23,7 @@
         {{ errorMessage }}
       </p>
 
-      <form class="mt-8 space-y-6" @submit.stop.prevent="handleLogin">
+      <form class="mt-8 space-y-6">
         <div class="space-y-4 rounded-md">
           <div>
             <label
@@ -62,24 +62,12 @@
           </div>
         </div>
 
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <!-- <input id="remember-me" v-model="form.remember" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700"> Запомнить меня </label> -->
-          </div>
-
-          <div class="text-sm">
-            <RouterLink
-              to="/ForgotPassword"
-              class="hover:text-accent/80 text-accent font-medium"
-            >
-              Забыли пароль?
-            </RouterLink>
-          </div>
-        </div>
-
         <div>
-          <button type="submit" class="group btn btn-accent">
+          <button
+            type="submit"
+            class="group btn btn-accent"
+            @click="handleLogin"
+          >
             Войти
             <ArrowRightEndOnRectangleIcon
               class="size-5 text-blue-300 group-hover:text-blue-200"
@@ -102,7 +90,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
@@ -110,6 +98,8 @@ import {
   ArrowRightEndOnRectangleIcon,
   BoltIcon,
 } from "@heroicons/vue/16/solid";
+import { useUrlSearchParams } from "@vueuse/core";
+import type { AxiosError } from "axios";
 
 const api = getApi();
 
@@ -118,12 +108,20 @@ const router = useRouter();
 const form = ref({
   email: "",
   password: "",
-  remember: false,
 });
+
+// Safari specific code
+const urlParams = useUrlSearchParams<{
+  email?: string;
+  password?: string;
+}>("history");
+
+form.value.email = urlParams.email || "";
+form.value.password = urlParams.password || "";
 
 const errorMessage = ref("");
 
-function validate() {
+const validate = () => {
   if (!form.value.email) {
     errorMessage.value = "Email обязателен";
     return false;
@@ -140,16 +138,32 @@ function validate() {
   }
   errorMessage.value = "";
   return true;
-}
+};
+
+type SuccessResponse = {
+  token: string;
+  refresh_token: string;
+};
+
+type ErrorResponse = {
+  error: string;
+};
+
+type LoginResponse = SuccessResponse | ErrorResponse;
 
 const handleLogin = async () => {
   if (!validate()) return;
 
   try {
-    const response = await api.post("/auth/login", {
+    const response = await api.post<LoginResponse>("/auth/login", {
       email: form.value.email,
       password: form.value.password,
     });
+
+    if ("error" in response.data) {
+      errorMessage.value = response.data.error;
+      return;
+    }
 
     const { token, refresh_token } = response.data;
 
@@ -161,8 +175,11 @@ const handleLogin = async () => {
     console.error(error);
     errorMessage.value =
       "Неверный email или пароль " +
-      `(${error.response?.data?.error || "Неизвестная ошибка"})`;
+      `(${((error as AxiosError).response?.data as ErrorResponse)?.error || "Неизвестная ошибка"})`;
   }
 };
+if (validate()) {
+  handleLogin();
+}
 usePageTitle("Авторизация");
 </script>

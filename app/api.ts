@@ -1,7 +1,5 @@
-// api.js
 import axios, {
   AxiosError,
-  type AxiosInstance,
   type AxiosRequestConfig,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
