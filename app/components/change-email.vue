@@ -2,7 +2,7 @@
   <div class="flex h-fit flex-col rounded-xl bg-white p-6 shadow">
     <h2 class="title-2">Изменить Email</h2>
 
-    <form @submit.prevent="submitEmail">
+    <form @submit.stop.prevent="submitEmail">
       <div class="mb-4">
         <label class="mb-1 block text-sm font-medium text-gray-700"
           >Новый Email</label

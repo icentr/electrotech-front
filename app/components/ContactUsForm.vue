@@ -153,7 +153,7 @@ const onSubmit = () => {
           >
             <div class="text-accent text-xl font-semibold">Отправка...</div>
           </div>
-          <form @submit.prevent="onSubmit" v-if="!isLoading">
+          <form @submit.stop.prevent="onSubmit" v-if="!isLoading">
             <div class="mb-5">
               <label for="name" class="mb-2 block font-medium text-gray-700"
                 >Контактное лицо*</label

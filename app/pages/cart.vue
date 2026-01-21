@@ -180,7 +180,7 @@ const cartItems = computed(() => cartStore.cartItems);
               >
                 <form
                   class="flex flex-1 items-center"
-                  @submit.prevent="applyPromoCode"
+                  @submit.stop.prevent="applyPromoCode"
                 >
                   <input
                     type="text"

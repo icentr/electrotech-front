@@ -2,7 +2,7 @@
   <div class="flex h-fit flex-col rounded-xl bg-white p-6 shadow">
     <h2 class="title-2">Изменить номер телефона</h2>
 
-    <form @submit.prevent="submitPhone">
+    <form @submit.stop.prevent="submitPhone">
       <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700"

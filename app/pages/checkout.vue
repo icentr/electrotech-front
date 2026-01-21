@@ -17,7 +17,7 @@
               Контактные данные
             </h2>
 
-            <form @submit.prevent="submitOrder">
+            <form @submit.stop.prevent="submitOrder">
               <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div v-for="field in userFields">
                   <label

@@ -16,7 +16,7 @@
         <p class="mt-2 text-sm text-gray-600">Создайте новую учетную запись</p>
       </div>
 
-      <form class="mt-8 space-y-6" @submit.prevent="handleRegister">
+      <form class="mt-8 space-y-6" @submit.stop.prevent="handleRegister">
         <p v-if="errorMessage" class="text-center text-sm text-red-500">
           {{ errorMessage }}
         </p>

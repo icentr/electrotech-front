@@ -2,7 +2,7 @@
   <div class="flex flex-col rounded-xl bg-white p-6 shadow">
     <h2 class="title-2">Сменить пароль</h2>
 
-    <form @submit.prevent="handleSubmit" class="space-y-4">
+    <form @submit.stop.prevent="handleSubmit" class="space-y-4">
       <div>
         <label class="mb-1 block text-sm font-medium text-gray-700"
           >Текущий пароль</label

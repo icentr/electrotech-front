@@ -23,7 +23,7 @@
         {{ errorMessage }}
       </p>
 
-      <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
+      <form class="mt-8 space-y-6" @submit.stop.prevent="handleLogin">
         <div class="space-y-4 rounded-md">
           <div>
             <label
@@ -160,7 +160,8 @@ const handleLogin = async () => {
   } catch (error) {
     console.error(error);
     errorMessage.value =
-      error.response?.data?.message || "Неверный email или пароль";
+      "Неверный email или пароль " +
+      `(${error.response?.data?.error || "Неизвестная ошибка"})`;
   }
 };
 usePageTitle("Авторизация");

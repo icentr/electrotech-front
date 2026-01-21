@@ -76,7 +76,7 @@ const pagesToShow = computed(() => {
                   Каталог товаров
                 </h1>
                 <form
-                  @submit.prevent="onSearch"
+                  @submit.stop.prevent="onSearch"
                   @reset="onResetSearch"
                   class="flex gap-2"
                 >
