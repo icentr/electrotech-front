@@ -2,15 +2,13 @@ import { defineStore } from "pinia";
 import type { Product } from "@/models";
 import { getApi } from "@/api";
 import { useAxios } from "@vueuse/integrations/useAxios";
-import axios from "axios";
 
 interface CatalogResponse {
   code: number;
-  pages: number;
-  page: number;
-  total: number;
-  products: Product[];
-  error: string | null;
+  pages?: number;
+  page?: number;
+  total?: number;
+  products?: Product[];
 }
 
 export const useCatalogStore = defineStore("catalog", {
@@ -43,7 +41,8 @@ export const useCatalogStore = defineStore("catalog", {
     },
 
     async fetch() {
-      console.log(
+      this.error = null;
+      console.debug(
         "Получение товаров... Поисковая строка: %s",
         this.searchString,
       );
@@ -63,10 +62,18 @@ export const useCatalogStore = defineStore("catalog", {
       );
 
       then(({ data }) => {
-        this.products = data.value.products;
-        this.totalPages = data.value.pages;
-        this.currentPage = data.value.page;
-        this.totalProducts = data.value.total;
+        console.debug("Data received");
+        if (data.value.code !== 200) {
+          console.error(
+            "Something bad happened, status code " + data.value.code.toString(),
+          );
+          this.error =
+            "Something bad happened, status code " + data.value.code.toString();
+        }
+        this.products = data.value.products ?? [];
+        this.totalPages = data.value.pages ?? 0;
+        this.currentPage = data.value.page ?? 0;
+        this.totalProducts = data.value.total ?? 0;
       });
     },
   },

@@ -1,4 +1,5 @@
 import axios, {
+  Axios,
   AxiosError,
   type AxiosRequestConfig,
   type AxiosResponse,
@@ -18,10 +19,10 @@ interface RetryConfig extends AxiosRequestConfig {
 const STATUS_UNAUTHORIZED = 401;
 
 const refreshAuthentication = async (
+  apiClient: Axios,
   refreshToken: string,
 ): Promise<{ token: string; refreshToken: string }> => {
-  const api = getApi();
-  const { data } = await api.post("auth/refresh", {
+  const { data } = await apiClient.post("auth/refresh", {
     refresh_token: refreshToken,
   });
 
@@ -34,6 +35,7 @@ export const createApi = (baseURL: string) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: false,
   });
 
   // Перехватчики
@@ -59,6 +61,7 @@ export const createApi = (baseURL: string) => {
         case "expired":
           try {
             const { token, refreshToken } = await refreshAuthentication(
+              api,
               auth.refreshToken,
             );
             auth.login(token, refreshToken);

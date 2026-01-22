@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useCatalogStore } from "@/stores/catalog";
 import { useUrlSearchParams } from "@vueuse/core";
 import {
@@ -10,7 +10,10 @@ import {
 
 usePageTitle("Каталог");
 
-const urlParams = useUrlSearchParams();
+const urlParams = useUrlSearchParams<{
+  page: number;
+  search: string;
+}>();
 
 /* Cool feature, maybe we should implement it somehow */
 const IS_FOR_DEVS = false;
@@ -21,7 +24,7 @@ catalog.setSearchString(urlParams.search || "");
 
 catalog.fetch();
 
-const goToPage = async (newPage) => {
+const goToPage = async (newPage: number) => {
   catalog.setPage(newPage);
   await catalog.fetch();
 };
