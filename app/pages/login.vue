@@ -121,23 +121,27 @@ form.value.password = urlParams.password || "";
 
 const errorMessage = ref("");
 
-const validate = () => {
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const isValid = () => {
+  let errors = [];
+
   if (!form.value.email) {
-    errorMessage.value = "Email обязателен";
-    return false;
+    errors.push("Email обязателен");
   }
-  // Простая проверка email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(form.value.email)) {
-    errorMessage.value = "Введите корректный email";
-    return false;
+    errors.push("Введите корректный email");
   }
   if (!form.value.password) {
-    errorMessage.value = "Пароль обязателен";
-    return false;
+    errors.push("Пароль обязателен");
   }
-  errorMessage.value = "";
-  return true;
+
+  return { valid: errors.length === 0, errors: errors };
+};
+
+const validate = (): boolean => {
+  const validationResult = isValid();
+  errorMessage.value = validationResult.errors.join(", ");
+  return validationResult.valid;
 };
 
 type SuccessResponse = {
@@ -149,18 +153,28 @@ type ErrorResponse = {
   error: string;
 };
 
-type LoginResponse = SuccessResponse | ErrorResponse;
+function isSuccess(
+  response: SuccessResponse | ErrorResponse,
+): response is SuccessResponse {
+  return (
+    (response as SuccessResponse).token !== undefined &&
+    (response as SuccessResponse).refresh_token !== undefined
+  );
+}
 
 const handleLogin = async () => {
   if (!validate()) return;
 
   try {
-    const response = await api.post<LoginResponse>("/auth/login", {
-      email: form.value.email,
-      password: form.value.password,
-    });
+    const response = await api.post<SuccessResponse | ErrorResponse>(
+      "/auth/login",
+      {
+        email: form.value.email,
+        password: form.value.password,
+      },
+    );
 
-    if ("error" in response.data) {
+    if (!isSuccess(response.data)) {
       errorMessage.value = response.data.error;
       return;
     }
@@ -178,7 +192,7 @@ const handleLogin = async () => {
       `(${((error as AxiosError).response?.data as ErrorResponse)?.error || "Неизвестная ошибка"})`;
   }
 };
-if (validate()) {
+if (isValid().valid) {
   handleLogin();
 }
 usePageTitle("Авторизация");
