@@ -1,7 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import {
   HomeIcon,
-  UserCircleIcon,
   QueueListIcon,
   ShoppingCartIcon,
 } from "@heroicons/vue/24/outline";

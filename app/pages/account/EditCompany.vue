@@ -116,10 +116,9 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+<script setup lang="ts">
 import { getApi } from "@/api";
+import type { AxiosError } from "axios";
 
 const api = getApi();
 const router = useRouter();
@@ -210,7 +209,8 @@ const submitForm = async () => {
     setTimeout(() => router.push("/account"), 1500);
   } catch (err) {
     errorMessage.value =
-      err.response?.data?.error || "Ошибка при обновлении данных";
+      ((err as AxiosError).response?.data as { error: string })?.error ||
+      "Ошибка при обновлении данных";
   } finally {
     loading.value = false;
   }

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {
   DocumentTextIcon,
   EnvelopeIcon,
@@ -22,7 +22,7 @@ const form = ref({
 
 import { useApi } from "@/api";
 
-const validationErrors = ref(null);
+const validationErrors = ref<string[]>([]);
 
 const formValid = computed(() => {
   validationErrors.value = [];

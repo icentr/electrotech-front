@@ -1,6 +1,5 @@
-<script setup>
+<script setup lang="ts">
 import { getApi } from "@/api";
-import { onMounted, ref } from "vue";
 import { DOCS } from "~/data";
 
 const api = getApi();
@@ -19,11 +18,12 @@ import {
 import { DocumentIcon, PencilIcon } from "@heroicons/vue/24/outline";
 usePageTitle("Аккаунт");
 // Данные пользователя
-const user = ref({
-  name: "",
-  email: "",
-  phone: "",
-});
+const user = ref<{
+  name?: string;
+  email?: string;
+  phone?: string;
+  avatarUrl?: string;
+}>({});
 // Данные компании
 const company = ref({
   name: "",
@@ -39,10 +39,12 @@ const cart = useCartStore();
 const router = useRouter();
 
 const handleLogout = () => {
-  auth.logout();
+  auth.clear();
   cart.clearCart();
   router.push("/login");
 };
+import type { Order } from "~/models";
+const orders = ref<Order[]>([]);
 onMounted(async () => {
   try {
     const { data } = await api.post("/user/get-data");
@@ -70,7 +72,9 @@ onMounted(async () => {
     console.error("Ошибка при получении данных компании: " + error);
   }
   try {
-    const { data } = await api.get("/orders/get");
+    const { data } = await api.get<{
+      orders: Order[];
+    }>("/orders/get");
 
     console.log(data);
     orders.value = data.orders.map((order) => {
@@ -78,12 +82,8 @@ onMounted(async () => {
         (sum, p) => sum + p.quantity * p.productPrice,
         0,
       );
-
-      return {
-        id: order.id,
-        creationDate: order.creationDate,
-        amount,
-      };
+      order.amount = amount;
+      return order;
     });
     // orders.value = data.orders;
   } catch (error) {
@@ -92,12 +92,14 @@ onMounted(async () => {
 });
 
 // История заказов
-const orders = ref([]);
 
 // Форматирование даты
-const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(dateString).toLocaleDateString("ru-RU", options);
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString("ru-RU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 // Классы для статусов заказов
@@ -127,7 +129,7 @@ const formatDate = (dateString) => {
                 />
               </div>
               <h2 class="text-xl font-bold text-gray-900">{{ user.name }}</h2>
-              <p class="text-gray-500">{{ user.position }}</p>
+              <p class="text-gray-500">{{ company.position }}</p>
             </div>
 
             <div class="space-y-4">

@@ -15,7 +15,7 @@ const urlParams = useUrlSearchParams<{
   search: string;
 }>();
 
-/* Cool feature, maybe we should implement it somehow */
+/** Cool feature, maybe we should implement it somehow */
 const IS_FOR_DEVS = false;
 
 const catalog = useCatalogStore();

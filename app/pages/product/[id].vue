@@ -1,4 +1,3 @@
-<!-- src/pages/product/[id].vue -->
 <template>
   <BreadcrumbsBlock
     :breadcrumbs="[{ name: 'Каталог', url: '/catalog' }]"
@@ -112,8 +111,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
 import { getApi } from "@/api";
 
 const api = getApi();

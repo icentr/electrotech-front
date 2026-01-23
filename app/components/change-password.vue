@@ -52,9 +52,9 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
 import { getApi } from "@/api";
+import type { AxiosError } from "axios";
 
 const api = getApi();
 
@@ -84,7 +84,9 @@ const handleSubmit = async () => {
     newPassword.value = "";
     confirmPassword.value = "";
   } catch (err) {
-    error.value = err.response?.data?.message || "Ошибка при смене пароля";
+    error.value =
+      ((err as AxiosError).response?.data as { error: string })?.error ||
+      "Ошибка при смене пароля";
   }
 };
 </script>

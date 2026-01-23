@@ -94,7 +94,7 @@
               type="submit"
               class="btn btn-lg"
               :class="
-                orderForm.agreeTerms && orderForm.allRequiredFields
+                orderForm.allRequiredFields
                   ? 'btn-accent'
                   : 'btn-accent-outline'
               "
@@ -133,9 +133,7 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
+<script setup lang="ts">
 import { useCartStore } from "../stores/cart";
 import { getApi } from "@/api";
 import { ArrowPathIcon, CreditCardIcon } from "@heroicons/vue/16/solid";
@@ -161,11 +159,12 @@ const orderForm = ref({
   companyOkpo: "",
   paymentMethod: "invoice",
   comments: "",
+  allRequiredFields: false,
 });
 
 const isSubmitting = ref(false);
 
-const formatCurrency = (amount) => {
+const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("ru-RU", {
     style: "currency",
     currency: "RUB",

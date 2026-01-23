@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { DOCS } from "@/data";
 import { ArrowUpRightIcon } from "@heroicons/vue/16/solid";
 import { usePageTitle } from "~/utils";

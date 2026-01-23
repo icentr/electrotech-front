@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 usePageTitle("Главная");
 import {
   ArrowRightIcon,
@@ -11,7 +11,7 @@ import {
   PhoneIcon,
   PowerIcon,
 } from "@heroicons/vue/16/solid";
-import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED, SHORT_NAME } from "~/data";
+import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED } from "~/data";
 import ContactUsForm from "~/components/ContactUsForm.vue";
 
 import { ADVANTAGES } from "~/data/advantages";

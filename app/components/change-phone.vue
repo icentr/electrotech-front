@@ -32,10 +32,10 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
+import type { AxiosError } from "axios";
 
 const api = getApi();
 
@@ -48,7 +48,7 @@ const router = useRouter();
 
 const submitPhone = async () => {
   error.value = "";
-  success.value = "";
+  success.value = false;
   loading.value = true;
 
   try {
@@ -58,7 +58,9 @@ const submitPhone = async () => {
     success.value = true;
     setTimeout(() => router.push("/account"), 1500);
   } catch (err) {
-    error.value = err.response?.data?.error || "Ошибка при обновлении номера";
+    error.value =
+      ((err as AxiosError).response?.data as { error: string })?.error ||
+      "Ошибка при обновлении номера";
   } finally {
     loading.value = false;
   }

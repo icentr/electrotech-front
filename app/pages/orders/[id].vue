@@ -26,13 +26,6 @@
               :alt="product.productName"
               class="absolute top-0 left-0 h-full w-full object-contain p-4"
             />
-
-            <div
-              v-if="product.badge"
-              class="absolute top-3 left-3 rounded bg-yellow-400 px-2 py-1 text-xs font-bold text-yellow-800"
-            >
-              {{ product.badge }}
-            </div>
           </div>
 
           <!-- Информация -->
@@ -66,12 +59,6 @@
                 <div class="text-xl font-bold text-gray-900">
                   {{ formatCurrency(product.productPrice) }}
                 </div>
-                <div
-                  v-if="product.oldPrice"
-                  class="text-sm text-gray-400 line-through"
-                >
-                  {{ formatCurrency(product.oldPrice) }}
-                </div>
               </div>
               <div
                 v-if="product.quantity > 0"
@@ -96,24 +83,23 @@
     </div>
   </div>
 </template>
-<script setup>
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
-
+<script setup lang="ts">
 import { getImageUrl } from "@/utils";
 import { getApi } from "@/api";
 import { CheckCircleIcon } from "@heroicons/vue/16/solid";
-
+import type { Order } from "~/models";
 const loading = ref(true);
 
 const api = getApi();
 
 const route = useRoute();
-const order = ref(null);
+
+type LocalOrder = Order & { date: string };
+const order = ref<LocalOrder>();
 
 onMounted(async () => {
   try {
-    const { data } = await api.get("/orders/get");
+    const { data } = await api.get<{ orders: Order[] }>("/orders/get");
 
     loading.value = false;
     const orders = data.orders;
@@ -124,7 +110,6 @@ onMounted(async () => {
       const rawDate = found.creationDate;
       const isoDate = rawDate.split(" ")[0] + "T" + rawDate.split(" ")[1];
 
-      // Просто присваиваем без преобразований
       order.value = {
         ...found,
         date: isoDate,
@@ -135,15 +120,14 @@ onMounted(async () => {
   }
 });
 
-const formatDate = (dateString) => {
-  const options = {
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleString("ru-RU", {
     year: "numeric",
     month: "long",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-  };
-  return new Date(dateString).toLocaleString("ru-RU", options);
+  });
 };
 
 const orderTotal = computed(() => {

@@ -2,6 +2,7 @@ import axios, {
   Axios,
   AxiosError,
   type AxiosRequestConfig,
+  type AxiosInstance,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from "axios";
@@ -11,10 +12,6 @@ import { getApiBaseUrl } from "@/utils";
 
 export const getApi = () => createApi(getApiBaseUrl());
 import { useAxios } from "@vueuse/integrations/useAxios";
-
-interface RetryConfig extends AxiosRequestConfig {
-  _is_retry_request?: boolean;
-}
 
 const STATUS_UNAUTHORIZED = 401;
 
@@ -41,49 +38,52 @@ export const createApi = (baseURL: string) => {
   // Перехватчики
   api.interceptors.response.use(
     (response: AxiosResponse) => response,
-    async (error: AxiosError) => {
-      if (error.response?.status !== STATUS_UNAUTHORIZED) {
-        return error;
-      }
-      const auth = useAuthStore();
-
-      switch (auth.status) {
-        case "authenticated":
-          console.error(
-            "Something wrong with authentication, clearing auth data",
-          );
-          auth.clear();
-          return Promise.reject(error);
-        case "unauthenticated":
-          const router = useRouter();
-          router.push("/login");
-          return Promise.reject(error);
-        case "expired":
-          try {
-            const { token, refreshToken } = await refreshAuthentication(
-              api,
-              auth.refreshToken,
-            );
-            auth.login(token, refreshToken);
-            return api.request(error.request);
-          } catch (refreshErr) {
-            return refreshErr;
-          }
-      }
-    },
+    badResponseInterceptor(api),
   );
 
-  api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    const auth = useAuthStore();
-    if (auth.token) {
-      config.headers["Authorization"] = auth.token;
-    }
-    return config;
-  });
+  api.interceptors.request.use(authHeaderInterceptor);
 
   return api;
 };
 
+const authHeaderInterceptor = (config: InternalAxiosRequestConfig) => {
+  const auth = useAuthStore();
+  if (auth.token) {
+    config.headers["Authorization"] = auth.token;
+  }
+  return config;
+};
+const badResponseInterceptor =
+  (api: AxiosInstance) => async (error: AxiosError) => {
+    if (error.response?.status !== STATUS_UNAUTHORIZED) {
+      return error;
+    }
+    const auth = useAuthStore();
+
+    switch (auth.status) {
+      case "authenticated":
+        console.error(
+          "Something wrong with authentication, clearing auth data",
+        );
+        auth.clear();
+        return Promise.reject(error);
+      case "unauthenticated":
+        const router = useRouter();
+        router.push("/login");
+        return Promise.reject(error);
+      case "expired":
+        try {
+          const { token, refreshToken } = await refreshAuthentication(
+            api,
+            auth.refreshToken,
+          );
+          auth.login(token, refreshToken);
+          return api.request(error.request);
+        } catch (refreshErr) {
+          return refreshErr;
+        }
+    }
+  };
 export const useApi = (
   url: string,
   config: AxiosRequestConfig | null = null,

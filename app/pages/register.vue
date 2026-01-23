@@ -1,4 +1,3 @@
-<!-- src/views/Register.vue -->
 <template>
   <div
     class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8"
@@ -112,12 +111,11 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { DOCS } from "~/data";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { getApi } from "@/api";
 import { BoltIcon } from "@heroicons/vue/16/solid";
+import type { AxiosError } from "axios";
 
 const api = getApi();
 
@@ -181,7 +179,7 @@ const handleRegister = async () => {
   if (!validate()) return;
 
   try {
-    await api.post("/auth/register", {
+    await api.post<{ message: string } | { error: string }>("/auth/register", {
       email: form.value.email,
       password: form.value.password,
       first_name: form.value.first_name,
@@ -191,15 +189,16 @@ const handleRegister = async () => {
     });
 
     router.push("/login");
-  } catch (error) {
-    // ловим ответ от сервера
+  } catch (e) {
+    const error = e as AxiosError;
     if (error.response?.status === 409) {
-      // например, 409 — конфликт (email или телефон занят)
       errorMessage.value =
-        error.response.data?.message || "Email или телефон уже используется";
+        (error.response.data as { error: string })?.error ||
+        "Email или телефон уже используется";
     } else {
       errorMessage.value =
-        error.response?.data?.message || "Ошибка регистрации";
+        (error.response?.data as { error: string })?.error ||
+        "Ошибка регистрации";
     }
   }
 };

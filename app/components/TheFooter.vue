@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { COMPANY_NAME } from "~/data";
 </script>
 <template>

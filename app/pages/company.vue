@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 usePageTitle("О Компании");
 
 import {
@@ -13,7 +13,13 @@ import {
   TruckIcon,
   UserGroupIcon,
 } from "@heroicons/vue/16/solid";
-import { COMPANY_PHONE, COMPANY_PHONE_NORMALIZED, COMPANY_NAME } from "~/data";
+import {
+  COMPANY_PHONE,
+  COMPANY_PHONE_NORMALIZED,
+  COMPANY_NAME,
+  COMPANY_ADDRESS,
+  COMPANY_EMAIL,
+} from "~/data";
 </script>
 <template>
   <div class="bg-gray-50 antialiased">

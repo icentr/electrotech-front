@@ -105,19 +105,17 @@ const api = getApi();
 
 const router = useRouter();
 
-const form = ref({
-  email: "",
-  password: "",
-});
-
-// Safari specific code
-const urlParams = useUrlSearchParams<{
+type LoginData = {
   email?: string;
   password?: string;
-}>("history");
+};
 
-form.value.email = urlParams.email || "";
-form.value.password = urlParams.password || "";
+const form = ref<LoginData>({});
+
+// Safari specific code
+const urlParams = useUrlSearchParams<LoginData>("history");
+
+form.value = urlParams;
 
 const errorMessage = ref("");
 

@@ -31,10 +31,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getApi } from "@/api";
+import type { AxiosError } from "axios";
 
 const email = ref("");
 const loading = ref(false);
@@ -44,17 +45,28 @@ const router = useRouter();
 
 const api = getApi();
 
+type ChangeEmailErrorResponse = { error: string };
+type ChangeEmailSuccessResponse = { message: string };
+
+type ChangeEmailResponse =
+  | ChangeEmailSuccessResponse
+  | ChangeEmailErrorResponse;
+
 const submitEmail = async () => {
   error.value = "";
   success.value = "";
   loading.value = true;
 
   try {
-    await api.post("/user/change-email", { email: email.value });
+    await api.post<ChangeEmailResponse>("/user/change-email", {
+      email: email.value,
+    });
     success.value = "Email успешно обновлён";
     setTimeout(() => router.push("/account"), 1500);
   } catch (e) {
-    error.value = e.response?.data?.error || "Ошибка при обновлении email";
+    error.value =
+      ((e as AxiosError).response?.data as ChangeEmailErrorResponse)?.error ||
+      "Ошибка при обновлении email";
   } finally {
     loading.value = false;
   }

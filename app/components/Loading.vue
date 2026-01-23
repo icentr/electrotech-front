@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ArrowPathIcon } from "@heroicons/vue/16/solid";
 const props = defineProps<{
-  label: string | null;
+  label?: string;
 }>();
 </script>
 <template>

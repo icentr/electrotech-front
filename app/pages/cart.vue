@@ -7,8 +7,6 @@ import {
   ArrowLeftIcon,
   CreditCardIcon,
 } from "@heroicons/vue/16/solid";
-import { ref, computed } from "vue";
-import { RouterLink } from "vue-router";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import { formatCurrency } from "@/utils";
@@ -91,10 +89,10 @@ const cartItems = computed(() => cartStore.cartItems);
                 <!-- Изображение и название -->
                 <div class="flex flex-col gap-3 md:w-1/2">
                   <div>
-                    <RouterLink
+                    <NuxtLink
                       :to="`/product/${item.id}`"
                       class="hover:text-accent pb-2 font-bold text-gray-900"
-                      >{{ item.name }}</RouterLink
+                      >{{ item.name }}</NuxtLink
                     >
                   </div>
                   <div class="flex grow flex-row items-end justify-between">
@@ -231,10 +229,10 @@ const cartItems = computed(() => cartStore.cartItems);
                 <p class="mb-6 text-gray-500">
                   Добавьте товары из каталога, чтобы продолжить
                 </p>
-                <RouterLink to="/catalog" class="btn btn-accent">
+                <NuxtLink to="/catalog" class="btn btn-accent">
                   <ArrowLeftIcon class="mr-2 size-4" />
                   Перейти в каталог
-                </RouterLink>
+                </NuxtLink>
               </div>
             </div>
           </div>
