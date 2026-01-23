@@ -126,7 +126,7 @@ const isValid = () => {
   if (!form.value.email) {
     errors.push("Email обязателен");
   }
-  if (!emailRegex.test(form.value.email)) {
+  if (!emailRegex.test(form.value?.email ?? "")) {
     errors.push("Введите корректный email");
   }
   if (!form.value.password) {
