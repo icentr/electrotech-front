@@ -7,16 +7,19 @@ usePageTitle("Документы");
 <template>
   <BreadcrumbsBlock page="Документы" />
 
-  <RouterLink class="btn" :to="DOCS.privacyPolicy.link">
-    Политика конфиденциальности
-    <ArrowUpRightIcon class="size-5" />
-  </RouterLink>
-  <RouterLink
-    class="btn"
-    :to="DOCS.userAgreement.link"
-    v-if="DOCS.userAgreement.enabled"
-  >
-    Пользовательское соглашение
-    <ArrowUpRightIcon class="size-5" />
-  </RouterLink>
+  <div class="flex flex-col gap-3">
+    <div v-for="doc in DOCS">
+      <div v-if="doc.type == 'page'">
+        <RouterLink class="btn" v-if="!doc.disabled" :to="doc.link">
+          {{ doc.prettyName }}
+        </RouterLink>
+      </div>
+      <div v-if="doc.type == 'file'">
+        <a :href="doc.link" class="btn" target="_blank">
+          {{ doc.prettyName }}
+          <ArrowUpRightIcon class="size-4" />
+        </a>
+      </div>
+    </div>
+  </div>
 </template>

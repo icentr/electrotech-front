@@ -77,12 +77,9 @@
       </form>
 
       <div class="text-center">
-        <p class="text-sm text-gray-600">
+        <p class="text-gray-600">
           Еще нет аккаунта?
-          <RouterLink
-            to="/Register"
-            class="text-accent hover:text-accent/80 font-medium"
-          >
+          <RouterLink to="/Register" class="link-accent">
             Зарегистрироваться
           </RouterLink>
         </p>

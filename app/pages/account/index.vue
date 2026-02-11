@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getApi } from "@/api";
-import { DOCS } from "~/data";
+import { privacyPolycy, userAgreement, personalDataAgreement } from "~/data";
 
 const api = getApi();
 
@@ -12,10 +12,15 @@ import {
   BuildingOfficeIcon,
   EnvelopeIcon,
   ExclamationTriangleIcon,
+  DocumentTextIcon,
   PhoneIcon,
   PhoneXMarkIcon,
-} from "@heroicons/vue/16/solid";
-import { DocumentIcon, PencilIcon } from "@heroicons/vue/24/outline";
+} from "@heroicons/vue/24/solid";
+import {
+  DocumentIcon,
+  PencilIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/vue/24/outline";
 usePageTitle("Аккаунт");
 // Данные пользователя
 const user = ref<{
@@ -244,24 +249,29 @@ const formatDate = (dateString: string) => {
           <div
             class="flex flex-col gap-3 rounded-xl border border-gray-100 bg-white p-6 shadow-sm"
           >
-            <div class="mb-5 flex items-center justify-between">
+            <div class="mb-5 flex items-center">
+              <div
+                class="text-accent bg-accent/10 mr-4 flex h-12 w-12 items-center justify-center rounded-lg"
+              >
+                <DocumentTextIcon class="size-6" />
+              </div>
               <h2 class="text-xl font-bold text-gray-900">Документы</h2>
             </div>
-            <RouterLink class="btn" :to="DOCS.privacyPolicy.link">
-              Политика конфиденциальности
+            <RouterLink class="btn" :to="userAgreement.link" target="_blank">
+              {{ userAgreement.prettyName }}
               <ArrowUpRightIcon class="size-5" />
             </RouterLink>
             <RouterLink
               class="btn"
-              :to="DOCS.userAgreement.link"
-              v-if="DOCS.userAgreement.enabled"
+              :to="personalDataAgreement.link"
+              target="_blank"
             >
-              Пользовательское соглашение
+              {{ personalDataAgreement.prettyName }}
               <ArrowUpRightIcon class="size-5" />
             </RouterLink>
 
             <RouterLink class="btn btn-accent-outline mt-5" to="/docs"
-              >Все документы <DocumentIcon class="size-5" />
+              >Все документы <DocumentDuplicateIcon class="size-5" />
             </RouterLink>
           </div>
         </div>

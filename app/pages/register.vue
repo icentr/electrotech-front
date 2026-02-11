@@ -25,7 +25,13 @@
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Фамилия</label
             >
-            <input v-model="form.surname" type="text" required class="entry" />
+            <input
+              v-model="form.surname"
+              type="text"
+              required
+              class="entry"
+              autocomplete="given-name"
+            />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
@@ -33,6 +39,7 @@
             >
             <input
               v-model="form.first_name"
+              autocomplete="name"
               type="text"
               required
               class="entry"
@@ -42,13 +49,24 @@
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Отчество</label
             >
-            <input v-model="form.last_name" type="text" class="entry" />
+            <input
+              v-model="form.last_name"
+              type="text"
+              class="entry"
+              autocomplete="additional-name"
+            />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
               >Email</label
             >
-            <input v-model="form.email" type="email" required class="entry" />
+            <input
+              v-model="form.email"
+              type="email"
+              required
+              class="entry"
+              autocomplete="email"
+            />
           </div>
           <div>
             <label class="mb-1 block text-sm font-medium text-gray-700"
@@ -57,6 +75,7 @@
             <input
               v-model="form.phone_number"
               type="tel"
+              autocomplete="tel"
               required
               class="entry"
             />
@@ -68,6 +87,7 @@
               type="password"
               required
               class="entry"
+              autocomplete="new-password"
             />
           </div>
           <div>
@@ -77,23 +97,27 @@
             <input
               v-model="form.confirmPassword"
               type="password"
+              autocomplete="new-password"
               required
               class="entry"
             />
           </div>
         </div>
+
         <div>
           <label class="text-sm text-gray-700">
-            Нажимая <q>Зарегистрироваться</q> вы соглашаетесь с
-            <span v-if="DOCS.userAgreement.enabled">
-              <RouterLink :to="DOCS.userAgreement.link" class="link-accent">
-                пользовательским соглашением
-              </RouterLink>
-              и
-            </span>
-            <RouterLink :to="DOCS.privacyPolicy.link" class="link-accent">
-              политикой конфиденциальности
-            </RouterLink>
+            Нажимая <q>Зарегистрироваться</q> вы подтверждаете, что охнакомлены
+            с
+            <a :href="privacyPolycy.link" class="link-accent">
+              политикой конфиденциальности</a
+            >, а также принимаете
+            <a :href="personalDataAgreement.link" class="link-accent"
+              >согласие на обработку персональных данных</a
+            >
+            и
+            <a :href="userAgreement.link" class="link-accent"
+              >пользовательское соглашение</a
+            >
           </label>
         </div>
 
@@ -101,18 +125,21 @@
       </form>
 
       <div class="text-center">
-        <p class="text-sm text-gray-600">
+        <p class="text-gray-600">
           Уже есть аккаунт?
-          <RouterLink to="/login" class="text-accent hover:text-accent/80">
-            Войти
-          </RouterLink>
+          <RouterLink to="/login" class="link-accent"> Войти </RouterLink>
         </p>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { DOCS } from "~/data";
+import {
+  DOCS,
+  privacyPolycy,
+  personalDataAgreement,
+  userAgreement,
+} from "~/data";
 import { getApi } from "@/api";
 import { BoltIcon } from "@heroicons/vue/16/solid";
 import type { AxiosError } from "axios";
