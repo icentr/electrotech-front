@@ -38,10 +38,32 @@ const PREVIEW_CATEGORIES = [
     icon: CpuChipIcon,
   },
 ];
+const SERVICES = [
+  {
+    name: "Принт-центр",
+    description: "Печать маркировки на базе различных маркировочных материалов",
+  },
+  {
+    name: "Изготовление и сборка электрощитов",
+    description:
+      "Изготовление качественных, современных и надежных ВРУ, АВР, щитов автоматики и управления, распределительных щитов.",
+  },
+  {
+    name: "Кастомизация дверей и корпусов электротехнических шкафов",
+    description:
+      "Доработка серийных корпусных изделий по индивидуальным требованиям заказчика",
+  },
+];
+
+const SERVICE_VIDEO = {
+  source: "/horizon-vid.mp4",
+  caption:
+    "Сравнение скорости пробивки отверстий в шкафу под кнопки/проводку с использованием ALFRA PRESS AP 400 и ручного приспособления. Профессионально, аккуратно и оперативно",
+};
 </script>
 <template>
-  <div class="bg-gray-50">
-    <!-- Герой-секция с акцентом на ваши товары -->
+  <!-- Герой-секция с акцентом на ваши товары -->
+  <div>
     <section class="hero-gradient text-white">
       <div class="container mx-auto px-4 py-20 md:py-28">
         <div class="flex flex-col items-center md:flex-row">
@@ -164,7 +186,44 @@ const PREVIEW_CATEGORIES = [
         </div>
       </div>
     </section>
-
+    <section class="">
+      <h2 class="title-1 uppercase">Наши услуги</h2>
+      <div
+        class="flex flex-col gap-8 rounded-xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 md:flex-row"
+      >
+        <div class="flex flex-col gap-4 md:w-1/2">
+          <div
+            v-for="service in SERVICES"
+            class="hover:border-accent/50 flex flex-col gap-2 rounded-lg border border-gray-100 bg-gray-50 p-2 px-4 shadow-sm transition-all duration-300 hover:bg-gray-100"
+          >
+            <h3 class="text-xl font-bold text-gray-900">
+              {{ service.name }}
+            </h3>
+            <div class="text text-gray-600">
+              {{ service.description }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center md:w-1/2">
+          <video
+            aria-labelledby="video-caption"
+            class="rounded-md"
+            v-if="SERVICE_VIDEO"
+            controls
+            autoplay
+            disablepictureinpicture
+            muted
+          >
+            <source :src="SERVICE_VIDEO.source" />
+          </video>
+          <div>
+            <label id="caption" class="text-sm text-gray-800">
+              {{ SERVICE_VIDEO.caption }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Популярные категории с вашими товарами -->
     <section class="bg-gray-50 py-16">
       <div class="container mx-auto px-4">

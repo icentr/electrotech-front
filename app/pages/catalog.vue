@@ -60,6 +60,14 @@ const pagesToShow = computed(() => {
   }
   return pages;
 });
+
+const SERVICES = [
+  {
+    name: "Принт-центр",
+    description: "Печать маркировки на базе различных маркировочных материалов",
+  },
+  { name: "Кастомизация дверей и корпусов электротехнических шкафов" },
+];
 </script>
 
 <template>
@@ -104,6 +112,7 @@ const pagesToShow = computed(() => {
                   </button>
                 </form>
               </div>
+
               <div
                 class="mt-4 rounded-lg border border-gray-300 bg-gray-100 px-3 py-2 text-gray-500 shadow-sm transition-all duration-700 hover:shadow-lg md:mt-0"
               >
